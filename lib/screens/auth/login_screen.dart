@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:kader/helpers/helpers.dart';
 import 'package:kader/localization/language/languages.dart';
 import 'package:kader/providers/auth_provider.dart';
 import 'package:kader/screens/auth/register_screen.dart';
 import 'package:kader/screens/home_screen.dart';
+import 'package:kader/services/helpers.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {

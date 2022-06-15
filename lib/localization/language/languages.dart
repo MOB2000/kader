@@ -54,8 +54,6 @@ abstract class Languages {
   String get vacationLength;
   String get enterVacationDaysNumber;
   String get digitsOnlyAllowed;
-  String get checkFriday;
-  String get checkSaturday;
   String get startDate;
   String get returnDate;
   String get requestVacation;

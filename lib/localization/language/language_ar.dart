@@ -77,12 +77,6 @@ class LanguageAr extends Languages {
   String get kDisplayVacations => 'عرض الإجازات';
 
   @override
-  String get checkFriday => 'احتساب الجمعة';
-
-  @override
-  String get checkSaturday => 'احتساب السبت';
-
-  @override
   String get digitsOnlyAllowed => 'ادخل قيمة رقمية';
 
   @override

@@ -11,10 +11,9 @@ class AuthHelper {
   late CustomUser currentUser = CustomUser(
     id: '',
     type: UserType.employee,
-    password: '',
     phoneNumber: '',
     idNumber: '',
-    photo: '',
+    photoUrl: '',
     name: '',
     email: '',
     gender: Gender.male,
@@ -22,10 +21,10 @@ class AuthHelper {
 
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
-  Future<String?> register(CustomUser user) async {
+  Future<String?> register(String email, String password) async {
     final userCredential = await _firebaseAuth.createUserWithEmailAndPassword(
-      email: user.email,
-      password: user.password,
+      email: email,
+      password: password,
     );
     return userCredential.user!.uid;
   }
@@ -34,11 +33,11 @@ class AuthHelper {
     await _firebaseAuth.signOut();
   }
 
-  Future<String> login(String email, String password) async {
+  Future<String?> login(String email, String password) async {
     final userCredential = await _firebaseAuth.signInWithEmailAndPassword(
       email: email,
       password: password,
     );
-    return userCredential.user!.uid;
+    return userCredential.user?.uid;
   }
 }

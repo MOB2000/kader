@@ -57,12 +57,6 @@ class LanguageEn extends Languages {
   String get kDisplayVacations => 'Display Vacations';
 
   @override
-  String get checkFriday => 'check Friday';
-
-  @override
-  String get checkSaturday => 'check Saturday';
-
-  @override
   String get digitsOnlyAllowed => 'digits only allowed';
 
   @override

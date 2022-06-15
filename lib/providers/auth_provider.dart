@@ -5,7 +5,7 @@ import 'package:kader/models/custom_user.dart';
 import 'package:kader/services/auth_helper.dart';
 import 'package:kader/services/firebase_storage_helper.dart';
 import 'package:kader/services/firestor_helper.dart';
-import 'package:kader/services/shared_preferences.dart';
+import 'package:kader/services/shared_preferences_helper.dart';
 
 class AuthProvider with ChangeNotifier {
   final AuthHelper _authHelper = AuthHelper.instance;
@@ -20,26 +20,28 @@ class AuthProvider with ChangeNotifier {
 
   Future<void> logout() async {
     await _authHelper.logout();
-    await SharedPrefs.instance.setIsLogged(false);
+    await SharedPreferencesHelper.instance.setIsLogged(false);
   }
 
   Future<void> login(String email, String password) async {
     final id = await _authHelper.login(email, password);
-    //  TODO: check login
+    if (id == null) {
+      return;
+    }
     user = await _firestoreHelper.getUser(id);
     await saveUserLocal();
   }
 
-  Future<void> register(File imageFile) async {
+  Future<void> register(String email, String password, File imageFile) async {
     final isIdExists = await _firestoreHelper.checkIdExists(user.idNumber);
     if (isIdExists) {
       throw Exception('رقجوم الهوية مود');
     }
 
     final photoUrl = await FirebaseStorageHelper.instance.uploadFile(imageFile);
-    user = user.copyWith(photo: photoUrl);
+    user = user.copyWith(photoUrl: photoUrl);
 
-    final uid = await _authHelper.register(user);
+    final uid = await _authHelper.register(email, password);
     if (uid == null) {
       return;
     }
@@ -49,7 +51,7 @@ class AuthProvider with ChangeNotifier {
   }
 
   Future<void> saveUserLocal() async {
-    await SharedPrefs.instance.setUser(user);
-    await SharedPrefs.instance.setIsLogged(true);
+    await SharedPreferencesHelper.instance.setUser(user);
+    await SharedPreferencesHelper.instance.setIsLogged(true);
   }
 }

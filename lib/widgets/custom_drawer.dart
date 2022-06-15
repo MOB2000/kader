@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kader/constants/images.dart';
 import 'package:kader/localization/language/languages.dart';
 import 'package:kader/screens/auth/login_screen.dart';
-import 'package:kader/services/shared_preferences.dart';
+import 'package:kader/services/shared_preferences_helper.dart';
 import 'package:kader/widgets/locale_widget.dart';
 
 class CustomDrawer extends StatefulWidget {
@@ -15,7 +15,7 @@ class CustomDrawer extends StatefulWidget {
 class _CustomDrawerState extends State<CustomDrawer> {
   @override
   Widget build(BuildContext context) {
-    final account = SharedPrefs.instance.account;
+    final account = SharedPreferencesHelper.instance.account;
     final languages = Languages.of(context);
 
     return Drawer(
@@ -43,7 +43,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
             icon: const Icon(Icons.logout),
             title: languages.logout,
             onTap: () async {
-              await SharedPrefs.instance.setIsLogged(false);
+              await SharedPreferencesHelper.instance.setIsLogged(false);
               if (!mounted) return;
               Navigator.pushReplacementNamed(context, LoginScreen.routeName);
             },

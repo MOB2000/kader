@@ -18,10 +18,6 @@ class _VacationRequestScreenState extends State<VacationRequestScreen> {
 
   DateTime get endDate => startDate.add(Duration(days: vacationLength));
 
-  // TODO: check friday and saturday
-  bool isCheckedFriday = false;
-  bool isCheckedSaturday = false;
-
   final vacationFormKey = GlobalKey<FormState>();
 
   @override
@@ -62,54 +58,6 @@ class _VacationRequestScreenState extends State<VacationRequestScreen> {
                 onSaved: (value) => vacationLength = int.parse(value!.trim()),
               ),
               const SizedBox(height: 18),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: CheckboxListTile(
-                      checkColor: Colors.white,
-                      activeColor: kMainColor,
-                      value: isCheckedFriday,
-                      controlAffinity: ListTileControlAffinity.leading,
-                      onChanged: (newValue) {
-                        setState(() {
-                          isCheckedFriday = !isCheckedFriday;
-                        });
-                      },
-                      title: Text(
-                        languages.checkFriday,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 15,
-                          color: Colors.grey.shade900,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: CheckboxListTile(
-                      checkColor: Colors.white,
-                      activeColor: kMainColor,
-                      controlAffinity: ListTileControlAffinity.leading,
-                      value: isCheckedSaturday,
-                      onChanged: (newValue) {
-                        setState(() {
-                          isCheckedSaturday = !isCheckedSaturday;
-                        });
-                      },
-                      title: Text(
-                        languages.checkSaturday,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 15,
-                          color: Colors.grey.shade900,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 18),
               GestureDetector(
                 onTap: () async {
                   final selectedDate = await showDatePicker(
@@ -145,8 +93,7 @@ class _VacationRequestScreenState extends State<VacationRequestScreen> {
                     const SizedBox(width: 8),
                     Text(languages.startDate),
                     const SizedBox(width: 4),
-                    Text(StringsHelper.getDayDate(
-                        startDate, languages.languageCode)),
+                    Text(StringsHelper.getDayDate(startDate)),
                   ],
                 ),
               ),
@@ -159,8 +106,7 @@ class _VacationRequestScreenState extends State<VacationRequestScreen> {
                     const SizedBox(width: 8),
                     Text(languages.returnDate),
                     const SizedBox(width: 4),
-                    Text(StringsHelper.getDayDate(
-                        endDate, languages.languageCode)),
+                    Text(StringsHelper.getDayDate(endDate)),
                   ],
                 ),
               const SizedBox(height: 48),

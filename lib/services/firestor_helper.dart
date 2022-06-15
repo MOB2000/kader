@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:kader/constants/keys.dart';
+import 'package:kader/models/complaint.dart';
 import 'package:kader/models/custom_user.dart';
 
 class FirestoreHelper {
@@ -27,13 +28,33 @@ class FirestoreHelper {
   }
 
   Future<CustomUser> getUser(String id) async {
-    final q = await _firebaseFirestore
+    final doc = await _firebaseFirestore
         .collection('users')
         .where('id', isEqualTo: id)
         .get()
         .then((value) => value.docs.first);
 
-    final user = CustomUser.fromMap(q.data());
+    final user = CustomUser.fromMap(doc.data());
     return user;
+  }
+
+  Future<void> addComplaint(Complaint complaint) async {
+    await _firebaseFirestore.collection('complaints').add(complaint.toMap());
+  }
+
+  Future<List<Complaint>> get complaints async =>
+      await _firebaseFirestore.collection('complaints').get().then((value) =>
+          value.docs.map((e) => Complaint.fromMap(e.data())).toList());
+
+  Future<List<Complaint>> getComplaints(String ownerId) async {
+    final complaints = await _firebaseFirestore
+        .collection('complaints')
+        .where('ownerId', isEqualTo: ownerId)
+        .get()
+        .then(
+          (value) =>
+              value.docs.map((e) => Complaint.fromMap(e.data())).toList(),
+        );
+    return complaints;
   }
 }

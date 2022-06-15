@@ -2,13 +2,13 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:kader/helpers/helpers.dart';
 import 'package:kader/localization/language/languages.dart';
 import 'package:kader/models/gender.dart';
 import 'package:kader/providers/auth_provider.dart';
 import 'package:kader/screens/auth/login_screen.dart';
 import 'package:kader/screens/home_screen.dart';
+import 'package:kader/services/helpers.dart';
+import 'package:kader/services/image_picker.dart';
 import 'package:provider/provider.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -32,13 +32,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final registerFormKey = GlobalKey<FormState>();
 
   File? imageFile;
+  String password = '';
 
   @override
   Widget build(BuildContext context) {
     final languages = Languages.of(context);
     final authProvider = Provider.of<AuthProvider>(context);
     // TODO: use focus node and submit
-    // TODO:
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -60,13 +60,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
               TextButton(
                 child: const Text('اختر صورة'),
                 onPressed: () async {
-                  //TODO: extract to class
-                  final image = await ImagePicker()
-                      .pickImage(source: ImageSource.gallery);
+                  final image = await ImagePickerHelper.instance.pickImage();
 
                   if (image != null) {
                     setState(() {
-                      imageFile = File(image.path);
+                      imageFile = image;
                     });
                   }
                 },
@@ -98,8 +96,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 validator: (value) => checkEmpty(value, 'ادخل كلمة المرور'),
                 onSaved: (value) {
                   value = value!.trim();
-                  authProvider.user =
-                      authProvider.user.copyWith(password: value);
+                  password = value;
                 },
               ),
               TextFormField(
@@ -169,7 +166,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     bool isLogged = false;
                     await showDialogWaiting(context, () async {
                       try {
-                        await authProvider.register(imageFile!);
+                        await authProvider.register(
+                            authProvider.user.email, password, imageFile!);
                         isLogged = true;
                       } catch (e) {
                         Fluttertoast.showToast(msg: e.toString());

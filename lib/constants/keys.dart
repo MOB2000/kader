@@ -29,7 +29,7 @@ class Keys {
   static const String accountType = 'accountType';
   static const String account = 'account';
 
-  static const String photo = 'photo';
+  static const String photoUrl = 'photoUrl';
   static const String idNumber = 'idNumber';
   static const String phoneNumber = 'phoneNumber';
   static const String password = 'password';

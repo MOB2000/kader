@@ -6,10 +6,10 @@ import 'package:kader/localization/locale_constant.dart';
 import 'package:kader/models/custom_user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class SharedPrefs {
-  SharedPrefs._();
+class SharedPreferencesHelper {
+  SharedPreferencesHelper._();
 
-  static final SharedPrefs instance = SharedPrefs._();
+  static final SharedPreferencesHelper instance = SharedPreferencesHelper._();
 
   late SharedPreferences _sharedPreferences;
 

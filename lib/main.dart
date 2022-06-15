@@ -8,6 +8,7 @@ import 'package:kader/localization/app_localizations_delegate.dart';
 import 'package:kader/localization/language/languages.dart';
 import 'package:kader/localization/locale_constant.dart';
 import 'package:kader/providers/auth_provider.dart';
+import 'package:kader/providers/services_provider.dart';
 import 'package:kader/screens/auth/login_screen.dart';
 import 'package:kader/screens/auth/register_screen.dart';
 import 'package:kader/screens/complaints_screen.dart';
@@ -22,14 +23,14 @@ import 'package:kader/screens/vacations_balance_screen.dart';
 import 'package:kader/screens/working_hours_screen.dart';
 import 'package:kader/services/connectivity.dart';
 import 'package:kader/services/db.dart';
-import 'package:kader/services/shared_preferences.dart';
+import 'package:kader/services/shared_preferences_helper.dart';
 import 'package:provider/provider.dart';
 
 Future<void> main() async {
   final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
-  await SharedPrefs.instance.init();
+  await SharedPreferencesHelper.instance.init();
   await DB.instance.init();
   Connection.instance.listen();
 
@@ -69,15 +70,18 @@ class _KaderState extends State<Kader> {
     _locale = getLocale();
   }
 
-  String get initialRoute => SharedPrefs.instance.isLogged
-      ? HomeScreen.routeName
-      : LoginScreen.routeName;
+  String get initialRoute {
+    return SharedPreferencesHelper.instance.isLogged
+        ? HomeScreen.routeName
+        : LoginScreen.routeName;
+  }
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => AuthProvider()),
+        ChangeNotifierProvider(create: (context) => ServicesProvider()),
       ],
       builder: (context, child) {
         return MaterialApp(
@@ -129,7 +133,7 @@ class _KaderState extends State<Kader> {
           },
           locale: _locale,
           supportedLocales: languageList.map((e) => e.toLocale),
-          localizationsDelegates: const [
+          localizationsDelegates: const <LocalizationsDelegate>[
             AppLocalizationsDelegate(),
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,

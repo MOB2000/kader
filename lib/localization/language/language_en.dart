@@ -1,0 +1,149 @@
+import 'languages.dart';
+
+class LanguageEn extends Languages {
+  @override
+  String get languageCode => 'en';
+  @override
+  String get kader => 'Kader';
+  @override
+  String get appLanguage => "Language";
+  @override
+  String get kHome => 'Home';
+  @override
+  String get login => 'Login';
+  @override
+  String get register => 'register';
+  @override
+  String get posts => 'Posts';
+  @override
+  String get complaints => 'Complaints';
+  @override
+  String get lastLogin => 'Last Login';
+  @override
+  String get logout => 'Logout';
+  @override
+  String get profile => 'profile';
+  @override
+  String get search => 'Search';
+  @override
+  String get errorOccurred => 'Error Occurred';
+  @override
+  String get noResults => 'No Results';
+  @override
+  String get enterValue => 'Enter Value';
+  @override
+  String get mohStaff => 'MOH Staff';
+  @override
+  String get clickHereToGoToThePostPage => 'To go to the news page, click here';
+  @override
+  String get sharePost => 'Share Post';
+  @override
+  String get custody => 'Custody';
+  @override
+  String get administrativeServices => 'Administrative Services';
+  @override
+  String get protocols => 'Protocols';
+  @override
+  String get additionalServices => 'Additional Services';
+  @override
+  String get eVacation => 'E-Vacation';
+  @override
+  String get workingHours => 'Working Hours';
+  @override
+  String get shifts => 'Shifts';
+  @override
+  String get vacationRequest => 'Vacation Request';
+  @override
+  String get pendingRequests => 'Pending Requests';
+  @override
+  String get returnAcknowledgment => 'Return';
+  @override
+  String get kDisplayVacations => 'Display Vacations';
+
+  @override
+  String get checkFriday => 'check Friday';
+
+  @override
+  String get checkSaturday => 'check Saturday';
+
+  @override
+  String get digitsOnlyAllowed => 'digits only allowed';
+
+  @override
+  String get enterVacationDaysNumber => 'enter vacation days number';
+
+  @override
+  String get requestVacation => 'request vacation';
+
+  @override
+  String get returnDate => 'return date';
+
+  @override
+  String get startDate => 'start date';
+
+  @override
+  String get vacationLength => 'vacation length';
+
+  @override
+  String get signingIn => 'Signing In';
+
+  @override
+  String get noInternetConnection => 'no internet connection';
+
+  @override
+  String get noMorePosts => 'no more posts';
+
+  @override
+  String get noPosts => 'no posts';
+
+  @override
+  String get postDetails => 'post details';
+
+  @override
+  String get close => 'close';
+
+  @override
+  String get vacationsBalance => 'vacations balance';
+
+  @override
+  String get workInformation => 'work information';
+
+  @override
+  String get financialObligations => 'financial obligations';
+
+  @override
+  // TODO: implement email
+  String get email => 'email';
+
+  @override
+  // TODO: implement female
+  String get female => 'female';
+
+  @override
+  // TODO: implement gender
+  String get gender => 'gender';
+
+  @override
+  // TODO: implement idNumber
+  String get idNumber => 'idNumber';
+
+  @override
+  // TODO: implement male
+  String get male => 'male';
+
+  @override
+  // TODO: implement name
+  String get name => 'name';
+
+  @override
+  // TODO: implement password
+  String get password => 'password';
+
+  @override
+  // TODO: implement phoneNumber
+  String get phoneNumber => 'phoneNumber';
+
+  @override
+  // TODO: implement photo
+  String get photo => 'photo';
+}

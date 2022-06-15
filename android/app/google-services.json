@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "350470554848",
+    "project_id": "kader-1b10b",
+    "storage_bucket": "kader-1b10b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:350470554848:android:87b1f8a1a143e9bebcbc85",
+        "android_client_info": {
+          "package_name": "com.example.kader"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "350470554848-fl0c87otrb1j3kkb3ikp2k3gi6g23ui2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.kader",
+            "certificate_hash": "b402337921efd5102f30b1df8eb9f303c819c499"
+          }
+        },
+        {
+          "client_id": "350470554848-t55lvnhmjt61jf3ib63h5ok76t70nlt5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZf-7JEGgK5jYZmrjP-v2JKDd3NJTQLqE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "350470554848-t55lvnhmjt61jf3ib63h5ok76t70nlt5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

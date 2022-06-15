@@ -1,9 +1,9 @@
 import 'dart:io';
 
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:kader/models/custom_user.dart';
 import 'package:kader/services/auth_helper.dart';
+import 'package:kader/services/firebase_storage_helper.dart';
 import 'package:kader/services/firestor_helper.dart';
 import 'package:kader/services/shared_preferences.dart';
 
@@ -30,22 +30,13 @@ class AuthProvider with ChangeNotifier {
     await saveUserLocal();
   }
 
-  Future<void> saveUserLocal() async {
-    await SharedPrefs.instance.setUser(user);
-    await SharedPrefs.instance.setIsLogged(true);
-  }
-
   Future<void> register(File imageFile) async {
     final isIdExists = await _firestoreHelper.checkIdExists(user.idNumber);
     if (isIdExists) {
       throw Exception('رقجوم الهوية مود');
     }
-    final ref = FirebaseStorage.instance
-        .ref()
-        .child('profiles_images${imageFile.path.split('/').last}');
-    await ref.putFile(imageFile);
 
-    final photoUrl = await ref.getDownloadURL();
+    final photoUrl = await FirebaseStorageHelper.instance.uploadFile(imageFile);
     user = user.copyWith(photo: photoUrl);
 
     final uid = await _authHelper.register(user);
@@ -55,5 +46,10 @@ class AuthProvider with ChangeNotifier {
     user = user.copyWith(id: uid);
     await _firestoreHelper.addUser(user);
     await saveUserLocal();
+  }
+
+  Future<void> saveUserLocal() async {
+    await SharedPrefs.instance.setUser(user);
+    await SharedPrefs.instance.setIsLogged(true);
   }
 }

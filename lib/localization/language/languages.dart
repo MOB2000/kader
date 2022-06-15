@@ -23,7 +23,6 @@ abstract class Languages {
   String get female;
 
   String get posts;
-  String get workInformation;
   String get complaints;
   String get lastLogin;
   String get logout;
@@ -42,13 +41,12 @@ abstract class Languages {
   String get clickHereToGoToThePostPage;
   String get sharePost;
   String get custody;
-  String get administrativeServices;
-  String get protocols;
   String get profile;
-  String get additionalServices;
   String get eVacation;
+  String get manageDepartment;
+  String get meetings;
+  String get transitionsRequests;
   String get workingHours;
-  String get shifts;
   String get vacationRequest;
   String get pendingRequests;
   String get returnAcknowledgment;
@@ -61,5 +59,4 @@ abstract class Languages {
   String get startDate;
   String get returnDate;
   String get requestVacation;
-  String get financialObligations;
 }

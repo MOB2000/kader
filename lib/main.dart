@@ -8,23 +8,17 @@ import 'package:kader/localization/app_localizations_delegate.dart';
 import 'package:kader/localization/language/languages.dart';
 import 'package:kader/localization/locale_constant.dart';
 import 'package:kader/providers/auth_provider.dart';
-import 'package:kader/screens/additional_services_screen.dart';
-import 'package:kader/screens/administrative_services_screen.dart';
 import 'package:kader/screens/auth/login_screen.dart';
 import 'package:kader/screens/auth/register_screen.dart';
 import 'package:kader/screens/complaints_screen.dart';
 import 'package:kader/screens/custody_screen.dart';
 import 'package:kader/screens/display_vacations_screen.dart';
 import 'package:kader/screens/e_vacation_screen.dart';
-import 'package:kader/screens/financial_obligations_screen.dart';
 import 'package:kader/screens/home_screen.dart';
 import 'package:kader/screens/pending_requests_screen.dart';
-import 'package:kader/screens/protocols_screen.dart';
 import 'package:kader/screens/return_screen.dart';
-import 'package:kader/screens/shifts_screen_screen.dart';
 import 'package:kader/screens/vacation_request_screen.dart';
 import 'package:kader/screens/vacations_balance_screen.dart';
-import 'package:kader/screens/work_information_screen.dart';
 import 'package:kader/screens/working_hours_screen.dart';
 import 'package:kader/services/connectivity.dart';
 import 'package:kader/services/db.dart';
@@ -118,16 +112,8 @@ class _KaderState extends State<Kader> {
             LoginScreen.routeName: (context) => const LoginScreen(),
             RegisterScreen.routeName: (context) => const RegisterScreen(),
             HomeScreen.routeName: (context) => const HomeScreen(),
-            WorkInformationScreen.routeName: (context) =>
-                const WorkInformationScreen(),
-            FinancialObligationsScreen.routeName: (context) =>
-                const FinancialObligationsScreen(),
-            ProtocolsScreen.routeName: (context) => const ProtocolsScreen(),
             ComplaintsScreen.routeName: (context) => const ComplaintsScreen(),
-            AdditionalServicesScreen.routeName: (context) =>
-                const AdditionalServicesScreen(),
             EVacationScreen.routeName: (context) => const EVacationScreen(),
-            ShiftsScreen.routeName: (context) => const ShiftsScreen(),
             ReturnScreen.routeName: (context) => const ReturnScreen(),
             VacationRequestScreen.routeName: (context) =>
                 const VacationRequestScreen(),
@@ -140,8 +126,6 @@ class _KaderState extends State<Kader> {
             CustodyScreen.routeName: (context) => const CustodyScreen(),
             VacationsBalanceScreen.routeName: (context) =>
                 const VacationsBalanceScreen(),
-            AdministrativeServicesScreen.routeName: (context) =>
-                const AdministrativeServicesScreen(),
           },
           locale: _locale,
           supportedLocales: languageList.map((e) => e.toLocale),

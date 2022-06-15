@@ -26,6 +26,8 @@ class LanguageEn extends Languages {
   @override
   String get search => 'Search';
   @override
+  String get manageDepartment => 'Manage Department';
+  @override
   String get errorOccurred => 'Error Occurred';
   @override
   String get noResults => 'No Results';
@@ -39,18 +41,12 @@ class LanguageEn extends Languages {
   String get sharePost => 'Share Post';
   @override
   String get custody => 'Custody';
-  @override
-  String get administrativeServices => 'Administrative Services';
-  @override
-  String get protocols => 'Protocols';
-  @override
-  String get additionalServices => 'Additional Services';
+
   @override
   String get eVacation => 'E-Vacation';
   @override
   String get workingHours => 'Working Hours';
-  @override
-  String get shifts => 'Shifts';
+
   @override
   String get vacationRequest => 'Vacation Request';
   @override
@@ -106,44 +102,33 @@ class LanguageEn extends Languages {
   String get vacationsBalance => 'vacations balance';
 
   @override
-  String get workInformation => 'work information';
-
-  @override
-  String get financialObligations => 'financial obligations';
-
-  @override
-  // TODO: implement email
   String get email => 'email';
 
   @override
-  // TODO: implement female
   String get female => 'female';
 
   @override
-  // TODO: implement gender
   String get gender => 'gender';
 
   @override
-  // TODO: implement idNumber
   String get idNumber => 'idNumber';
 
   @override
-  // TODO: implement male
   String get male => 'male';
 
   @override
-  // TODO: implement name
   String get name => 'name';
 
   @override
-  // TODO: implement password
   String get password => 'password';
 
   @override
-  // TODO: implement phoneNumber
   String get phoneNumber => 'phoneNumber';
+  @override
+  String get meetings => 'meetings';
+  @override
+  String get photo => 'photo';
 
   @override
-  // TODO: implement photo
-  String get photo => 'photo';
+  String get transitionsRequests => 'Transitions Requests';
 }

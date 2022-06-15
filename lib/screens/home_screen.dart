@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:kader/constants/colors.dart';
 import 'package:kader/constants/images.dart';
 import 'package:kader/localization/language/languages.dart';
-import 'package:kader/screens/additional_services_screen.dart';
-import 'package:kader/screens/administrative_services_screen.dart';
+import 'package:kader/screens/complaints_screen.dart';
 import 'package:kader/screens/custody_screen.dart';
-import 'package:kader/screens/financial_obligations_screen.dart';
-import 'package:kader/screens/protocols_screen.dart';
-import 'package:kader/screens/work_information_screen.dart';
+import 'package:kader/screens/e_vacation_screen.dart';
+import 'package:kader/screens/working_hours_screen.dart';
 import 'package:kader/widgets/custom_drawer.dart';
 import 'package:kader/widgets/service_widget.dart';
 import 'package:kader/widgets/services_widget.dart';
@@ -25,44 +22,42 @@ class HomeScreen extends StatelessWidget {
         title: Text(languages.kHome),
       ),
       drawer: const CustomDrawer(),
-      body: Column(
-        children: <Widget>[
-          Expanded(
-            child: ServicesWidget(
-              children: <ServiceWidget>[
-                ServiceWidget(
-                  name: languages.workInformation,
-                  routeName: WorkInformationScreen.routeName,
-                  image: Images.workInformation,
-                ),
-                ServiceWidget(
-                  name: languages.administrativeServices,
-                  routeName: AdministrativeServicesScreen.routeName,
-                  image: Images.administrativeServices,
-                ),
-                ServiceWidget(
-                  name: languages.custody,
-                  image: Images.custodyImage,
-                  routeName: CustodyScreen.routeName,
-                ),
-                ServiceWidget(
-                  name: languages.financialObligations,
-                  image: Images.financialObligations,
-                  routeName: FinancialObligationsScreen.routeName,
-                ),
-                ServiceWidget(
-                  name: languages.protocols,
-                  image: Images.protocols,
-                  routeName: ProtocolsScreen.routeName,
-                ),
-                ServiceWidget(
-                  name: languages.additionalServices,
-                  image: Images.additionalServicesImage,
-                  routeName: AdditionalServicesScreen.routeName,
-                  color: kSecondaryColor,
-                ),
-              ],
-            ),
+      body: ServicesWidget(
+        children: <ServiceWidget>[
+          ServiceWidget(
+            name: languages.manageDepartment,
+            image: Images.eVacation,
+            routeName: EVacationScreen.routeName,
+          ),
+          ServiceWidget(
+            name: languages.meetings,
+            image: Images.eVacation,
+            routeName: EVacationScreen.routeName,
+          ),
+          ServiceWidget(
+            name: languages.transitionsRequests,
+            image: Images.eVacation,
+            routeName: EVacationScreen.routeName,
+          ),
+          ServiceWidget(
+            name: languages.eVacation,
+            image: Images.eVacation,
+            routeName: EVacationScreen.routeName,
+          ),
+          ServiceWidget(
+            name: languages.workingHours,
+            image: Images.workingHours,
+            routeName: WorkingHoursScreen.routeName,
+          ),
+          ServiceWidget(
+            name: languages.custody,
+            image: Images.custodyImage,
+            routeName: CustodyScreen.routeName,
+          ),
+          ServiceWidget(
+            name: languages.complaints,
+            image: Images.complaints,
+            routeName: ComplaintsScreen.routeName,
           ),
         ],
       ),

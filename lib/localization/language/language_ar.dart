@@ -30,8 +30,10 @@ class LanguageAr extends Languages {
 
   @override
   String get logout => 'تسجيل الخروج';
+
   @override
   String get profile => 'الملف الشخصي';
+
   @override
   String get search => 'بحث';
 
@@ -57,22 +59,10 @@ class LanguageAr extends Languages {
   String get custody => 'العهدة';
 
   @override
-  String get administrativeServices => 'الخدمات الإدارية';
-
-  @override
-  String get protocols => 'البروتوكولات';
-
-  @override
-  String get additionalServices => 'الخدمات الإضافية';
-
-  @override
   String get eVacation => 'الإجازة الالكترونية';
 
   @override
   String get workingHours => 'الدوام';
-
-  @override
-  String get shifts => 'الورديات';
 
   @override
   String get vacationRequest => 'التقدم لطلب إجازة';
@@ -132,33 +122,21 @@ class LanguageAr extends Languages {
   String get vacationsBalance => 'رصيد الإجازات';
 
   @override
-  String get workInformation => 'البيانات الوظيفية';
-
-  @override
-  String get financialObligations => 'الالتزامات المالية';
-
-  @override
-  // TODO: implement email
   String get email => 'الايميل';
 
   @override
-  // TODO: implement female
   String get female => 'أنثى';
 
   @override
-  // TODO: implement gender
   String get gender => 'الجنس';
 
   @override
-  // TODO: implement idNumber
   String get idNumber => 'رقم الهوية';
 
   @override
-  // TODO: implement male
   String get male => 'ذكر';
 
   @override
-  // TODO: implement name
   String get name => 'الاسم';
 
   @override
@@ -168,6 +146,13 @@ class LanguageAr extends Languages {
   String get phoneNumber => 'رقم الجوال';
 
   @override
-  // TODO: implement photo
   String get photo => 'الصورة الشخصية';
+
+  @override
+  String get manageDepartment => 'إدارة القسم';
+
+  @override
+  String get meetings => 'الاجتماعات';
+  @override
+  String get transitionsRequests => 'طلبات النقل';
 }

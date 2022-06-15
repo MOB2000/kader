@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:kader/constants/images.dart';
 import 'package:kader/localization/language/languages.dart';
 import 'package:kader/screens/auth/login_screen.dart';
-import 'package:kader/screens/complaints_screen.dart';
 import 'package:kader/services/shared_preferences.dart';
 import 'package:kader/widgets/locale_widget.dart';
 
@@ -38,17 +37,6 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 Text(account.name),
               ],
             ),
-          ),
-          DrawerListTile(
-            icon: Image.asset(
-              Images.complaints,
-              height: 24,
-              width: 24,
-            ),
-            title: languages.complaints,
-            onTap: () async {
-              Navigator.pushNamed(context, ComplaintsScreen.routeName);
-            },
           ),
           const LocaleWidget(),
           DrawerListTile(

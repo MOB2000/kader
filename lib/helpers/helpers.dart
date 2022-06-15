@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 
+import '../widgets/loading_widget.dart';
+
 Future<void> showDialogWaiting(BuildContext context, Function function) async {
   showDialog(
     context: context,
-    builder: (context) => const Center(
-      child: SizedBox(
-        height: 24,
-        width: 24,
-        child: CircularProgressIndicator.adaptive(),
-      ),
-    ),
+    builder: (context) => const LoadingWidget(),
   );
 
   await function();

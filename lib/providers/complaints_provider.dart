@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kader/models/complaint.dart';
 import 'package:kader/services/firestor_helper.dart';
 
-class ServicesProvider extends ChangeNotifier {
+class ComplaintsProvider extends ChangeNotifier {
   final FirestoreHelper _firestoreHelper = FirestoreHelper.instance;
 
   Future<void> addComplaint(Complaint complaint) async {

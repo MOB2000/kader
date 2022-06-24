@@ -22,14 +22,10 @@ dependencies:
   intl: ^0.17.0
   infinite_scroll_pagination: ^3.2.0
   fluttertoast: ^8.0.9
-  sqflite: ^2.0.2
-  path: any
-  path_provider: ^2.0.11
   connectivity_plus: ^2.3.3
   shared_preferences: ^2.0.15
   google_fonts: ^3.0.1
   flutter_native_splash: ^2.2.3
-
 
 dev_dependencies:
   flutter_test:

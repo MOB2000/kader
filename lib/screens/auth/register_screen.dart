@@ -20,14 +20,6 @@ class RegisterScreen extends StatefulWidget {
   State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-String? checkEmpty(String? value, String whenEmpty) {
-  value = value!.trim();
-  if (value.isEmpty) {
-    return whenEmpty;
-  }
-  return null;
-}
-
 class _RegisterScreenState extends State<RegisterScreen> {
   final registerFormKey = GlobalKey<FormState>();
 

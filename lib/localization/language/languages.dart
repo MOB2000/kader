@@ -11,7 +11,6 @@ abstract class Languages {
   String get kHome;
   String get login;
   String get register;
-
   String get name;
   String get email;
   String get password;
@@ -21,7 +20,6 @@ abstract class Languages {
   String get gender;
   String get male;
   String get female;
-
   String get posts;
   String get complaints;
   String get lastLogin;
@@ -44,6 +42,8 @@ abstract class Languages {
   String get profile;
   String get eVacation;
   String get manageDepartment;
+  String get manageDepartments;
+  String get departments;
   String get meetings;
   String get transitionsRequests;
   String get workingHours;

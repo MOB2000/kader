@@ -8,21 +8,24 @@ import 'package:kader/localization/app_localizations_delegate.dart';
 import 'package:kader/localization/language/languages.dart';
 import 'package:kader/localization/locale_constant.dart';
 import 'package:kader/providers/auth_provider.dart';
-import 'package:kader/providers/services_provider.dart';
+import 'package:kader/providers/complaints_provider.dart';
+import 'package:kader/providers/departments_provider.dart';
 import 'package:kader/screens/auth/login_screen.dart';
 import 'package:kader/screens/auth/register_screen.dart';
 import 'package:kader/screens/complaints_screen.dart';
+import 'package:kader/screens/create_department_screen.dart';
 import 'package:kader/screens/custody_screen.dart';
+import 'package:kader/screens/departments_screen.dart';
 import 'package:kader/screens/display_vacations_screen.dart';
 import 'package:kader/screens/e_vacation_screen.dart';
 import 'package:kader/screens/home_screen.dart';
+import 'package:kader/screens/meetings_screen.dart';
 import 'package:kader/screens/pending_requests_screen.dart';
 import 'package:kader/screens/return_screen.dart';
 import 'package:kader/screens/vacation_request_screen.dart';
 import 'package:kader/screens/vacations_balance_screen.dart';
 import 'package:kader/screens/working_hours_screen.dart';
 import 'package:kader/services/connectivity.dart';
-import 'package:kader/services/db.dart';
 import 'package:kader/services/shared_preferences_helper.dart';
 import 'package:provider/provider.dart';
 
@@ -31,7 +34,6 @@ Future<void> main() async {
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
   await SharedPreferencesHelper.instance.init();
-  await DB.instance.init();
   Connection.instance.listen();
 
   await Firebase.initializeApp();
@@ -41,6 +43,7 @@ Future<void> main() async {
   // TODO: check internet connection
   // TODO: extract strings
   // TODO: group files in sub folders
+  // TODO:
   // TODO:
   runApp(const Kader());
 
@@ -81,7 +84,8 @@ class _KaderState extends State<Kader> {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => AuthProvider()),
-        ChangeNotifierProvider(create: (context) => ServicesProvider()),
+        ChangeNotifierProvider(create: (context) => ComplaintsProvider()),
+        ChangeNotifierProvider(create: (context) => DepartmentsProvider()),
       ],
       builder: (context, child) {
         return MaterialApp(
@@ -117,8 +121,12 @@ class _KaderState extends State<Kader> {
             RegisterScreen.routeName: (context) => const RegisterScreen(),
             HomeScreen.routeName: (context) => const HomeScreen(),
             ComplaintsScreen.routeName: (context) => const ComplaintsScreen(),
+            MeetingsScreen.routeName: (context) => const MeetingsScreen(),
             EVacationScreen.routeName: (context) => const EVacationScreen(),
             ReturnScreen.routeName: (context) => const ReturnScreen(),
+            DepartmentsScreen.routeName: (context) => const DepartmentsScreen(),
+            CreateDepartmentScreen.routeName: (context) =>
+                const CreateDepartmentScreen(),
             VacationRequestScreen.routeName: (context) =>
                 const VacationRequestScreen(),
             PendingRequestsScreen.routeName: (context) =>

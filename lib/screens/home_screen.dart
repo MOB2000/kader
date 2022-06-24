@@ -3,7 +3,9 @@ import 'package:kader/constants/images.dart';
 import 'package:kader/localization/language/languages.dart';
 import 'package:kader/screens/complaints_screen.dart';
 import 'package:kader/screens/custody_screen.dart';
+import 'package:kader/screens/departments_screen.dart';
 import 'package:kader/screens/e_vacation_screen.dart';
+import 'package:kader/screens/meetings_screen.dart';
 import 'package:kader/screens/working_hours_screen.dart';
 import 'package:kader/widgets/custom_drawer.dart';
 import 'package:kader/widgets/service_widget.dart';
@@ -25,19 +27,14 @@ class HomeScreen extends StatelessWidget {
       body: ServicesWidget(
         children: <ServiceWidget>[
           ServiceWidget(
-            name: languages.manageDepartment,
+            name: languages.manageDepartments,
             image: Images.eVacation,
-            routeName: EVacationScreen.routeName,
+            routeName: DepartmentsScreen.routeName,
           ),
           ServiceWidget(
             name: languages.meetings,
             image: Images.eVacation,
-            routeName: EVacationScreen.routeName,
-          ),
-          ServiceWidget(
-            name: languages.transitionsRequests,
-            image: Images.eVacation,
-            routeName: EVacationScreen.routeName,
+            routeName: MeetingsScreen.routeName,
           ),
           ServiceWidget(
             name: languages.eVacation,

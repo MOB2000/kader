@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kader/localization/language/languages.dart';
 import 'package:kader/models/complaint.dart';
-import 'package:kader/providers/services_provider.dart';
+import 'package:kader/providers/complaints_provider.dart';
 import 'package:kader/widgets/complaint_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -13,7 +13,7 @@ class ComplaintsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final languages = Languages.of(context);
-    final servicesProvider = Provider.of<ServicesProvider>(context);
+    final servicesProvider = Provider.of<ComplaintsProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(languages.complaints),

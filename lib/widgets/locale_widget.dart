@@ -29,6 +29,7 @@ class _LocaleWidgetState extends State<LocaleWidget> {
           setState(() {
             languageData = language!;
           });
+
           await changeLanguage(context, languageData);
         },
         value: languageData,

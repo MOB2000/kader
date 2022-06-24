@@ -12,6 +12,17 @@ class CustomUser {
   final Gender gender;
   final UserType type;
 
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        other is CustomUser &&
+            runtimeType == other.runtimeType &&
+            id == other.id;
+  }
+
+  @override
+  int get hashCode => id.hashCode;
+
   CustomUser({
     required this.id,
     required this.name,

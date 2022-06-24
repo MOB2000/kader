@@ -117,6 +117,11 @@ class LanguageEn extends Languages {
   String get password => 'password';
 
   @override
+  String get manageDepartments => 'Manage Departments';
+
+  @override
+  String get departments => 'departments';
+  @override
   String get phoneNumber => 'phoneNumber';
   @override
   String get meetings => 'meetings';

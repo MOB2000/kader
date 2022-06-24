@@ -146,6 +146,12 @@ class LanguageAr extends Languages {
   String get manageDepartment => 'إدارة القسم';
 
   @override
+  String get manageDepartments => 'إدارة الأقسام';
+
+  @override
+  String get departments => 'الأقسام';
+
+  @override
   String get meetings => 'الاجتماعات';
   @override
   String get transitionsRequests => 'طلبات النقل';

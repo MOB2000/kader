@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:kader/constants/keys.dart';
+import 'package:kader/models/attendance.dart';
 import 'package:kader/models/complaint.dart';
 import 'package:kader/models/custom_user.dart';
 import 'package:kader/models/department.dart';
+import 'package:kader/models/vacation_request.dart';
 
 class FirestoreHelper {
   FirestoreHelper._();
@@ -120,9 +122,9 @@ class FirestoreHelper {
     List<CustomUser> employees,
     Department department,
   ) async {
-    _firebaseFirestore
+    await _firebaseFirestore
         .collection('employees_departments')
-        .where('department_id')
+        .where('department_id', isEqualTo: department.id)
         .get()
         .then((value) async {
       final ids = value.docs.map((element) {
@@ -141,6 +143,41 @@ class FirestoreHelper {
         'department_id': department.id,
       });
     });
+  }
+
+  Future<List<VacationRequest>> getEmployeeVacations(CustomUser user) async {
+    return await _firebaseFirestore
+        .collection('vacations_requests')
+        .where('employeeId', isEqualTo: user.id)
+        .get()
+        .then((value) =>
+            value.docs.map((e) => VacationRequest.fromMap(e.data())).toList());
+  }
+
+  Future<List<VacationRequest>> getDepartmentVacations(
+      String departmentId) async {
+    return await _firebaseFirestore
+        .collection('vacations_requests')
+        .where('departmentId', isEqualTo: departmentId)
+        .get()
+        .then((value) =>
+            value.docs.map((e) => VacationRequest.fromMap(e.data())).toList());
+  }
+
+  Future<void> addVacationRequest(VacationRequest vacationRequest) async {
+    vacationRequest.id = await _firebaseFirestore
+        .collection('vacations_requests')
+        .add(vacationRequest.toMap())
+        .then((value) => value.id);
+
+    await updateVacation(vacationRequest);
+  }
+
+  Future<void> updateVacation(VacationRequest vacationRequest) async {
+    await _firebaseFirestore
+        .collection('vacations_requests')
+        .doc(vacationRequest.id)
+        .set(vacationRequest.toMap());
   }
 
   Future<void> removeEmployeeFromDepartment(
@@ -176,5 +213,67 @@ class FirestoreHelper {
           (value) =>
               value.docs.map((e) => CustomUser.fromMap(e.data())).toList(),
         );
+  }
+
+  Future<String> getDepartmentId(CustomUser manager) async {
+    final id = await _firebaseFirestore
+        .collection('departments')
+        .where('manager_id', isEqualTo: manager.id)
+        .get()
+        .then((value) => value.docs.first.data()['id']);
+    return id;
+  }
+
+  Future<List<Attendance>> getEmployeeAttendanceHistory(
+      CustomUser employee) async {
+    return await _firebaseFirestore
+        .collection('attendance')
+        .where('employeeId', isEqualTo: employee.id)
+        .get()
+        .then(
+          (value) =>
+              value.docs.map((e) => Attendance.fromMap(e.data())).toList(),
+        );
+  }
+
+  Future<void> updateAttendance(Attendance attendance) async {
+    final exists = attendance.id != null;
+
+    if (exists) {
+      await _firebaseFirestore
+          .collection('attendance')
+          .doc(attendance.id)
+          .set(attendance.toMap());
+    } else {
+      attendance.id = await _firebaseFirestore
+          .collection('attendance')
+          .add(attendance.toMap())
+          .then((value) => value.id);
+    }
+  }
+
+  Future<Attendance?> checkSavedAttendance(CustomUser user) async {
+    Attendance? attendance = await _firebaseFirestore
+        .collection('attendance')
+        .where('employeeId', isEqualTo: user.id)
+        .get()
+        .then(
+      (value) {
+        if (value.docs.isEmpty) {
+          return null;
+        }
+        final today = value.docs.where((element) =>
+            DateTime.parse(element['date']).day == DateTime.now().day);
+
+        print(DateTime.now().day);
+        if (today.isEmpty) {
+          return null;
+        }
+
+        return Attendance.fromMap(today.first.data());
+      },
+    );
+
+    return attendance;
   }
 }

@@ -59,28 +59,13 @@ class LanguageAr extends Languages {
   String get custody => 'العهدة';
 
   @override
-  String get eVacation => 'الإجازة الالكترونية';
+  String get vacations => 'الإجازات ';
 
   @override
-  String get workingHours => 'الدوام';
-
-  @override
-  String get vacationRequest => 'التقدم لطلب إجازة';
-
-  @override
-  String get pendingRequests => 'طلبات في الانتظار';
-
-  @override
-  String get returnAcknowledgment => 'إقرار العودة';
+  String get attendance => 'الحضور';
 
   @override
   String get kDisplayVacations => 'عرض الإجازات';
-
-  @override
-  String get digitsOnlyAllowed => 'ادخل قيمة رقمية';
-
-  @override
-  String get enterVacationDaysNumber => 'ادخل عدد أيام الإجازة';
 
   @override
   String get requestVacation => 'طلب الإجازة';
@@ -111,9 +96,6 @@ class LanguageAr extends Languages {
 
   @override
   String get close => 'إغلاق';
-
-  @override
-  String get vacationsBalance => 'رصيد الإجازات';
 
   @override
   String get email => 'الايميل';
@@ -153,6 +135,7 @@ class LanguageAr extends Languages {
 
   @override
   String get meetings => 'الاجتماعات';
+
   @override
   String get transitionsRequests => 'طلبات النقل';
 }

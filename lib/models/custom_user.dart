@@ -1,5 +1,4 @@
 import 'package:kader/constants/keys.dart';
-import 'package:kader/models/gender.dart';
 import 'package:kader/models/user_type.dart';
 
 class CustomUser {
@@ -9,7 +8,6 @@ class CustomUser {
   final String phoneNumber;
   final String idNumber;
   final String photoUrl;
-  final Gender gender;
   final UserType type;
 
   @override
@@ -30,7 +28,6 @@ class CustomUser {
     required this.phoneNumber,
     required this.idNumber,
     required this.photoUrl,
-    required this.gender,
     required this.type,
   });
 
@@ -41,7 +38,6 @@ class CustomUser {
         phoneNumber = map[Keys.phoneNumber],
         idNumber = map[Keys.idNumber],
         photoUrl = map[Keys.photoUrl],
-        gender = Gender.fromString(map[Keys.gender]),
         type = UserType.fromString(map[Keys.type]);
 
   Map<String, dynamic> toMap() {
@@ -52,7 +48,6 @@ class CustomUser {
       Keys.phoneNumber: phoneNumber,
       Keys.idNumber: idNumber,
       Keys.photoUrl: photoUrl,
-      Keys.gender: gender.toString(),
       Keys.type: type.toString(),
     };
   }
@@ -64,7 +59,6 @@ class CustomUser {
     String? phoneNumber,
     String? idNumber,
     String? photoUrl,
-    Gender? gender,
     UserType? type,
   }) {
     return CustomUser(
@@ -75,7 +69,17 @@ class CustomUser {
       photoUrl: photoUrl ?? this.photoUrl,
       name: name ?? this.name,
       email: email ?? this.email,
-      gender: gender ?? this.gender,
     );
   }
+
+  CustomUser.empty()
+      : this(
+          id: '',
+          type: UserType.employee,
+          phoneNumber: '',
+          idNumber: '',
+          photoUrl: '',
+          name: '',
+          email: '',
+        );
 }

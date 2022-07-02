@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:kader/localization/language/languages.dart';
-import 'package:kader/models/gender.dart';
 import 'package:kader/providers/auth_provider.dart';
 import 'package:kader/screens/auth/login_screen.dart';
 import 'package:kader/screens/home_screen.dart';
@@ -61,6 +60,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   }
                 },
               ),
+              const SizedBox(height: 8),
               TextFormField(
                 decoration: InputDecoration(
                   labelText: languages.name,
@@ -71,6 +71,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   authProvider.user = authProvider.user.copyWith(name: value);
                 },
               ),
+              const SizedBox(height: 8),
               TextFormField(
                 decoration: InputDecoration(
                   labelText: languages.email,
@@ -81,16 +82,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   authProvider.user = authProvider.user.copyWith(email: value);
                 },
               ),
+              const SizedBox(height: 8),
               TextFormField(
                 decoration: InputDecoration(
                   labelText: languages.password,
                 ),
+                obscureText: true,
                 validator: (value) => checkEmpty(value, 'ادخل كلمة المرور'),
                 onSaved: (value) {
                   value = value!.trim();
                   password = value;
                 },
               ),
+              const SizedBox(height: 8),
               TextFormField(
                 decoration: InputDecoration(
                   labelText: languages.phoneNumber,
@@ -102,6 +106,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       authProvider.user.copyWith(phoneNumber: value);
                 },
               ),
+              const SizedBox(height: 8),
               TextFormField(
                 decoration: InputDecoration(
                   labelText: languages.idNumber,
@@ -113,37 +118,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       authProvider.user.copyWith(idNumber: value);
                 },
               ),
-              Row(
-                children: <Widget>[
-                  Text(languages.gender),
-                  Expanded(
-                    child: RadioListTile<Gender>(
-                      title: Text(languages.male),
-                      value: Gender.male,
-                      groupValue: authProvider.user.gender,
-                      onChanged: (value) {
-                        setState(() {
-                          authProvider.user =
-                              authProvider.user.copyWith(gender: value);
-                        });
-                      },
-                    ),
-                  ),
-                  Expanded(
-                    child: RadioListTile<Gender>(
-                      value: Gender.female,
-                      groupValue: authProvider.user.gender,
-                      onChanged: (value) {
-                        setState(() {
-                          authProvider.user =
-                              authProvider.user.copyWith(gender: value);
-                        });
-                      },
-                      title: Text(languages.female),
-                    ),
-                  ),
-                ],
-              ),
+              const SizedBox(height: 8),
               const Spacer(),
               TextButton(
                 child: Text(languages.register),

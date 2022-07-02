@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:kader/constants/images.dart';
 import 'package:kader/localization/language/languages.dart';
+import 'package:kader/screens/attendance_screen.dart';
 import 'package:kader/screens/complaints_screen.dart';
 import 'package:kader/screens/custody_screen.dart';
 import 'package:kader/screens/departments_screen.dart';
-import 'package:kader/screens/e_vacation_screen.dart';
 import 'package:kader/screens/meetings_screen.dart';
-import 'package:kader/screens/working_hours_screen.dart';
+import 'package:kader/screens/vacations_screen.dart';
 import 'package:kader/widgets/custom_drawer.dart';
 import 'package:kader/widgets/service_widget.dart';
 import 'package:kader/widgets/services_widget.dart';
@@ -37,14 +37,14 @@ class HomeScreen extends StatelessWidget {
             routeName: MeetingsScreen.routeName,
           ),
           ServiceWidget(
-            name: languages.eVacation,
+            name: languages.vacations,
             image: Images.eVacation,
-            routeName: EVacationScreen.routeName,
+            routeName: VacationsScreen.routeName,
           ),
           ServiceWidget(
-            name: languages.workingHours,
-            image: Images.workingHours,
-            routeName: WorkingHoursScreen.routeName,
+            name: languages.attendance,
+            image: Images.attendance,
+            routeName: AttendanceScreen.routeName,
           ),
           ServiceWidget(
             name: languages.custody,

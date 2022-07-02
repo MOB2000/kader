@@ -7,25 +7,23 @@ import 'package:kader/constants/colors.dart';
 import 'package:kader/localization/app_localizations_delegate.dart';
 import 'package:kader/localization/language/languages.dart';
 import 'package:kader/localization/locale_constant.dart';
+import 'package:kader/providers/attendance_provider.dart';
 import 'package:kader/providers/auth_provider.dart';
 import 'package:kader/providers/complaints_provider.dart';
 import 'package:kader/providers/departments_provider.dart';
+import 'package:kader/providers/vacations_provider.dart';
+import 'package:kader/screens/attendance_history_screen.dart';
+import 'package:kader/screens/attendance_screen.dart';
 import 'package:kader/screens/auth/login_screen.dart';
 import 'package:kader/screens/auth/register_screen.dart';
 import 'package:kader/screens/complaints_screen.dart';
 import 'package:kader/screens/create_department_screen.dart';
 import 'package:kader/screens/custody_screen.dart';
 import 'package:kader/screens/departments_screen.dart';
-import 'package:kader/screens/display_vacations_screen.dart';
-import 'package:kader/screens/e_vacation_screen.dart';
 import 'package:kader/screens/home_screen.dart';
 import 'package:kader/screens/meetings_screen.dart';
-import 'package:kader/screens/pending_requests_screen.dart';
-import 'package:kader/screens/return_screen.dart';
-import 'package:kader/screens/vacation_request_screen.dart';
-import 'package:kader/screens/vacations_balance_screen.dart';
-import 'package:kader/screens/working_hours_screen.dart';
-import 'package:kader/services/connectivity.dart';
+import 'package:kader/screens/vacations/vacation_request_screen.dart';
+import 'package:kader/screens/vacations_screen.dart';
 import 'package:kader/services/shared_preferences_helper.dart';
 import 'package:provider/provider.dart';
 
@@ -34,13 +32,9 @@ Future<void> main() async {
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
   await SharedPreferencesHelper.instance.init();
-  Connection.instance.listen();
 
   await Firebase.initializeApp();
 
-  // TODO: remove unused packages, images and classes
-  // TODO: check exceptions
-  // TODO: check internet connection
   // TODO: extract strings
   // TODO: group files in sub folders
   // TODO:
@@ -86,6 +80,8 @@ class _KaderState extends State<Kader> {
         ChangeNotifierProvider(create: (context) => AuthProvider()),
         ChangeNotifierProvider(create: (context) => ComplaintsProvider()),
         ChangeNotifierProvider(create: (context) => DepartmentsProvider()),
+        ChangeNotifierProvider(create: (context) => VacationsProvider()),
+        ChangeNotifierProvider(create: (context) => AttendanceProvider()),
       ],
       builder: (context, child) {
         return MaterialApp(
@@ -120,24 +116,18 @@ class _KaderState extends State<Kader> {
             LoginScreen.routeName: (context) => const LoginScreen(),
             RegisterScreen.routeName: (context) => const RegisterScreen(),
             HomeScreen.routeName: (context) => const HomeScreen(),
+            VacationsScreen.routeName: (context) => VacationsScreen(),
+            VacationRequestScreen.routeName: (context) =>
+                const VacationRequestScreen(),
             ComplaintsScreen.routeName: (context) => const ComplaintsScreen(),
+            AttendanceScreen.routeName: (context) => AttendanceScreen(),
+            AttendanceHistoryScreen.routeName: (context) =>
+                const AttendanceHistoryScreen(),
             MeetingsScreen.routeName: (context) => const MeetingsScreen(),
-            EVacationScreen.routeName: (context) => const EVacationScreen(),
-            ReturnScreen.routeName: (context) => const ReturnScreen(),
             DepartmentsScreen.routeName: (context) => const DepartmentsScreen(),
             CreateDepartmentScreen.routeName: (context) =>
                 const CreateDepartmentScreen(),
-            VacationRequestScreen.routeName: (context) =>
-                const VacationRequestScreen(),
-            PendingRequestsScreen.routeName: (context) =>
-                const PendingRequestsScreen(),
-            DisplayVacationsScreen.routeName: (context) =>
-                const DisplayVacationsScreen(),
-            WorkingHoursScreen.routeName: (context) =>
-                const WorkingHoursScreen(),
             CustodyScreen.routeName: (context) => const CustodyScreen(),
-            VacationsBalanceScreen.routeName: (context) =>
-                const VacationsBalanceScreen(),
           },
           locale: _locale,
           supportedLocales: languageList.map((e) => e.toLocale),

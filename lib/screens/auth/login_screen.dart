@@ -23,12 +23,37 @@ class _LoginScreenState extends State<LoginScreen> {
 
   String password = '';
 
+  final _passwordFocusNode = FocusNode();
+
+  Future<void> login() async {
+    final authProvider = Provider.of<AuthProvider>(
+      context,
+      listen: false,
+    );
+
+    if (_loginFormKey.currentState!.validate()) {
+      _loginFormKey.currentState!.save();
+      bool isLogged = false;
+      await showDialogWaiting(context, () async {
+        try {
+          await authProvider.login(email, password);
+          isLogged = true;
+        } catch (e) {
+          Fluttertoast.showToast(msg: e.toString());
+        }
+      });
+      if (!isLogged) return;
+      if (!mounted) return;
+      Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final languages = Languages.of(context);
-    final authProvider = Provider.of<AuthProvider>(context);
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text(languages.login),
       ),
@@ -39,6 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
+              const Spacer(),
               TextFormField(
                 decoration: const InputDecoration(
                   labelText: 'الايميل',
@@ -48,40 +74,32 @@ class _LoginScreenState extends State<LoginScreen> {
                   value = value!.trim();
                   email = value;
                 },
+                onFieldSubmitted: (value) {
+                  _passwordFocusNode.requestFocus();
+                },
               ),
               const SizedBox(height: 12),
               TextFormField(
+                focusNode: _passwordFocusNode,
                 decoration: const InputDecoration(
                   labelText: 'كلمة المرور',
                 ),
+                onFieldSubmitted: (value) async {
+                  await login();
+                },
+                obscureText: true,
                 validator: (value) => checkEmpty(value, 'ادخل كلمة المرور'),
                 onSaved: (value) {
                   value = value!.trim();
                   password = value;
                 },
               ),
-              const SizedBox(height: 24),
+              const Spacer(),
               TextButton(
+                onPressed: login,
                 child: Text(languages.login),
-                onPressed: () async {
-                  if (_loginFormKey.currentState!.validate()) {
-                    _loginFormKey.currentState!.save();
-                    bool isLogged = false;
-                    await showDialogWaiting(context, () async {
-                      try {
-                        await authProvider.login(email, password);
-                        isLogged = true;
-                      } catch (e) {
-                        Fluttertoast.showToast(msg: e.toString());
-                      }
-                    });
-                    if (!isLogged) return;
-                    if (!mounted) return;
-                    Navigator.of(context)
-                        .pushReplacementNamed(HomeScreen.routeName);
-                  }
-                },
               ),
+              const Spacer(),
               TextButton(
                 child: Text(languages.register),
                 onPressed: () {

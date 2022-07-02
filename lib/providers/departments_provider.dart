@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kader/models/custom_user.dart';
 import 'package:kader/models/department.dart';
-import 'package:kader/services/firestor_helper.dart';
+import 'package:kader/services/firestore_helper.dart';
 
 class DepartmentsProvider with ChangeNotifier {
   final _firestore = FirestoreHelper.instance;
@@ -17,6 +17,10 @@ class DepartmentsProvider with ChangeNotifier {
     );
     await _firestore.createDepartment(department);
     notifyListeners();
+  }
+
+  Future<String> getDepartment(CustomUser manager) {
+    return _firestore.getDepartmentId(manager);
   }
 
   Future<void> deleteDepartment(Department department) async {

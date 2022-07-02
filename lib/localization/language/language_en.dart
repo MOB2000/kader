@@ -3,64 +3,72 @@ import 'languages.dart';
 class LanguageEn extends Languages {
   @override
   String get languageCode => 'en';
+
   @override
   String get kader => 'Kader';
+
   @override
   String get appLanguage => "Language";
+
   @override
   String get kHome => 'Home';
+
   @override
   String get login => 'Login';
+
   @override
   String get register => 'register';
+
   @override
   String get posts => 'Posts';
+
   @override
   String get complaints => 'Complaints';
+
   @override
   String get lastLogin => 'Last Login';
+
   @override
   String get logout => 'Logout';
+
   @override
   String get profile => 'profile';
+
   @override
   String get search => 'Search';
+
   @override
   String get manageDepartment => 'Manage Department';
+
   @override
   String get errorOccurred => 'Error Occurred';
+
   @override
   String get noResults => 'No Results';
+
   @override
   String get enterValue => 'Enter Value';
+
   @override
   String get mohStaff => 'MOH Staff';
+
   @override
   String get clickHereToGoToThePostPage => 'To go to the news page, click here';
+
   @override
   String get sharePost => 'Share Post';
+
   @override
   String get custody => 'Custody';
 
   @override
-  String get eVacation => 'E-Vacation';
-  @override
-  String get workingHours => 'Working Hours';
+  String get vacations => 'Vacations';
 
   @override
-  String get vacationRequest => 'Vacation Request';
-  @override
-  String get pendingRequests => 'Pending Requests';
-  @override
-  String get returnAcknowledgment => 'Return';
+  String get attendance => 'Attendance';
+
   @override
   String get kDisplayVacations => 'Display Vacations';
-
-  @override
-  String get digitsOnlyAllowed => 'digits only allowed';
-
-  @override
-  String get enterVacationDaysNumber => 'enter vacation days number';
 
   @override
   String get requestVacation => 'request vacation';
@@ -93,9 +101,6 @@ class LanguageEn extends Languages {
   String get close => 'close';
 
   @override
-  String get vacationsBalance => 'vacations balance';
-
-  @override
   String get email => 'email';
 
   @override
@@ -121,10 +126,13 @@ class LanguageEn extends Languages {
 
   @override
   String get departments => 'departments';
+
   @override
   String get phoneNumber => 'phoneNumber';
+
   @override
   String get meetings => 'meetings';
+
   @override
   String get photo => 'photo';
 

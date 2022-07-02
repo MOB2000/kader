@@ -20,4 +20,7 @@ class StringsHelper {
 
   static String getDayDate(DateTime dateTime) =>
       DateFormat('EEEE d-MMM-yyyy', _locale).format(dateTime);
+
+  static String getHour(DateTime dateTime) =>
+      DateFormat('hh:mm', _locale).format(dateTime);
 }

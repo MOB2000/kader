@@ -18,11 +18,8 @@ dependencies:
   firebase_storage: ^10.2.17
   image_picker: ^0.8.5+3
   cached_network_image: ^3.2.1
-  http: ^0.13.4
   intl: ^0.17.0
-  infinite_scroll_pagination: ^3.2.0
   fluttertoast: ^8.0.9
-  connectivity_plus: ^2.3.3
   shared_preferences: ^2.0.15
   google_fonts: ^3.0.1
   flutter_native_splash: ^2.2.3

@@ -1,23 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:kader/models/custom_user.dart';
-import 'package:kader/models/gender.dart';
-import 'package:kader/models/user_type.dart';
+import 'package:kader/services/shared_preferences_helper.dart';
 
-class AuthHelper {
+class AuthHelper with ChangeNotifier {
   AuthHelper._();
 
   static final AuthHelper instance = AuthHelper._();
 
-  late CustomUser currentUser = CustomUser(
-    id: '',
-    type: UserType.employee,
-    phoneNumber: '',
-    idNumber: '',
-    photoUrl: '',
-    name: '',
-    email: '',
-    gender: Gender.male,
-  );
+  late CustomUser currentUser = CustomUser.empty();
 
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
@@ -31,6 +22,7 @@ class AuthHelper {
 
   Future<void> logout() async {
     await _firebaseAuth.signOut();
+    await SharedPreferencesHelper.instance.setIsLogged(false);
   }
 
   Future<String?> login(String email, String password) async {

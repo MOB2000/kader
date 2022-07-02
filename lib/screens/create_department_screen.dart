@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:kader/models/custom_user.dart';
-import 'package:kader/providers/auth_provider.dart';
 import 'package:kader/providers/departments_provider.dart';
 import 'package:kader/services/helpers.dart';
 import 'package:kader/widgets/select_manger_widget.dart';
@@ -24,7 +23,6 @@ class _CreateDepartmentScreenState extends State<CreateDepartmentScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final authProvider = Provider.of<AuthProvider>(context);
     final departmentsProvider = Provider.of<DepartmentsProvider>(context);
 
     return Scaffold(

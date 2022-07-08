@@ -20,7 +20,7 @@ class AttendanceHistoryScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('سحل الحضور'),
+        title: Text(languages.attendanceHistory),
       ),
       body: FutureBuilder<List<Attendance>>(
         future: provider.getEmployeeAttendanceHistory(user),
@@ -28,7 +28,7 @@ class AttendanceHistoryScreen extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.done) {
             final history = snapshot.data!;
             if (history.isEmpty) {
-              return const Center(child: Text('لا يوجد بيانات لعرضها'));
+              return Center(child: Text(languages.noData));
             }
             return ListView.builder(
               itemCount: history.length,

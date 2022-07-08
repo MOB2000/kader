@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kader/localization/language/languages.dart';
 import 'package:kader/models/custom_user.dart';
 import 'package:kader/models/department.dart';
 import 'package:kader/providers/departments_provider.dart';
@@ -40,11 +41,13 @@ class _DepartmentDetailsScreenState extends State<DepartmentDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final languages = Languages.of(context);
+
     final departmentsProvider = Provider.of<DepartmentsProvider>(context);
     getDepartmentEmployees(departmentsProvider);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('تفاصيل القسم'),
+        title: Text(languages.departmentDetails),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8),
@@ -64,7 +67,7 @@ class _DepartmentDetailsScreenState extends State<DepartmentDetailsScreen> {
                 );
               },
             ),
-            const Text('الموظفين'),
+            Text(languages.employees),
             Expanded(
               child: FutureBuilder<List<CustomUser>>(
                   future: departmentsProvider
@@ -73,8 +76,8 @@ class _DepartmentDetailsScreenState extends State<DepartmentDetailsScreen> {
                     if (snapshot.connectionState == ConnectionState.done) {
                       final employees = snapshot.data!;
                       if (employees.isEmpty) {
-                        return const Center(
-                          child: Text('لا يوجد موظفين داخل القسم'),
+                        return Center(
+                          child: Text(languages.noEmployeesInTheDepartment),
                         );
                       }
                       return ListView.builder(
@@ -84,7 +87,7 @@ class _DepartmentDetailsScreenState extends State<DepartmentDetailsScreen> {
                           return ListTile(
                             title: Text(employee.name),
                             trailing: TextButton(
-                              child: const Text('تفاصيل'),
+                              child: Text(languages.details),
                               onPressed: () async {},
                             ),
                           );
@@ -95,7 +98,7 @@ class _DepartmentDetailsScreenState extends State<DepartmentDetailsScreen> {
                   }),
             ),
             TextButton(
-              child: const Text('إضافة/إزالة موظفين'),
+              child: Text(languages.addRemoveEmployees),
               onPressed: () async {
                 final allEmployees = await departmentsProvider.employees;
                 final employeesToAdd = await departmentsProvider
@@ -132,13 +135,13 @@ class _DepartmentDetailsScreenState extends State<DepartmentDetailsScreen> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: <Widget>[
                             TextButton(
-                              child: const Text('تم'),
+                              child: Text(languages.done),
                               onPressed: () {
                                 Navigator.of(context).pop(true);
                               },
                             ),
                             TextButton(
-                              child: const Text('إلغاء'),
+                              child: Text(languages.cancel),
                               onPressed: () {
                                 Navigator.of(context).pop(false);
                               },

@@ -30,11 +30,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final _phoneNumberFocusNode = FocusNode();
   final _idNumberFocusNode = FocusNode();
 
-  Future<void> submitForm() async {
+  Future<void> submitForm(Languages languages) async {
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
 
     if (imageFile == null) {
-      Fluttertoast.showToast(msg: "يجب اختيار صورة");
+      Fluttertoast.showToast(msg: languages.mustPickAPicture);
       return;
     }
     if (registerFormKey.currentState!.validate()) {
@@ -83,7 +83,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                     const SizedBox(width: 12),
                     TextButton(
-                      child: const Text('اختر صورة'),
+                      child: Text(languages.pickPicture),
                       onPressed: () async {
                         final image =
                             await ImagePickerHelper.instance.pickImage();
@@ -102,7 +102,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   decoration: InputDecoration(
                     labelText: languages.name,
                   ),
-                  validator: (value) => checkEmpty(value, 'ادخل الاسم'),
+                  validator: (value) => checkEmpty(value, languages.enterValue),
                   onSaved: (value) {
                     value = value!.trim();
                     authProvider.user.name = value;
@@ -118,7 +118,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   focusNode: _emailFocusNode,
                   keyboardType: TextInputType.emailAddress,
-                  validator: (value) => checkEmpty(value, 'ادخل الايميل'),
+                  validator: (value) => checkEmpty(value, languages.enterValue),
                   onSaved: (value) {
                     value = value!.trim();
                     authProvider.user.email = value;
@@ -133,7 +133,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     labelText: languages.password,
                   ),
                   obscureText: true,
-                  validator: (value) => checkEmpty(value, 'ادخل كلمة المرور'),
+                  validator: (value) => checkEmpty(value, languages.enterValue),
                   focusNode: _passwordFocusNode,
                   onSaved: (value) {
                     value = value!.trim();
@@ -153,11 +153,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   validator: (value) {
                     value = value!.trim();
                     if (value.isEmpty) {
-                      return 'ادخل رقم الهوية';
+                      return languages.enterValue;
                     }
 
                     if (value.length != 10) {
-                      return 'رقم الجوال يجب أن يكون 10 أرقام';
+                      return languages.phoneNumberMustBeTen;
                     }
 
                     return null;
@@ -180,11 +180,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   validator: (value) {
                     value = value!.trim();
                     if (value.isEmpty) {
-                      return 'ادخل رقم الهوية';
+                      return languages.enterValue;
                     }
 
                     if (value.length != 10) {
-                      return 'رقم الهوية يجب أن يكون 10 أرقام';
+                      return languages.idNumberMustBeTen;
                     }
 
                     return null;
@@ -194,17 +194,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     authProvider.user.idNumber = value;
                   },
                   onFieldSubmitted: (value) async {
-                    await submitForm();
+                    await submitForm(languages);
                   },
                 ),
                 const SizedBox(height: 12),
                 TextButton(
-                  onPressed: submitForm,
+                  onPressed: () => submitForm(languages),
                   child: Text(languages.register),
                 ),
                 const SizedBox(height: 48),
                 TextButton(
-                  child: const Text('لديك حساب؟ قم بتسجيل الدخول'),
+                  child: Text(languages.alreadyHaveAccountLogin),
                   onPressed: () {
                     Navigator.of(context)
                         .pushReplacementNamed(LoginScreen.routeName);

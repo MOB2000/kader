@@ -178,4 +178,85 @@ class LanguageAr extends Languages {
 
   @override
   String get noManagersFound => 'لا يوجد مدراء';
+
+  @override
+  String get absenceSaved => 'تم تسجيل الغياب';
+
+  @override
+  String get attendanceHistory => 'سجل الحضور';
+
+  @override
+  String get checkAbsence => 'تسجيل انصراف';
+
+  @override
+  String get checkAttendance => 'تسجيل حضور';
+
+  @override
+  String get checkLeaving => 'تسجيل انصراف';
+
+  @override
+  String get noData => 'لا يوجد بيانات لعرضها';
+
+  @override
+  String get showHistory => 'عرض السجل';
+
+  @override
+  String get addRemoveEmployees => 'إضافة/إزالة موظفين';
+
+  @override
+  String get alreadyHaveAccountLogin => 'لديك حساب؟ قم بتسجيل الدخول';
+
+  @override
+  String get cancel => 'إلغاء';
+
+  @override
+  String get cause => 'السبب';
+
+  @override
+  String get create => 'إنشاء';
+
+  @override
+  String get createDepartment => 'إنشاء قسم';
+
+  @override
+  String get departmentDetails => 'تفاصيل القسم';
+
+  @override
+  String get departmentName => 'اسم القسم';
+
+  @override
+  String get done => 'تم';
+
+  @override
+  String get duration => 'المدة الزمنية';
+
+  @override
+  String get employees => 'الموظفين';
+
+  @override
+  String get idNumberMustBeTen => 'رقم الهوية أن يكون 10 أرقام';
+
+  @override
+  String get mustChooseManager => 'يجب اختيار مدير';
+
+  @override
+  String get mustPickAPicture => 'يجب اختيار صورة';
+
+  @override
+  String get noEmployeesInTheDepartment => 'لا يوجد موظفين داخل القسم';
+
+  @override
+  String get phoneNumberMustBeTen => 'رقم الجوال أن يكون 10 أرقام';
+
+  @override
+  String get pickDuration => 'اختر المدة';
+
+  @override
+  String get pickPicture => 'اختر صورة';
+
+  @override
+  String get sendRequest => 'إرسال الطلب';
+
+  @override
+  String get staffManagement => 'إدارة الموظفين';
 }

@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:kader/constants/keys.dart';
+import 'package:kader/localization/language/languages.dart';
 import 'package:kader/models/vacation_request.dart';
 import 'package:kader/providers/auth_provider.dart';
 import 'package:kader/providers/vacations_provider.dart';
@@ -35,12 +37,13 @@ class _RequestVacationScreenState extends State<RequestVacationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final languages = Languages.of(context);
     final user = Provider.of<AuthProvider>(context).user;
     final vacationsProvider = Provider.of<VacationsProvider>(context);
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('طلب إجازة'),
+        title: Text(languages.requestVacation),
       ),
       body: Form(
         key: _vacationRequestFormKey,
@@ -49,7 +52,7 @@ class _RequestVacationScreenState extends State<RequestVacationScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              const Text('المدة الزمنية'),
+              Text(languages.duration),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
@@ -59,7 +62,7 @@ class _RequestVacationScreenState extends State<RequestVacationScreen> {
                   Text(StringsHelper.getDate(dateTimeRange.end)),
                   const SizedBox(width: 12),
                   TextButton(
-                    child: const Text('اختر المدة'),
+                    child: Text(languages.pickDuration),
                     onPressed: () async {
                       final pickedDate = await showDateRangePicker(
                         context: context,
@@ -78,30 +81,29 @@ class _RequestVacationScreenState extends State<RequestVacationScreen> {
                 ],
               ),
               TextFormField(
-                validator: (value) =>
-                    checkEmpty(value, 'يجب إدخال سبب الإجازة '),
+                validator: (value) => checkEmpty(value, languages.enterValue),
                 onSaved: (value) {
                   value = value!.trim();
                   cause = value;
                 },
-                decoration: const InputDecoration(
-                  labelText: 'السبب',
+                decoration: InputDecoration(
+                  labelText: languages.cause,
                 ),
               ),
               const Spacer(),
               Center(
                 child: TextButton(
-                  child: const Text('إرسال الطلب'),
+                  child: Text(languages.sendRequest),
                   onPressed: () async {
                     if (_vacationRequestFormKey.currentState!.validate()) {
                       _vacationRequestFormKey.currentState!.save();
 
                       final departmentId = await FirebaseFirestore.instance
-                          .collection('employees_departments')
-                          .where('emp_id', isEqualTo: user.id)
+                          .collection(Keys.employeesDepartments)
+                          .where(Keys.empId, isEqualTo: user.id)
                           .get()
                           .then((value) =>
-                              value.docs.first.data()['department_id']);
+                              value.docs.first.data()[Keys.department_id]);
 
                       final vacationRequest = VacationRequest(
                         departmentId: departmentId,

@@ -47,7 +47,7 @@ class VacationsScreen extends StatelessWidget {
                 if (snapshot.connectionState == ConnectionState.done) {
                   final requests = snapshot.data!;
                   if (requests.isEmpty) {
-                    return const Center(child: Text('لا يوجد طلبات إجازات'));
+                    return Center(child: Text(languages.noData));
                   }
                   return ListView.builder(
                     itemCount: requests.length,
@@ -65,8 +65,8 @@ class VacationsScreen extends StatelessWidget {
       floatingActionButton: user.isManager
           ? null
           : FloatingActionButton(
-              child: const Text(
-                'طلب إجازة',
+              child: Text(
+                languages.requestVacation,
                 textAlign: TextAlign.center,
               ),
               onPressed: () {

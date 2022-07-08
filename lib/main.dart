@@ -32,11 +32,9 @@ Future<void> main() async {
 
   await Firebase.initializeApp();
 
-  // TODO: extract strings locale and keys
-
-  // TODO: group files in sub folders
   // TODO: enums locale toString methods
   // TODO:
+
   runApp(const Kader());
 
   FlutterNativeSplash.remove();

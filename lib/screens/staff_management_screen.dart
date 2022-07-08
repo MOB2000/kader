@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kader/localization/language/languages.dart';
 import 'package:kader/models/custom_user.dart';
 import 'package:kader/providers/auth_provider.dart';
 import 'package:kader/widgets/loading_widget.dart';
@@ -13,10 +14,11 @@ class StaffManagementScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<AuthProvider>(context);
+    final languages = Languages.of(context);
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('إدارة الموظفين'),
+        title: Text(languages.staffManagement),
       ),
       body: FutureBuilder<List<CustomUser>>(
         future: provider.staff,

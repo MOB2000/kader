@@ -82,14 +82,14 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(height: 18),
               TextFormField(
                 focusNode: _passwordFocusNode,
-                decoration: const InputDecoration(
-                  labelText: 'كلمة المرور',
+                decoration: InputDecoration(
+                  labelText: languages.password,
                 ),
                 onFieldSubmitted: (value) async {
                   await login();
                 },
                 obscureText: true,
-                validator: (value) => checkEmpty(value, 'ادخل كلمة المرور'),
+                validator: (value) => checkEmpty(value, languages.enterValue),
                 onSaved: (value) {
                   value = value!.trim();
                   password = value;

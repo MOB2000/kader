@@ -40,12 +40,6 @@ class HomeScreen extends StatelessWidget {
               image: Images.eVacation,
               routeName: StaffManagementScreen.routeName,
             ),
-          // if (!user.isAdmin)
-          //   ServiceWidget(
-          //     name: languages.meetings,
-          //     image: Images.eVacation,
-          //     routeName: MeetingsScreen.routeName,
-          //   ),
           if (!user.isAdmin)
             ServiceWidget(
               name: languages.vacations,
@@ -58,16 +52,6 @@ class HomeScreen extends StatelessWidget {
               image: Images.attendance,
               routeName: AttendanceScreen.routeName,
             ),
-          // ServiceWidget(
-          //   name: languages.custody,
-          //   image: Images.custodyImage,
-          //   routeName: CustodyScreen.routeName,
-          // ),
-          // ServiceWidget(
-          //   name: languages.complaints,
-          //   image: Images.complaints,
-          //   routeName: ComplaintsScreen.routeName,
-          // ),
         ],
       ),
     );

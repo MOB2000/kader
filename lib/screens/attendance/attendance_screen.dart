@@ -16,7 +16,7 @@ class AttendanceScreen extends StatelessWidget {
 
   Attendance attendance = Attendance(
     id: DateTime.now().toIso8601String(),
-    employeeId: 'employeeId',
+    employeeId: '',
     date: DateTime.now(),
     attendanceStatus: AttendanceStatus.attendance,
   );
@@ -44,19 +44,19 @@ class AttendanceScreen extends StatelessWidget {
                 children: <Widget>[
                   const SizedBox(height: 12),
                   if (attendance.attendanceStatus == AttendanceStatus.absence)
-                    const Center(child: Text('تم تسجيل الغياب ')),
+                    Center(child: Text(languages.absenceSaved)),
                   if (attendance.attendanceStatus !=
                       AttendanceStatus.absence) ...[
                     Text(StringsHelper.getDay(attendance.date)),
                     Text(StringsHelper.getDate(attendance.date)),
                     Row(
                       children: <Widget>[
-                        const Text('الحضور'),
+                        Text(languages.attendance),
                         if (attendance.attendance != null)
                           Text(StringsHelper.getHour(attendance.attendance!)),
                         if (attendance.attendance == null)
                           TextButton(
-                            child: const Text('تسجيل حضور'),
+                            child: Text(languages.checkAttendance),
                             onPressed: () async {
                               attendance.attendanceStatus =
                                   AttendanceStatus.attendance;
@@ -69,12 +69,12 @@ class AttendanceScreen extends StatelessWidget {
                     ),
                     Row(
                       children: <Widget>[
-                        const Text('الانصراف'),
+                        Text(languages.leaving),
                         if (attendance.leaving != null)
                           Text(StringsHelper.getHour(attendance.leaving!)),
                         if (attendance.leaving == null)
                           TextButton(
-                            child: const Text('تسجيل انصراف'),
+                            child: Text(languages.checkLeaving),
                             onPressed: () async {
                               attendance.attendanceStatus =
                                   AttendanceStatus.attendance;
@@ -91,7 +91,7 @@ class AttendanceScreen extends StatelessWidget {
                       attendance.leaving == null)
                     if (attendance.attendanceStatus != AttendanceStatus.absence)
                       TextButton(
-                        child: const Text('تسجيل غياب'),
+                        child: Text(languages.checkAbsence),
                         onPressed: () async {
                           attendance.attendance = null;
                           attendance.leaving = null;
@@ -101,7 +101,7 @@ class AttendanceScreen extends StatelessWidget {
                         },
                       ),
                   TextButton(
-                    child: const Text('عرض السجل'),
+                    child: Text(languages.showHistory),
                     onPressed: () {
                       Navigator.of(context)
                           .pushNamed(AttendanceHistoryScreen.routeName);

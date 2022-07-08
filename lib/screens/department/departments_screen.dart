@@ -26,7 +26,7 @@ class DepartmentsScreen extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.done) {
             final departments = snapshot.data!;
             if (departments.isEmpty) {
-              return const Center(child: Text('لا يوجد أقسام'));
+              return Center(child: Text(languages.noData));
             }
 
             return ListView.builder(

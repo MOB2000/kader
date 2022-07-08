@@ -121,5 +121,59 @@ abstract class Languages {
 
   String get returnDate;
 
+  String get attendanceHistory;
+
+  String get noData;
+
+  String get absenceSaved;
+
+  String get checkAttendance;
+
+  String get checkLeaving;
+
+  String get checkAbsence;
+
+  String get showHistory;
+
   String get requestVacation;
+
+  String get staffManagement;
+
+  String get sendRequest;
+
+  String get cause;
+
+  String get pickDuration;
+
+  String get duration;
+
+  String get cancel;
+
+  String get done;
+
+  String get noEmployeesInTheDepartment;
+
+  String get addRemoveEmployees;
+
+  String get employees;
+
+  String get departmentDetails;
+
+  String get mustChooseManager;
+
+  String get create;
+
+  String get departmentName;
+
+  String get createDepartment;
+
+  String get mustPickAPicture;
+
+  String get pickPicture;
+
+  String get phoneNumberMustBeTen;
+
+  String get idNumberMustBeTen;
+
+  String get alreadyHaveAccountLogin;
 }

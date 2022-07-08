@@ -171,14 +171,92 @@ class LanguageEn extends Languages {
   String get reject => 'Reject';
 
   @override
-  // TODO: implement leaving
   String get leaving => 'leaving';
 
   @override
-  // TODO: implement manager
   String get manager => 'manager';
 
   @override
-  // TODO: implement noManagersFound
   String get noManagersFound => 'no manager found';
+
+  @override
+  String get absenceSaved => 'absence saved';
+
+  @override
+  String get attendanceHistory => 'attendance history';
+
+  @override
+  String get checkAbsence => 'check absence';
+
+  @override
+  String get checkAttendance => 'check attendance';
+
+  @override
+  String get checkLeaving => 'check leaving';
+
+  @override
+  String get noData => 'no data';
+
+  @override
+  String get showHistory => 'show history';
+
+  @override
+  String get addRemoveEmployees => 'add/remove employees';
+
+  @override
+  String get alreadyHaveAccountLogin => 'already have an account? Login';
+
+  @override
+  String get cancel => 'cancel';
+
+  @override
+  String get cause => 'cause';
+
+  @override
+  String get create => 'create';
+
+  @override
+  String get createDepartment => 'create department';
+
+  @override
+  String get departmentDetails => 'department details';
+
+  @override
+  String get departmentName => 'department name';
+
+  @override
+  String get done => 'done';
+
+  @override
+  String get duration => 'duration';
+
+  @override
+  String get employees => 'employees';
+
+  @override
+  String get idNumberMustBeTen => 'id number must be exactly 10 numbers';
+
+  @override
+  String get mustChooseManager => 'must choose a manager';
+
+  @override
+  String get mustPickAPicture => 'must pick a picture';
+
+  @override
+  String get noEmployeesInTheDepartment => 'no employees in the department';
+
+  @override
+  String get phoneNumberMustBeTen => 'phone number must be exactly 10 numbers';
+
+  @override
+  String get pickDuration => 'pick duration';
+
+  @override
+  String get pickPicture => 'pick picture';
+
+  @override
+  String get sendRequest => 'send request';
+
+  @override
+  String get staffManagement => 'staff management';
 }

@@ -1,3 +1,5 @@
+import 'package:kader/constants/keys.dart';
+
 enum RequestStatus {
   pending,
   accepted,
@@ -6,16 +8,16 @@ enum RequestStatus {
   @override
   String toString() {
     return this == pending
-        ? 'pending'
+        ? Keys.pending
         : this == accepted
-            ? 'accepted'
-            : 'rejected';
+            ? Keys.accepted
+            : Keys.rejected;
   }
 
   static RequestStatus fromString(String string) {
-    return string == 'pending'
+    return string == Keys.pending
         ? pending
-        : string == 'accepted'
+        : string == Keys.accepted
             ? accepted
             : rejected;
   }

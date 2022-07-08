@@ -7,16 +7,16 @@ import 'package:kader/services/helpers.dart';
 import 'package:kader/services/strings_helper.dart';
 import 'package:provider/provider.dart';
 
-class VacationRequestScreen extends StatefulWidget {
-  static const String routeName = 'VacationRequestScreen';
+class RequestVacationScreen extends StatefulWidget {
+  static const String routeName = 'RequestVacationScreen';
 
-  const VacationRequestScreen({Key? key}) : super(key: key);
+  const RequestVacationScreen({Key? key}) : super(key: key);
 
   @override
-  State<VacationRequestScreen> createState() => _VacationRequestScreenState();
+  State<RequestVacationScreen> createState() => _RequestVacationScreenState();
 }
 
-class _VacationRequestScreenState extends State<VacationRequestScreen> {
+class _RequestVacationScreenState extends State<RequestVacationScreen> {
   final _vacationRequestFormKey = GlobalKey<FormState>();
 
   String cause = '';
@@ -24,6 +24,12 @@ class _VacationRequestScreenState extends State<VacationRequestScreen> {
     start: DateTime.now(),
     end: DateTime.now().add(
       const Duration(days: 100),
+    ),
+  );
+  final initialDateTimeRange = DateTimeRange(
+    start: DateTime.now(),
+    end: DateTime.now().add(
+      const Duration(days: 1),
     ),
   );
 
@@ -57,7 +63,7 @@ class _VacationRequestScreenState extends State<VacationRequestScreen> {
                     onPressed: () async {
                       final pickedDate = await showDateRangePicker(
                         context: context,
-                        initialDateRange: dateTimeRange,
+                        initialDateRange: initialDateTimeRange,
                         firstDate: dateTimeRange.start,
                         lastDate: dateTimeRange.end,
                       );

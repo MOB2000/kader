@@ -33,21 +33,23 @@ class AuthProvider with ChangeNotifier {
   }
 
   Future<void> register(String email, String password, File imageFile) async {
-    final isIdExists = await _firestoreHelper.checkIdExists(user.idNumber);
-    if (isIdExists) {
-      throw Exception('رقم الهوية موجود');
-    }
-
     final photoUrl = await FirebaseStorageHelper.instance.uploadFile(imageFile);
-    user = user.copyWith(photoUrl: photoUrl);
+    user.photoUrl = photoUrl;
 
     final uid = await _authHelper.register(email, password);
     if (uid == null) {
       return;
     }
-    user = user.copyWith(id: uid);
+    user.id = uid;
     await _firestoreHelper.addUser(user);
     await saveUserLocal();
+  }
+
+  Future<List<CustomUser>> get staff async {
+    return [
+      ...await _firestoreHelper.managers,
+      ...await _firestoreHelper.employees,
+    ];
   }
 
   Future<List<CustomUser>> get managers async {
@@ -56,6 +58,11 @@ class AuthProvider with ChangeNotifier {
 
   Future<List<CustomUser>> get employees async {
     return _firestoreHelper.employees;
+  }
+
+  Future<void> updateUser(CustomUser user) async {
+    await _firestoreHelper.updateUser(user);
+    notifyListeners();
   }
 
   Future<void> saveUserLocal() async {

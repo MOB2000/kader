@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kader/localization/language/languages.dart';
 import 'package:kader/models/department.dart';
 import 'package:kader/providers/departments_provider.dart';
-import 'package:kader/screens/create_department_screen.dart';
+import 'package:kader/screens/department/create_department_screen.dart';
 import 'package:kader/widgets/department_widget.dart';
 import 'package:kader/widgets/loading_widget.dart';
 import 'package:provider/provider.dart';

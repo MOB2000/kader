@@ -11,7 +11,7 @@ class LanguageAr extends Languages {
   String get appLanguage => "لغة التطبيق";
 
   @override
-  String get kHome => 'الرئيسية';
+  String get home => 'الرئيسية';
 
   @override
   String get login => 'تسجيل الدخول';
@@ -138,4 +138,44 @@ class LanguageAr extends Languages {
 
   @override
   String get transitionsRequests => 'طلبات النقل';
+
+  @override
+  String get manageStaff => 'إدارة الموظفين';
+
+  @override
+  String get areYouSure => 'هل أنت متأكد';
+
+  @override
+  String get details => 'تفاصيل';
+
+  @override
+  String get no => 'لا';
+
+  @override
+  String get yes => 'نعم';
+
+  @override
+  String get accept => 'قبول';
+
+  @override
+  String get reject => 'رفض';
+
+  @override
+  String get downgrade => 'تقليل رتبة';
+
+  @override
+  String get promotion => 'ترقية';
+
+  @override
+  String get managerMustRemovedFromDepartment =>
+      'يجب إزالة المدير من منصبه قبل تقليل رتبته';
+
+  @override
+  String get leaving => 'الانصراف';
+
+  @override
+  String get manager => 'المدير';
+
+  @override
+  String get noManagersFound => 'لا يوجد مدراء';
 }

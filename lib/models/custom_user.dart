@@ -2,24 +2,19 @@ import 'package:kader/constants/keys.dart';
 import 'package:kader/models/user_type.dart';
 
 class CustomUser {
-  final String id;
-  final String name;
-  final String email;
-  final String phoneNumber;
-  final String idNumber;
-  final String photoUrl;
-  final UserType type;
+  String id;
+  String name;
+  String email;
+  String phoneNumber;
+  String idNumber;
+  String photoUrl;
+  UserType type;
 
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        other is CustomUser &&
-            runtimeType == other.runtimeType &&
-            id == other.id;
-  }
+  bool get isAdmin => type == UserType.admin;
 
-  @override
-  int get hashCode => id.hashCode;
+  bool get isManager => type == UserType.manager;
+
+  bool get isEmployee => type == UserType.employee;
 
   CustomUser({
     required this.id,
@@ -52,26 +47,6 @@ class CustomUser {
     };
   }
 
-  CustomUser copyWith({
-    String? id,
-    String? name,
-    String? email,
-    String? phoneNumber,
-    String? idNumber,
-    String? photoUrl,
-    UserType? type,
-  }) {
-    return CustomUser(
-      id: id ?? this.id,
-      type: type ?? this.type,
-      phoneNumber: phoneNumber ?? this.phoneNumber,
-      idNumber: idNumber ?? this.idNumber,
-      photoUrl: photoUrl ?? this.photoUrl,
-      name: name ?? this.name,
-      email: email ?? this.email,
-    );
-  }
-
   CustomUser.empty()
       : this(
           id: '',
@@ -82,4 +57,15 @@ class CustomUser {
           name: '',
           email: '',
         );
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        other is CustomUser &&
+            runtimeType == other.runtimeType &&
+            id == other.id;
+  }
+
+  @override
+  int get hashCode => id.hashCode;
 }

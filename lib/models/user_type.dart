@@ -1,3 +1,5 @@
+import 'package:kader/constants/keys.dart';
+
 enum UserType {
   admin,
   manager,
@@ -6,16 +8,16 @@ enum UserType {
   @override
   String toString() {
     return this == admin
-        ? 'admin'
+        ? Keys.admin
         : this == manager
-            ? 'manager'
-            : 'employee';
+            ? Keys.manager
+            : Keys.employee;
   }
 
   static UserType fromString(String string) {
-    return string == 'admin'
+    return string == Keys.admin
         ? admin
-        : string == 'manager'
+        : string == Keys.manager
             ? manager
             : employee;
   }

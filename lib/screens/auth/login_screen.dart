@@ -69,6 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 decoration: const InputDecoration(
                   labelText: 'الايميل',
                 ),
+                keyboardType: TextInputType.emailAddress,
                 validator: (value) => checkEmpty(value, 'ادخل الايميل'),
                 onSaved: (value) {
                   value = value!.trim();
@@ -78,7 +79,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   _passwordFocusNode.requestFocus();
                 },
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: 18),
               TextFormField(
                 focusNode: _passwordFocusNode,
                 decoration: const InputDecoration(

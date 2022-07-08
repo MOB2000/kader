@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kader/constants/keys.dart';
 import 'package:kader/models/request_status.dart';
 
 class VacationRequest {
@@ -22,29 +23,29 @@ class VacationRequest {
 
   factory VacationRequest.fromMap(Map<String, dynamic> map) {
     return VacationRequest(
-      id: map['id'],
-      employeeId: map['employeeId'],
-      departmentId: map['departmentId'],
-      employeeName: map['employeeName'],
+      id: map[Keys.id],
+      employeeId: map[Keys.employeeId],
+      departmentId: map[Keys.departmentId],
+      employeeName: map[Keys.employeeName],
       dateTimeRange: DateTimeRange(
-        start: DateTime.parse(map['startDate']),
-        end: DateTime.parse(map['endDate']),
+        start: DateTime.parse(map[Keys.startDate]),
+        end: DateTime.parse(map[Keys.endDate]),
       ),
-      cause: map['cause'],
-      status: RequestStatus.fromString(map['status']),
+      cause: map[Keys.cause],
+      status: RequestStatus.fromString(map[Keys.status]),
     );
   }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'id': id,
-      'departmentId': departmentId,
-      'employeeId': employeeId,
-      'employeeName': employeeName,
-      'startDate': dateTimeRange.start.toIso8601String(),
-      'endDate': dateTimeRange.end.toIso8601String(),
-      'cause': cause,
-      'status': status.toString(),
+      Keys.id: id,
+      Keys.departmentId: departmentId,
+      Keys.employeeId: employeeId,
+      Keys.employeeName: employeeName,
+      Keys.startDate: dateTimeRange.start.toIso8601String(),
+      Keys.endDate: dateTimeRange.end.toIso8601String(),
+      Keys.cause: cause,
+      Keys.status: status.toString(),
     };
   }
 }

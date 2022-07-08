@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:kader/localization/language/languages.dart';
 import 'package:kader/providers/departments_provider.dart';
-import 'package:kader/screens/department_details_screen.dart';
+import 'package:kader/screens/department/department_details_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../models/department.dart';
@@ -15,6 +16,8 @@ class DepartmentWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final languages = Languages.of(context);
+
     final provider = Provider.of<DepartmentsProvider>(context);
     return ListTile(
       title: Text(department.name),
@@ -22,7 +25,7 @@ class DepartmentWidget extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           TextButton(
-            child: const Text('تفاصيل'),
+            child: Text(languages.details),
             onPressed: () async {
               final manager = await provider.getDepartmentManager(department);
 
@@ -41,9 +44,30 @@ class DepartmentWidget extends StatelessWidget {
               Icons.delete_forever,
               color: Colors.red,
             ),
-            onPressed: () {
-              //TODO: show confirm delete dialog
-              provider.deleteDepartment(department);
+            onPressed: () async {
+              final confirmDelete = await showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                  title: Text(languages.areYouSure),
+                  actions: [
+                    TextButton(
+                      child: Text(languages.yes),
+                      onPressed: () async {
+                        Navigator.of(context).pop(true);
+                      },
+                    ),
+                    TextButton(
+                      child: Text(languages.no),
+                      onPressed: () {
+                        Navigator.of(context).pop(false);
+                      },
+                    ),
+                  ],
+                ),
+              );
+              if (confirmDelete) {
+                await provider.deleteDepartment(department);
+              }
             },
           ),
         ],

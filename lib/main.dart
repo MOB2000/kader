@@ -9,21 +9,18 @@ import 'package:kader/localization/language/languages.dart';
 import 'package:kader/localization/locale_constant.dart';
 import 'package:kader/providers/attendance_provider.dart';
 import 'package:kader/providers/auth_provider.dart';
-import 'package:kader/providers/complaints_provider.dart';
 import 'package:kader/providers/departments_provider.dart';
 import 'package:kader/providers/vacations_provider.dart';
-import 'package:kader/screens/attendance_history_screen.dart';
-import 'package:kader/screens/attendance_screen.dart';
+import 'package:kader/screens/attendance/attendance_history_screen.dart';
+import 'package:kader/screens/attendance/attendance_screen.dart';
 import 'package:kader/screens/auth/login_screen.dart';
 import 'package:kader/screens/auth/register_screen.dart';
-import 'package:kader/screens/complaints_screen.dart';
-import 'package:kader/screens/create_department_screen.dart';
-import 'package:kader/screens/custody_screen.dart';
-import 'package:kader/screens/departments_screen.dart';
+import 'package:kader/screens/department/create_department_screen.dart';
+import 'package:kader/screens/department/departments_screen.dart';
 import 'package:kader/screens/home_screen.dart';
-import 'package:kader/screens/meetings_screen.dart';
-import 'package:kader/screens/vacations/vacation_request_screen.dart';
-import 'package:kader/screens/vacations_screen.dart';
+import 'package:kader/screens/staff_management_screen.dart';
+import 'package:kader/screens/vacations/request_vacation_screen.dart';
+import 'package:kader/screens/vacations/vacations_screen.dart';
 import 'package:kader/services/shared_preferences_helper.dart';
 import 'package:provider/provider.dart';
 
@@ -35,9 +32,10 @@ Future<void> main() async {
 
   await Firebase.initializeApp();
 
-  // TODO: extract strings
+  // TODO: extract strings locale and keys
+
   // TODO: group files in sub folders
-  // TODO:
+  // TODO: enums locale toString methods
   // TODO:
   runApp(const Kader());
 
@@ -78,7 +76,6 @@ class _KaderState extends State<Kader> {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => AuthProvider()),
-        ChangeNotifierProvider(create: (context) => ComplaintsProvider()),
         ChangeNotifierProvider(create: (context) => DepartmentsProvider()),
         ChangeNotifierProvider(create: (context) => VacationsProvider()),
         ChangeNotifierProvider(create: (context) => AttendanceProvider()),
@@ -116,18 +113,17 @@ class _KaderState extends State<Kader> {
             LoginScreen.routeName: (context) => const LoginScreen(),
             RegisterScreen.routeName: (context) => const RegisterScreen(),
             HomeScreen.routeName: (context) => const HomeScreen(),
-            VacationsScreen.routeName: (context) => VacationsScreen(),
-            VacationRequestScreen.routeName: (context) =>
-                const VacationRequestScreen(),
-            ComplaintsScreen.routeName: (context) => const ComplaintsScreen(),
+            StaffManagementScreen.routeName: (context) =>
+                const StaffManagementScreen(),
+            VacationsScreen.routeName: (context) => const VacationsScreen(),
+            RequestVacationScreen.routeName: (context) =>
+                const RequestVacationScreen(),
             AttendanceScreen.routeName: (context) => AttendanceScreen(),
             AttendanceHistoryScreen.routeName: (context) =>
                 const AttendanceHistoryScreen(),
-            MeetingsScreen.routeName: (context) => const MeetingsScreen(),
             DepartmentsScreen.routeName: (context) => const DepartmentsScreen(),
             CreateDepartmentScreen.routeName: (context) =>
                 const CreateDepartmentScreen(),
-            CustodyScreen.routeName: (context) => const CustodyScreen(),
           },
           locale: _locale,
           supportedLocales: languageList.map((e) => e.toLocale),

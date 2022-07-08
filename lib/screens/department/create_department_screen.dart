@@ -23,7 +23,7 @@ class _CreateDepartmentScreenState extends State<CreateDepartmentScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final departmentsProvider = Provider.of<DepartmentsProvider>(context);
+    final provider = Provider.of<DepartmentsProvider>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -64,7 +64,7 @@ class _CreateDepartmentScreenState extends State<CreateDepartmentScreen> {
                       Fluttertoast.showToast(msg: 'يجب اختيار مدير');
                       return;
                     }
-                    await departmentsProvider.createDepartment(
+                    await provider.createDepartment(
                       name,
                       manager!.id,
                     );

@@ -11,7 +11,7 @@ abstract class Languages {
 
   String get appLanguage;
 
-  String get kHome;
+  String get home;
 
   String get login;
 
@@ -49,13 +49,39 @@ abstract class Languages {
 
   String get noPosts;
 
+  String get no;
+
+  String get yes;
+
   String get noMorePosts;
 
   String get search;
 
   String get close;
 
+  String get attendance;
+
+  String get leaving;
+
+  String get manager;
+
+  String get noManagersFound;
+
   String get errorOccurred;
+
+  String get areYouSure;
+
+  String get details;
+
+  String get accept;
+
+  String get reject;
+
+  String get promotion;
+
+  String get downgrade;
+
+  String get managerMustRemovedFromDepartment;
 
   String get noResults;
 
@@ -79,13 +105,13 @@ abstract class Languages {
 
   String get manageDepartments;
 
+  String get manageStaff;
+
   String get departments;
 
   String get meetings;
 
   String get transitionsRequests;
-
-  String get attendance;
 
   String get kDisplayVacations;
 

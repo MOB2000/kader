@@ -28,6 +28,10 @@ class DepartmentsProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  Future<bool> checkManagerHasDepartment(CustomUser manager) {
+    return _firestore.checkManagerHasDepartment(manager);
+  }
+
   Future<CustomUser> getDepartmentManager(Department department) async {
     return _firestore.getDepartmentManager(department);
   }

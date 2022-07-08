@@ -1,3 +1,5 @@
+import 'package:kader/constants/keys.dart';
+
 enum AttendanceStatus {
   attendance,
   absence,
@@ -7,20 +9,20 @@ enum AttendanceStatus {
   @override
   String toString() {
     return this == attendance
-        ? 'attendance'
+        ? Keys.attendanceStatus
         : this == absence
-            ? 'absence'
+            ? Keys.absence
             : this == officialHoliday
-                ? 'officialHoliday'
-                : 'vacation';
+                ? Keys.officialHoliday
+                : Keys.vacation;
   }
 
   static AttendanceStatus fromString(String string) {
-    return string == 'attendance'
+    return string == Keys.attendanceStatus
         ? attendance
-        : string == 'absence'
+        : string == Keys.absence
             ? absence
-            : string == 'officialHoliday'
+            : string == Keys.officialHoliday
                 ? officialHoliday
                 : vacation;
   }

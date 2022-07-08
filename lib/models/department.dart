@@ -15,15 +15,15 @@ class Department {
     return <String, dynamic>{
       Keys.id: id,
       Keys.name: name,
-      'manager_id': managerId,
+      Keys.managerId: managerId,
     };
   }
 
   factory Department.fromMap(Map<String, dynamic> map) {
     return Department(
-      id: map['id'],
-      name: map['name'],
-      managerId: map['manager_id'],
+      id: map[Keys.id],
+      name: map[Keys.name],
+      managerId: map[Keys.managerId],
     );
   }
 }

@@ -25,11 +25,41 @@ class _RegisterScreenState extends State<RegisterScreen> {
   File? imageFile;
   String password = '';
 
+  final _emailFocusNode = FocusNode();
+  final _passwordFocusNode = FocusNode();
+  final _phoneNumberFocusNode = FocusNode();
+  final _idNumberFocusNode = FocusNode();
+
+  Future<void> submitForm() async {
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+
+    if (imageFile == null) {
+      Fluttertoast.showToast(msg: "يجب اختيار صورة");
+      return;
+    }
+    if (registerFormKey.currentState!.validate()) {
+      registerFormKey.currentState!.save();
+
+      bool isLogged = false;
+      await showDialogWaiting(context, () async {
+        try {
+          await authProvider.register(
+              authProvider.user.email, password, imageFile!);
+          isLogged = true;
+        } catch (e) {
+          Fluttertoast.showToast(msg: e.toString());
+        }
+      });
+      if (!isLogged) return;
+      if (!mounted) return;
+      Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final languages = Languages.of(context);
     final authProvider = Provider.of<AuthProvider>(context);
-    // TODO: use focus node and submit
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -39,123 +69,149 @@ class _RegisterScreenState extends State<RegisterScreen> {
         key: registerFormKey,
         child: Padding(
           padding: const EdgeInsets.all(12),
-          child: Column(
-            children: <Widget>[
-              if (imageFile != null)
-                Expanded(
-                  child: Image.file(
-                    imageFile!,
-                    fit: BoxFit.cover,
+          child: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    if (imageFile != null)
+                      Image.file(
+                        imageFile!,
+                        fit: BoxFit.cover,
+                        height: 64,
+                      ),
+                    const SizedBox(width: 12),
+                    TextButton(
+                      child: const Text('اختر صورة'),
+                      onPressed: () async {
+                        final image =
+                            await ImagePickerHelper.instance.pickImage();
+
+                        if (image != null) {
+                          setState(() {
+                            imageFile = image;
+                          });
+                        }
+                      },
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                TextFormField(
+                  decoration: InputDecoration(
+                    labelText: languages.name,
                   ),
+                  validator: (value) => checkEmpty(value, 'ادخل الاسم'),
+                  onSaved: (value) {
+                    value = value!.trim();
+                    authProvider.user.name = value;
+                  },
+                  onFieldSubmitted: (value) {
+                    _emailFocusNode.requestFocus();
+                  },
                 ),
-              TextButton(
-                child: const Text('اختر صورة'),
-                onPressed: () async {
-                  final image = await ImagePickerHelper.instance.pickImage();
+                const SizedBox(height: 8),
+                TextFormField(
+                  decoration: InputDecoration(
+                    labelText: languages.email,
+                  ),
+                  focusNode: _emailFocusNode,
+                  keyboardType: TextInputType.emailAddress,
+                  validator: (value) => checkEmpty(value, 'ادخل الايميل'),
+                  onSaved: (value) {
+                    value = value!.trim();
+                    authProvider.user.email = value;
+                  },
+                  onFieldSubmitted: (value) {
+                    _passwordFocusNode.requestFocus();
+                  },
+                ),
+                const SizedBox(height: 8),
+                TextFormField(
+                  decoration: InputDecoration(
+                    labelText: languages.password,
+                  ),
+                  obscureText: true,
+                  validator: (value) => checkEmpty(value, 'ادخل كلمة المرور'),
+                  focusNode: _passwordFocusNode,
+                  onSaved: (value) {
+                    value = value!.trim();
+                    password = value;
+                  },
+                  onFieldSubmitted: (value) {
+                    _phoneNumberFocusNode.requestFocus();
+                  },
+                ),
+                const SizedBox(height: 8),
+                TextFormField(
+                  decoration: InputDecoration(
+                    labelText: languages.phoneNumber,
+                  ),
+                  keyboardType: TextInputType.phone,
+                  focusNode: _phoneNumberFocusNode,
+                  validator: (value) {
+                    value = value!.trim();
+                    if (value.isEmpty) {
+                      return 'ادخل رقم الهوية';
+                    }
 
-                  if (image != null) {
-                    setState(() {
-                      imageFile = image;
-                    });
-                  }
-                },
-              ),
-              const SizedBox(height: 8),
-              TextFormField(
-                decoration: InputDecoration(
-                  labelText: languages.name,
-                ),
-                validator: (value) => checkEmpty(value, 'ادخل الاسم'),
-                onSaved: (value) {
-                  value = value!.trim();
-                  authProvider.user = authProvider.user.copyWith(name: value);
-                },
-              ),
-              const SizedBox(height: 8),
-              TextFormField(
-                decoration: InputDecoration(
-                  labelText: languages.email,
-                ),
-                validator: (value) => checkEmpty(value, 'ادخل الايميل'),
-                onSaved: (value) {
-                  value = value!.trim();
-                  authProvider.user = authProvider.user.copyWith(email: value);
-                },
-              ),
-              const SizedBox(height: 8),
-              TextFormField(
-                decoration: InputDecoration(
-                  labelText: languages.password,
-                ),
-                obscureText: true,
-                validator: (value) => checkEmpty(value, 'ادخل كلمة المرور'),
-                onSaved: (value) {
-                  value = value!.trim();
-                  password = value;
-                },
-              ),
-              const SizedBox(height: 8),
-              TextFormField(
-                decoration: InputDecoration(
-                  labelText: languages.phoneNumber,
-                ),
-                validator: (value) => checkEmpty(value, 'ادخل رقم الجوال'),
-                onSaved: (value) {
-                  value = value!.trim();
-                  authProvider.user =
-                      authProvider.user.copyWith(phoneNumber: value);
-                },
-              ),
-              const SizedBox(height: 8),
-              TextFormField(
-                decoration: InputDecoration(
-                  labelText: languages.idNumber,
-                ),
-                validator: (value) => checkEmpty(value, 'ادخل رقم الهوية'),
-                onSaved: (value) {
-                  value = value!.trim();
-                  authProvider.user =
-                      authProvider.user.copyWith(idNumber: value);
-                },
-              ),
-              const SizedBox(height: 8),
-              const Spacer(),
-              TextButton(
-                child: Text(languages.register),
-                onPressed: () async {
-                  if (imageFile == null) {
-                    Fluttertoast.showToast(msg: "يجب اختيار صورة");
-                    return;
-                  }
-                  if (registerFormKey.currentState!.validate()) {
-                    registerFormKey.currentState!.save();
+                    if (value.length != 10) {
+                      return 'رقم الجوال يجب أن يكون 10 أرقام';
+                    }
 
-                    bool isLogged = false;
-                    await showDialogWaiting(context, () async {
-                      try {
-                        await authProvider.register(
-                            authProvider.user.email, password, imageFile!);
-                        isLogged = true;
-                      } catch (e) {
-                        Fluttertoast.showToast(msg: e.toString());
-                      }
-                    });
-                    if (!isLogged) return;
-                    if (!mounted) return;
+                    return null;
+                  },
+                  onSaved: (value) {
+                    value = value!.trim();
+                    authProvider.user.phoneNumber = value;
+                  },
+                  onFieldSubmitted: (value) {
+                    _idNumberFocusNode.requestFocus();
+                  },
+                ),
+                const SizedBox(height: 8),
+                TextFormField(
+                  decoration: InputDecoration(
+                    labelText: languages.idNumber,
+                  ),
+                  focusNode: _idNumberFocusNode,
+                  keyboardType: TextInputType.number,
+                  validator: (value) {
+                    value = value!.trim();
+                    if (value.isEmpty) {
+                      return 'ادخل رقم الهوية';
+                    }
+
+                    if (value.length != 10) {
+                      return 'رقم الهوية يجب أن يكون 10 أرقام';
+                    }
+
+                    return null;
+                  },
+                  onSaved: (value) {
+                    value = value!.trim();
+                    authProvider.user.idNumber = value;
+                  },
+                  onFieldSubmitted: (value) async {
+                    await submitForm();
+                  },
+                ),
+                const SizedBox(height: 12),
+                TextButton(
+                  onPressed: submitForm,
+                  child: Text(languages.register),
+                ),
+                const SizedBox(height: 48),
+                TextButton(
+                  child: const Text('لديك حساب؟ قم بتسجيل الدخول'),
+                  onPressed: () {
                     Navigator.of(context)
-                        .pushReplacementNamed(HomeScreen.routeName);
-                  }
-                },
-              ),
-              const Spacer(flex: 2),
-              TextButton(
-                child: const Text('لديك حساب؟ قم بتسجيل الدخول'),
-                onPressed: () {
-                  Navigator.of(context)
-                      .pushReplacementNamed(LoginScreen.routeName);
-                },
-              ),
-            ],
+                        .pushReplacementNamed(LoginScreen.routeName);
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),

@@ -19,7 +19,9 @@ class AttendanceHistoryScreen extends StatelessWidget {
     final user = Provider.of<AuthProvider>(context).user;
 
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: const Text('سحل الحضور'),
+      ),
       body: FutureBuilder<List<Attendance>>(
         future: provider.getEmployeeAttendanceHistory(user),
         builder: (context, snapshot) {

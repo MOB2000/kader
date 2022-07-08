@@ -1,3 +1,4 @@
+import 'package:kader/constants/keys.dart';
 import 'package:kader/models/attendance_status.dart';
 
 class Attendance {
@@ -20,23 +21,23 @@ class Attendance {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'id': id,
-      'employeeId': employeeId,
-      'date': date.toIso8601String(),
-      'attendance': attendance?.toIso8601String(),
-      'leaving': leaving?.toIso8601String(),
-      'attendanceStatus': attendanceStatus.toString(),
+      Keys.id: id,
+      Keys.employeeId: employeeId,
+      Keys.date: date.toIso8601String(),
+      Keys.attendance: attendance?.toIso8601String(),
+      Keys.leaving: leaving?.toIso8601String(),
+      Keys.attendanceStatus: attendanceStatus.toString(),
     };
   }
 
   factory Attendance.fromMap(Map<String, dynamic> map) {
     return Attendance(
-      id: map['id'],
-      employeeId: map['employeeId'],
-      date: DateTime.parse(map['date']),
-      attendance: DateTime.tryParse(map['attendance'] ?? ''),
-      leaving: DateTime.tryParse(map['leaving'] ?? ''),
-      attendanceStatus: AttendanceStatus.fromString(map['attendanceStatus']),
+      id: map[Keys.id],
+      employeeId: map[Keys.employeeId],
+      date: DateTime.parse(map[Keys.date]),
+      attendance: DateTime.tryParse(map[Keys.attendance] ?? ''),
+      leaving: DateTime.tryParse(map[Keys.leaving] ?? ''),
+      attendanceStatus: AttendanceStatus.fromString(map[Keys.attendanceStatus]),
     );
   }
 }

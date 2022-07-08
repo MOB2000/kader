@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:kader/constants/keys.dart';
 import 'package:kader/models/attendance.dart';
-import 'package:kader/models/complaint.dart';
 import 'package:kader/models/custom_user.dart';
 import 'package:kader/models/department.dart';
 import 'package:kader/models/vacation_request.dart';
@@ -13,56 +12,33 @@ class FirestoreHelper {
 
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
 
-  Future<bool> checkIdExists(String id) async {
-    final result = await _firebaseFirestore
-        .collection('users')
-        .where(Keys.id, isEqualTo: id)
-        .get();
-
-    return result.size != 0;
-  }
-
   Future<void> addUser(CustomUser user) async {
-    await _firebaseFirestore.collection('users').add(user.toMap());
+    await _firebaseFirestore.collection(Keys.users).add(user.toMap());
   }
 
   Future<void> updateUser(CustomUser user) async {
-    await _firebaseFirestore.collection('users').doc(user.id).set(user.toMap());
+    final id = await _firebaseFirestore
+        .collection(Keys.users)
+        .where(Keys.id, isEqualTo: user.id)
+        .get()
+        .then((value) => value.docs.first.id);
+
+    await _firebaseFirestore.collection(Keys.users).doc(id).set(user.toMap());
   }
 
   Future<CustomUser> getUser(String id) async {
     final doc = await _firebaseFirestore
-        .collection('users')
-        .where('id', isEqualTo: id)
+        .collection(Keys.users)
+        .where(Keys.id, isEqualTo: id)
         .get()
         .then((value) => value.docs.first);
 
     return CustomUser.fromMap(doc.data());
   }
 
-  Future<void> addComplaint(Complaint complaint) async {
-    await _firebaseFirestore.collection('complaints').add(complaint.toMap());
-  }
-
-  Future<List<Complaint>> get complaints async =>
-      await _firebaseFirestore.collection('complaints').get().then((value) =>
-          value.docs.map((e) => Complaint.fromMap(e.data())).toList());
-
-  Future<List<Complaint>> getComplaints(String ownerId) async {
-    final complaints = await _firebaseFirestore
-        .collection('complaints')
-        .where('ownerId', isEqualTo: ownerId)
-        .get()
-        .then(
-          (value) =>
-              value.docs.map((e) => Complaint.fromMap(e.data())).toList(),
-        );
-    return complaints;
-  }
-
   Future<void> createDepartment(Department department) async {
     department.id = await _firebaseFirestore
-        .collection('departments')
+        .collection(Keys.departments)
         .add(department.toMap())
         .then((value) => value.id);
 
@@ -71,15 +47,15 @@ class FirestoreHelper {
 
   Future<void> updateDepartment(Department department) async {
     await _firebaseFirestore
-        .collection('departments')
+        .collection(Keys.departments)
         .doc(department.id)
         .set(department.toMap());
   }
 
   Future<List<CustomUser>> get managers async {
     return await _firebaseFirestore
-        .collection('users')
-        .where('type', isEqualTo: 'manager')
+        .collection(Keys.users)
+        .where(Keys.type, isEqualTo: Keys.manager)
         .get()
         .then((value) =>
             value.docs.map((doc) => CustomUser.fromMap(doc.data())).toList());
@@ -87,7 +63,7 @@ class FirestoreHelper {
 
   Future<List<Department>> get departments async {
     return await _firebaseFirestore
-        .collection('departments')
+        .collection(Keys.departments)
         .get()
         .then((value) {
       return value.docs.map((doc) => Department.fromMap(doc.data())).toList();
@@ -96,15 +72,15 @@ class FirestoreHelper {
 
   Future<void> deleteDepartment(Department department) async {
     await _firebaseFirestore
-        .collection('departments')
+        .collection(Keys.departments)
         .doc(department.id)
         .delete();
   }
 
   Future<List<CustomUser>> get employees async {
     return await _firebaseFirestore
-        .collection('users')
-        .where('type', isEqualTo: 'employee')
+        .collection(Keys.users)
+        .where(Keys.type, isEqualTo: Keys.employee)
         .get()
         .then((value) =>
             value.docs.map((doc) => CustomUser.fromMap(doc.data())).toList());
@@ -112,8 +88,8 @@ class FirestoreHelper {
 
   Future<CustomUser> getDepartmentManager(Department department) async {
     return _firebaseFirestore
-        .collection('users')
-        .where('id', isEqualTo: department.managerId)
+        .collection(Keys.users)
+        .where(Keys.id, isEqualTo: department.managerId)
         .get()
         .then((value) => CustomUser.fromMap(value.docs.first.data()));
   }
@@ -123,32 +99,32 @@ class FirestoreHelper {
     Department department,
   ) async {
     await _firebaseFirestore
-        .collection('employees_departments')
-        .where('department_id', isEqualTo: department.id)
+        .collection(Keys.employeesDepartments)
+        .where(Keys.department_id, isEqualTo: department.id)
         .get()
         .then((value) async {
       final ids = value.docs.map((element) {
         return element.id;
       });
-      ids.forEach((id) async {
+      for (var id in ids) {
         await _firebaseFirestore
-            .collection('employees_departments')
+            .collection(Keys.employeesDepartments)
             .doc(id)
             .delete();
-      });
+      }
     });
-    employees.forEach((employee) async {
-      await _firebaseFirestore.collection('employees_departments').add({
-        'emp_id': employee.id,
-        'department_id': department.id,
+    for (var employee in employees) {
+      await _firebaseFirestore.collection(Keys.employeesDepartments).add({
+        Keys.empId: employee.id,
+        Keys.department_id: department.id,
       });
-    });
+    }
   }
 
   Future<List<VacationRequest>> getEmployeeVacations(CustomUser user) async {
     return await _firebaseFirestore
-        .collection('vacations_requests')
-        .where('employeeId', isEqualTo: user.id)
+        .collection(Keys.vacationsRequests)
+        .where(Keys.employeeId, isEqualTo: user.id)
         .get()
         .then((value) =>
             value.docs.map((e) => VacationRequest.fromMap(e.data())).toList());
@@ -157,8 +133,8 @@ class FirestoreHelper {
   Future<List<VacationRequest>> getDepartmentVacations(
       String departmentId) async {
     return await _firebaseFirestore
-        .collection('vacations_requests')
-        .where('departmentId', isEqualTo: departmentId)
+        .collection(Keys.vacationsRequests)
+        .where(Keys.departmentId, isEqualTo: departmentId)
         .get()
         .then((value) =>
             value.docs.map((e) => VacationRequest.fromMap(e.data())).toList());
@@ -166,7 +142,7 @@ class FirestoreHelper {
 
   Future<void> addVacationRequest(VacationRequest vacationRequest) async {
     vacationRequest.id = await _firebaseFirestore
-        .collection('vacations_requests')
+        .collection(Keys.vacationsRequests)
         .add(vacationRequest.toMap())
         .then((value) => value.id);
 
@@ -175,7 +151,7 @@ class FirestoreHelper {
 
   Future<void> updateVacation(VacationRequest vacationRequest) async {
     await _firebaseFirestore
-        .collection('vacations_requests')
+        .collection(Keys.vacationsRequests)
         .doc(vacationRequest.id)
         .set(vacationRequest.toMap());
   }
@@ -185,29 +161,29 @@ class FirestoreHelper {
     Department department,
   ) async {
     final id = await _firebaseFirestore
-        .collection('employees_departments')
-        .where('emp_id', isEqualTo: employee.id)
+        .collection(Keys.employeesDepartments)
+        .where(Keys.empId, isEqualTo: employee.id)
         .get()
         .then((value) => value.docs.first.id);
     await _firebaseFirestore
-        .collection('employees_departments')
+        .collection(Keys.employeesDepartments)
         .doc(id)
         .delete();
   }
 
   Future<List<CustomUser>> getDepartmentEmployees(Department department) async {
     final empsIds = await _firebaseFirestore
-        .collection('employees_departments')
-        .where('department_id', isEqualTo: department.id)
+        .collection(Keys.employeesDepartments)
+        .where(Keys.department_id, isEqualTo: department.id)
         .get()
-        .then((value) => value.docs.map((e) => e.data()['emp_id']).toList());
+        .then((value) => value.docs.map((e) => e.data()[Keys.empId]).toList());
 
     if (empsIds.isEmpty) {
       return <CustomUser>[];
     }
     return _firebaseFirestore
-        .collection('users')
-        .where('id', whereIn: empsIds)
+        .collection(Keys.users)
+        .where(Keys.id, whereIn: empsIds)
         .get()
         .then(
           (value) =>
@@ -217,18 +193,18 @@ class FirestoreHelper {
 
   Future<String> getDepartmentId(CustomUser manager) async {
     final id = await _firebaseFirestore
-        .collection('departments')
-        .where('manager_id', isEqualTo: manager.id)
+        .collection(Keys.departments)
+        .where(Keys.managerId, isEqualTo: manager.id)
         .get()
-        .then((value) => value.docs.first.data()['id']);
+        .then((value) => value.docs.first.data()[Keys.id]);
     return id;
   }
 
   Future<List<Attendance>> getEmployeeAttendanceHistory(
       CustomUser employee) async {
     return await _firebaseFirestore
-        .collection('attendance')
-        .where('employeeId', isEqualTo: employee.id)
+        .collection(Keys.attendance)
+        .where(Keys.employeeId, isEqualTo: employee.id)
         .get()
         .then(
           (value) =>
@@ -237,35 +213,31 @@ class FirestoreHelper {
   }
 
   Future<void> updateAttendance(Attendance attendance) async {
-    final exists = attendance.id != null;
-
-    if (exists) {
-      await _firebaseFirestore
-          .collection('attendance')
-          .doc(attendance.id)
-          .set(attendance.toMap());
-    } else {
-      attendance.id = await _firebaseFirestore
-          .collection('attendance')
-          .add(attendance.toMap())
-          .then((value) => value.id);
-    }
+    await _firebaseFirestore
+        .collection(Keys.attendance)
+        .doc(attendance.id)
+        .set(attendance.toMap());
   }
 
   Future<Attendance?> checkSavedAttendance(CustomUser user) async {
     Attendance? attendance = await _firebaseFirestore
-        .collection('attendance')
-        .where('employeeId', isEqualTo: user.id)
+        .collection(Keys.attendance)
+        .where(Keys.employeeId, isEqualTo: user.id)
         .get()
         .then(
       (value) {
         if (value.docs.isEmpty) {
           return null;
         }
-        final today = value.docs.where((element) =>
-            DateTime.parse(element['date']).day == DateTime.now().day);
+        final today = value.docs.where((element) {
+          final dataTime = DateTime.parse(element[Keys.date]);
 
-        print(DateTime.now().day);
+          final today = DateTime.now();
+          return dataTime.year == today.year &&
+              dataTime.month == today.month &&
+              dataTime.day == today.day;
+        });
+
         if (today.isEmpty) {
           return null;
         }
@@ -275,5 +247,13 @@ class FirestoreHelper {
     );
 
     return attendance;
+  }
+
+  Future<bool> checkManagerHasDepartment(CustomUser manager) async {
+    return _firebaseFirestore
+        .collection(Keys.departments)
+        .where(Keys.managerId, isEqualTo: manager.id)
+        .get()
+        .then((value) => value.docs.isNotEmpty);
   }
 }

@@ -11,7 +11,7 @@ class LanguageEn extends Languages {
   String get appLanguage => "Language";
 
   @override
-  String get kHome => 'Home';
+  String get home => 'Home';
 
   @override
   String get login => 'Login';
@@ -138,4 +138,47 @@ class LanguageEn extends Languages {
 
   @override
   String get transitionsRequests => 'Transitions Requests';
+
+  @override
+  String get manageStaff => 'Manage Staff';
+
+  @override
+  String get areYouSure => 'Are you sure?';
+
+  @override
+  String get details => 'Details';
+
+  @override
+  String get no => 'No';
+
+  @override
+  String get yes => 'Yes';
+
+  @override
+  String get accept => 'Accept';
+
+  @override
+  String get downgrade => 'Downgrade';
+
+  @override
+  String get managerMustRemovedFromDepartment =>
+      'manager must removed from department';
+
+  @override
+  String get promotion => 'promotion';
+
+  @override
+  String get reject => 'Reject';
+
+  @override
+  // TODO: implement leaving
+  String get leaving => 'leaving';
+
+  @override
+  // TODO: implement manager
+  String get manager => 'manager';
+
+  @override
+  // TODO: implement noManagersFound
+  String get noManagersFound => 'no manager found';
 }

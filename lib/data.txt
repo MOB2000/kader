@@ -1,0 +1,25 @@
+all passwords are asdasd
+
+admin
+admin@asd.asd
+
+departments
+mobile,web,marketing
+
+managers
+mob@asd.asd
+web@asd.asd
+mar@asd.asd
+
+employees
+mob1@asd.asd
+mob2@asd.asd
+mob3@asd.asd
+
+web1@asd.asd
+web2@asd.asd
+web3@asd.asd
+
+mar1@asd.asd
+mar2@asd.asd
+mar3@asd.asd

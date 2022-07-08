@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kader/localization/language/languages.dart';
 import 'package:kader/models/custom_user.dart';
 import 'package:kader/providers/auth_provider.dart';
 import 'package:kader/widgets/loading_widget.dart';
@@ -30,10 +31,11 @@ class _SelectManagerWidgetState extends State<SelectManagerWidget> {
   @override
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthProvider>(context);
+    final languages = Languages.of(context);
 
     return Row(
       children: <Widget>[
-        const Text('المدير'),
+        Text(languages.manager),
         const SizedBox(width: 12),
         Expanded(
           child: FutureBuilder<List<CustomUser>>(
@@ -42,8 +44,8 @@ class _SelectManagerWidgetState extends State<SelectManagerWidget> {
               if (snapshot.connectionState == ConnectionState.done) {
                 final managers = snapshot.data!;
                 if (managers.isEmpty) {
-                  return const Center(
-                    child: Text('لا يوجد مدراء'),
+                  return Center(
+                    child: Text(languages.noManagersFound),
                   );
                 }
 

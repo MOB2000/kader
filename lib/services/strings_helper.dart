@@ -1,4 +1,8 @@
 import 'package:intl/intl.dart';
+import 'package:kader/localization/language/languages.dart';
+import 'package:kader/models/attendance_status.dart';
+import 'package:kader/models/request_status.dart';
+import 'package:kader/models/user_type.dart';
 import 'package:kader/services/shared_preferences_helper.dart';
 
 class StringsHelper {
@@ -23,4 +27,58 @@ class StringsHelper {
 
   static String getHour(DateTime dateTime) =>
       DateFormat('hh:mm', _locale).format(dateTime);
+
+  static String translateRequestStatus(
+    RequestStatus requestStatus,
+    Languages languages,
+  ) {
+    if (requestStatus == RequestStatus.accepted) {
+      return languages.accepted;
+    }
+    if (requestStatus == RequestStatus.rejected) {
+      return languages.rejected;
+    }
+    if (requestStatus == RequestStatus.pending) {
+      return languages.pending;
+    }
+
+    throw Exception();
+  }
+
+  static String translateUserType(
+    UserType userType,
+    Languages languages,
+  ) {
+    if (userType == UserType.admin) {
+      return languages.admin;
+    }
+    if (userType == UserType.manager) {
+      return languages.manager;
+    }
+    if (userType == UserType.employee) {
+      return languages.employee;
+    }
+
+    throw Exception();
+  }
+
+  static String translateAttendanceStatus(
+    AttendanceStatus attendanceStatus,
+    Languages languages,
+  ) {
+    if (attendanceStatus == AttendanceStatus.attendance) {
+      return languages.attendance;
+    }
+    if (attendanceStatus == AttendanceStatus.absence) {
+      return languages.absence;
+    }
+    if (attendanceStatus == AttendanceStatus.officialHoliday) {
+      return languages.officialHoliday;
+    }
+    if (attendanceStatus == AttendanceStatus.vacation) {
+      return languages.vacationSaved;
+    }
+
+    throw Exception();
+  }
 }

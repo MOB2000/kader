@@ -52,7 +52,8 @@ class VacationRequestWidget extends StatelessWidget {
                     ),
                   ],
                 )
-              : Text(vacationRequest.status.toString()),
+              : Text(StringsHelper.translateRequestStatus(
+                  vacationRequest.status, languages)),
     );
   }
 }

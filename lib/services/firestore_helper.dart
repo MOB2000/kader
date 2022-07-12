@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:kader/constants/keys.dart';
 import 'package:kader/models/attendance.dart';
+import 'package:kader/models/attendance_status.dart';
 import 'package:kader/models/custom_user.dart';
 import 'package:kader/models/department.dart';
+import 'package:kader/models/request_status.dart';
 import 'package:kader/models/vacation_request.dart';
 
 class FirestoreHelper {
@@ -50,6 +52,19 @@ class FirestoreHelper {
         .collection(Keys.departments)
         .doc(department.id)
         .set(department.toMap());
+  }
+
+  Future<List<CustomUser>> get managersWithoutDepartments async {
+    final allManagers = await managers;
+    final managersWithDepartments = await _firebaseFirestore
+        .collection(Keys.departments)
+        .get()
+        .then((value) =>
+            value.docs.map((e) => e.data()[Keys.managerId]).toList());
+
+    allManagers
+        .removeWhere((element) => managersWithDepartments.contains(element.id));
+    return allManagers;
   }
 
   Future<List<CustomUser>> get managers async {
@@ -154,6 +169,23 @@ class FirestoreHelper {
         .collection(Keys.vacationsRequests)
         .doc(vacationRequest.id)
         .set(vacationRequest.toMap());
+
+    if (vacationRequest.status == RequestStatus.accepted) {
+      DateTime dateTime = vacationRequest.dateTimeRange.start;
+
+      do {
+        final attendance = Attendance(
+          id: DateTime.now().toIso8601String(),
+          employeeId: vacationRequest.employeeId,
+          employeeName: vacationRequest.employeeName,
+          date: dateTime,
+          attendanceStatus: AttendanceStatus.vacation,
+        );
+
+        await updateAttendance(attendance);
+        dateTime = dateTime.add(const Duration(days: 1));
+      } while (!dateTime.isAfter(vacationRequest.dateTimeRange.end));
+    }
   }
 
   Future<void> removeEmployeeFromDepartment(
@@ -255,5 +287,45 @@ class FirestoreHelper {
         .where(Keys.managerId, isEqualTo: manager.id)
         .get()
         .then((value) => value.docs.isNotEmpty);
+  }
+
+  Future<List<Attendance>> allDepartmentEmployeesAttendance(
+    CustomUser manager,
+  ) async {
+    final departmentId = await _firebaseFirestore
+        .collection(Keys.departments)
+        .where(Keys.managerId, isEqualTo: manager.id)
+        .get()
+        .then((value) => value.docs.first.data()[Keys.id]);
+
+    final employeesIds = await _firebaseFirestore
+        .collection(Keys.employeesDepartments)
+        .where(Keys.department_id, isEqualTo: departmentId)
+        .get()
+        .then((value) => value.docs.map((e) => e.data()[Keys.empId]).toList());
+
+    final attendance = await _firebaseFirestore
+        .collection(Keys.attendance)
+        .where(Keys.employeeId, whereIn: employeesIds)
+        .get()
+        .then((value) =>
+            value.docs.map((e) => Attendance.fromMap(e.data())).toList());
+
+    return attendance;
+  }
+
+  Future<List<CustomUser>> employeesWithoutDepartment(
+      Department department) async {
+    final employeesWithDepartments = await _firebaseFirestore
+        .collection(Keys.employeesDepartments)
+        .get()
+        .then((value) => value.docs.map((e) => e.data()[Keys.empId]).toList());
+
+    final allEmployees = await employees;
+
+    allEmployees.removeWhere(
+        (element) => employeesWithDepartments.contains(element.id));
+
+    return allEmployees;
   }
 }

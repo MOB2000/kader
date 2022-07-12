@@ -22,15 +22,13 @@ class AttendanceHistoryWidget extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Text(StringsHelper.getDayDate(attendance.date)),
+          Text(StringsHelper.translateAttendanceStatus(
+              attendance.attendanceStatus, languages)),
           if (attendance.attendanceStatus == AttendanceStatus.attendance) ...[
-            Text(attendance.attendanceStatus.toString()),
             Text(
                 '${languages.attendance} ${StringsHelper.getHour(attendance.attendance!)}'),
             Text(
                 '${languages.leaving} ${StringsHelper.getHour(attendance.leaving!)}'),
-          ],
-          if (attendance.attendanceStatus != AttendanceStatus.attendance) ...[
-            Text(attendance.attendanceStatus.toString()),
           ],
           const Divider(thickness: 8),
         ],

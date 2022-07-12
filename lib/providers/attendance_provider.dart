@@ -19,4 +19,9 @@ class AttendanceProvider with ChangeNotifier {
   Future<Attendance?> checkSavedAttendance(CustomUser user) async {
     return _firestoreHelper.checkSavedAttendance(user);
   }
+
+  Future<List<Attendance>> allDepartmentEmployeesAttendance(
+      CustomUser manager) async {
+    return _firestoreHelper.allDepartmentEmployeesAttendance(manager);
+  }
 }

@@ -68,7 +68,7 @@ class LanguageAr extends Languages {
   String get kDisplayVacations => 'عرض الإجازات';
 
   @override
-  String get requestVacation => 'طلب الإجازة';
+  String get requestVacation => 'طلب إجازة';
 
   @override
   String get returnDate => 'تاريخ العودة';
@@ -174,7 +174,7 @@ class LanguageAr extends Languages {
   String get leaving => 'الانصراف';
 
   @override
-  String get manager => 'المدير';
+  String get manager => 'مدير';
 
   @override
   String get noManagersFound => 'لا يوجد مدراء';
@@ -186,7 +186,7 @@ class LanguageAr extends Languages {
   String get attendanceHistory => 'سجل الحضور';
 
   @override
-  String get checkAbsence => 'تسجيل انصراف';
+  String get checkAbsence => 'تسجيل غياب';
 
   @override
   String get checkAttendance => 'تسجيل حضور';
@@ -249,6 +249,9 @@ class LanguageAr extends Languages {
   String get phoneNumberMustBeTen => 'رقم الجوال أن يكون 10 أرقام';
 
   @override
+  String get showEmployeesHistory => 'سجل دوام الموظفين';
+
+  @override
   String get pickDuration => 'اختر المدة';
 
   @override
@@ -259,4 +262,31 @@ class LanguageAr extends Languages {
 
   @override
   String get staffManagement => 'إدارة الموظفين';
+
+  @override
+  String get absence => 'غياب';
+
+  @override
+  String get accepted => 'مقبول';
+
+  @override
+  String get pending => 'انتظار';
+
+  @override
+  String get rejected => 'مرفوض';
+
+  @override
+  String get admin => 'أدمن';
+
+  @override
+  String get employee => 'موظف';
+
+  @override
+  String get theManager => 'المدير';
+
+  @override
+  String get vacationSaved => 'تم تسجيل إجازة';
+
+  @override
+  String get officialHoliday => 'إجازة رسمية';
 }

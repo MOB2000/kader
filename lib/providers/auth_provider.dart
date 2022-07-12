@@ -52,6 +52,10 @@ class AuthProvider with ChangeNotifier {
     ];
   }
 
+  Future<List<CustomUser>> get managersWithoutDepartments async {
+    return _firestoreHelper.managersWithoutDepartments;
+  }
+
   Future<List<CustomUser>> get managers async {
     return _firestoreHelper.managers;
   }

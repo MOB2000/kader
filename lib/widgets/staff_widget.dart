@@ -5,6 +5,7 @@ import 'package:kader/models/custom_user.dart';
 import 'package:kader/models/user_type.dart';
 import 'package:kader/providers/auth_provider.dart';
 import 'package:kader/providers/departments_provider.dart';
+import 'package:kader/services/strings_helper.dart';
 import 'package:provider/provider.dart';
 
 class StaffWidget extends StatelessWidget {
@@ -20,7 +21,7 @@ class StaffWidget extends StatelessWidget {
 
     return ListTile(
       title: Text(staff.name),
-      subtitle: Text(staff.type.toString()),
+      subtitle: Text(StringsHelper.translateUserType(staff.type, languages)),
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[

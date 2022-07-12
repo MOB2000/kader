@@ -259,4 +259,34 @@ class LanguageEn extends Languages {
 
   @override
   String get staffManagement => 'staff management';
+
+  @override
+  String get showEmployeesHistory => 'show employees history';
+
+  @override
+  String get absence => 'absence';
+
+  @override
+  String get accepted => 'accepted';
+
+  @override
+  String get pending => 'pending';
+
+  @override
+  String get rejected => 'rejected';
+
+  @override
+  String get officialHoliday => 'official holiday';
+
+  @override
+  String get admin => 'admin';
+
+  @override
+  String get employee => 'employee';
+
+  @override
+  String get theManager => 'manager';
+
+  @override
+  String get vacationSaved => 'vacation taken';
 }

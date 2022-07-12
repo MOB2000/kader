@@ -4,6 +4,7 @@ import 'package:kader/models/attendance_status.dart';
 class Attendance {
   String? id;
   String employeeId;
+  String employeeName;
   DateTime date;
   DateTime? attendance;
   DateTime? leaving;
@@ -13,6 +14,7 @@ class Attendance {
   Attendance({
     this.id,
     required this.employeeId,
+    required this.employeeName,
     required this.date,
     this.attendance,
     this.leaving,
@@ -23,6 +25,7 @@ class Attendance {
     return <String, dynamic>{
       Keys.id: id,
       Keys.employeeId: employeeId,
+      Keys.employeeName: employeeName,
       Keys.date: date.toIso8601String(),
       Keys.attendance: attendance?.toIso8601String(),
       Keys.leaving: leaving?.toIso8601String(),
@@ -34,6 +37,7 @@ class Attendance {
     return Attendance(
       id: map[Keys.id],
       employeeId: map[Keys.employeeId],
+      employeeName: map[Keys.employeeName],
       date: DateTime.parse(map[Keys.date]),
       attendance: DateTime.tryParse(map[Keys.attendance] ?? ''),
       leaving: DateTime.tryParse(map[Keys.leaving] ?? ''),

@@ -13,6 +13,7 @@ import 'package:kader/providers/departments_provider.dart';
 import 'package:kader/providers/vacations_provider.dart';
 import 'package:kader/screens/attendance/attendance_history_screen.dart';
 import 'package:kader/screens/attendance/attendance_screen.dart';
+import 'package:kader/screens/attendance/employees_attendance_history_screen.dart';
 import 'package:kader/screens/auth/login_screen.dart';
 import 'package:kader/screens/auth/register_screen.dart';
 import 'package:kader/screens/department/create_department_screen.dart';
@@ -31,9 +32,6 @@ Future<void> main() async {
   await SharedPreferencesHelper.instance.init();
 
   await Firebase.initializeApp();
-
-  // TODO: enums locale toString methods
-  // TODO:
 
   runApp(const Kader());
 
@@ -119,6 +117,8 @@ class _KaderState extends State<Kader> {
             AttendanceScreen.routeName: (context) => AttendanceScreen(),
             AttendanceHistoryScreen.routeName: (context) =>
                 const AttendanceHistoryScreen(),
+            EmployeesAttendanceHistoryScreen.routeName: (context) =>
+                const EmployeesAttendanceHistoryScreen(),
             DepartmentsScreen.routeName: (context) => const DepartmentsScreen(),
             CreateDepartmentScreen.routeName: (context) =>
                 const CreateDepartmentScreen(),

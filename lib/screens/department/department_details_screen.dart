@@ -3,7 +3,6 @@ import 'package:kader/localization/language/languages.dart';
 import 'package:kader/models/custom_user.dart';
 import 'package:kader/models/department.dart';
 import 'package:kader/providers/departments_provider.dart';
-import 'package:kader/services/helpers.dart';
 import 'package:kader/widgets/loading_widget.dart';
 import 'package:kader/widgets/select_manger_widget.dart';
 import 'package:provider/provider.dart';
@@ -45,6 +44,7 @@ class _DepartmentDetailsScreenState extends State<DepartmentDetailsScreen> {
 
     final departmentsProvider = Provider.of<DepartmentsProvider>(context);
     getDepartmentEmployees(departmentsProvider);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(languages.departmentDetails),
@@ -58,13 +58,7 @@ class _DepartmentDetailsScreenState extends State<DepartmentDetailsScreen> {
               onChanged: (newManager) async {
                 widget.department.managerId = newManager.id;
 
-                showDialogWaiting(
-                  context,
-                  () async {
-                    await departmentsProvider
-                        .updateDepartment(widget.department);
-                  },
-                );
+                await departmentsProvider.updateDepartment(widget.department);
               },
             ),
             Text(languages.employees),
@@ -100,18 +94,22 @@ class _DepartmentDetailsScreenState extends State<DepartmentDetailsScreen> {
             TextButton(
               child: Text(languages.addRemoveEmployees),
               onPressed: () async {
-                final allEmployees = await departmentsProvider.employees;
+                final employeesWithoutDepartment = await departmentsProvider
+                    .employeesWithoutDepartment(widget.department);
+
                 final employeesToAdd = await departmentsProvider
                     .getDepartmentEmployees(widget.department);
+                employeesWithoutDepartment.addAll(employeesToAdd);
+
                 final add = await showDialog(
                   context: context,
                   barrierDismissible: false,
                   builder: (context) {
                     return AlertDialog(
                       content: ListView.builder(
-                        itemCount: allEmployees.length,
+                        itemCount: employeesWithoutDepartment.length,
                         itemBuilder: (context, index) {
-                          final employee = allEmployees[index];
+                          final employee = employeesWithoutDepartment[index];
                           return StatefulBuilder(
                             builder: (context, setState) {
                               return CheckboxListTile(

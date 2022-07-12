@@ -35,14 +35,17 @@ class _SelectManagerWidgetState extends State<SelectManagerWidget> {
 
     return Row(
       children: <Widget>[
-        Text(languages.manager),
+        Text(languages.theManager),
         const SizedBox(width: 12),
         Expanded(
           child: FutureBuilder<List<CustomUser>>(
-            future: authProvider.managers,
+            future: authProvider.managersWithoutDepartments,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
                 final managers = snapshot.data!;
+                if (widget.value != null) {
+                  managers.add(widget.value!);
+                }
                 if (managers.isEmpty) {
                   return Center(
                     child: Text(languages.noManagersFound),

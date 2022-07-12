@@ -19,6 +19,7 @@ class Keys {
   static const String managerId = 'manager_id';
   static const String empId = 'emp_id';
   static const String employeeId = 'employeeId';
+  static const String employeeName = 'employeeName';
   static const String vacationsRequests = 'vacations_requests';
   static const String departmentId = 'departmentId';
   static const String attendance = 'attendance';
@@ -33,7 +34,6 @@ class Keys {
   static const String accepted = 'accepted';
   static const String rejected = 'rejected';
   static const String admin = 'admin';
-  static const String employeeName = 'employeeName';
   static const String startDate = 'startDate';
   static const String endDate = 'endDate';
   static const String cause = 'cause';

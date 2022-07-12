@@ -9,7 +9,7 @@ enum AttendanceStatus {
   @override
   String toString() {
     return this == attendance
-        ? Keys.attendanceStatus
+        ? Keys.attendance
         : this == absence
             ? Keys.absence
             : this == officialHoliday
@@ -18,7 +18,7 @@ enum AttendanceStatus {
   }
 
   static AttendanceStatus fromString(String string) {
-    return string == Keys.attendanceStatus
+    return string == Keys.attendance
         ? attendance
         : string == Keys.absence
             ? absence

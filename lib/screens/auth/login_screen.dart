@@ -33,16 +33,19 @@ class _LoginScreenState extends State<LoginScreen> {
 
     if (_loginFormKey.currentState!.validate()) {
       _loginFormKey.currentState!.save();
+
       bool isLogged = false;
       await showDialogWaiting(context, () async {
         try {
           await authProvider.login(email, password);
+
           isLogged = true;
         } catch (e) {
           Fluttertoast.showToast(msg: e.toString());
         }
       });
       if (!isLogged) return;
+
       if (!mounted) return;
       Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
     }
@@ -70,7 +73,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   labelText: 'الايميل',
                 ),
                 keyboardType: TextInputType.emailAddress,
-                validator: (value) => checkEmpty(value, 'ادخل الايميل'),
+                validator: (value) => checkEmpty(value, languages.enterValue),
                 onSaved: (value) {
                   value = value!.trim();
                   email = value;

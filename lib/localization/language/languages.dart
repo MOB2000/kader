@@ -61,9 +61,21 @@ abstract class Languages {
 
   String get attendance;
 
+  String get absence;
+
   String get leaving;
 
+  String get accepted;
+
+  String get rejected;
+
+  String get pending;
+
+  String get theManager;
+
   String get manager;
+
+  String get admin;
 
   String get noManagersFound;
 
@@ -101,6 +113,10 @@ abstract class Languages {
 
   String get vacations;
 
+  String get vacationSaved;
+
+  String get officialHoliday;
+
   String get manageDepartment;
 
   String get manageDepartments;
@@ -135,6 +151,8 @@ abstract class Languages {
 
   String get showHistory;
 
+  String get showEmployeesHistory;
+
   String get requestVacation;
 
   String get staffManagement;
@@ -156,6 +174,8 @@ abstract class Languages {
   String get addRemoveEmployees;
 
   String get employees;
+
+  String get employee;
 
   String get departmentDetails;
 

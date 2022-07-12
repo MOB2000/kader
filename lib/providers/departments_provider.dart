@@ -59,4 +59,9 @@ class DepartmentsProvider with ChangeNotifier {
     await _firestore.removeEmployeeFromDepartment(employee, department);
     notifyListeners();
   }
+
+  Future<List<CustomUser>> employeesWithoutDepartment(
+      Department department) async {
+    return _firestore.employeesWithoutDepartment(department);
+  }
 }

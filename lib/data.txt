@@ -4,7 +4,7 @@ admin
 admin@asd.asd
 
 departments
-mobile,web,marketing
+mobile, web and marketing
 
 managers
 mob@asd.asd

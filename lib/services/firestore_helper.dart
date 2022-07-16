@@ -2,8 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:kader/constants/keys.dart';
 import 'package:kader/models/attendance.dart';
 import 'package:kader/models/attendance_status.dart';
+import 'package:kader/models/complaint.dart';
+import 'package:kader/models/custody.dart';
 import 'package:kader/models/custom_user.dart';
 import 'package:kader/models/department.dart';
+import 'package:kader/models/meeting.dart';
+import 'package:kader/models/meeting_employee.dart';
 import 'package:kader/models/request_status.dart';
 import 'package:kader/models/vacation_request.dart';
 
@@ -16,6 +20,15 @@ class FirestoreHelper {
 
   Future<void> addUser(CustomUser user) async {
     await _firebaseFirestore.collection(Keys.users).add(user.toMap());
+  }
+
+  Future<Department> getDepartmentID(String id) async {
+    final doc = await _firebaseFirestore
+        .collection('departments')
+        .where('id', isEqualTo: id)
+        .get()
+        .then((value) => value.docs.first);
+    return Department.fromMap(doc.data().cast());
   }
 
   Future<void> updateUser(CustomUser user) async {
@@ -327,5 +340,219 @@ class FirestoreHelper {
         (element) => employeesWithDepartments.contains(element.id));
 
     return allEmployees;
+  }
+
+  Future<Department> getDepartment(String id) async {
+    return _firebaseFirestore
+        .collection('departments')
+        .where('manager_id', isEqualTo: id)
+        .get()
+        .then((value) => Department.fromMap(value.docs.first.data()));
+  }
+
+  Future<void> addComplaint(Complaint complaint) async {
+    complaint.id = await _firebaseFirestore
+        .collection('complaints')
+        .add(complaint.toMap())
+        .then((value) => value.id);
+    await updateComplaints_ID(complaint);
+  }
+
+  Future<List<Complaint>> get complaints async =>
+      await _firebaseFirestore.collection('complaints').get().then((value) =>
+          value.docs.map((e) => Complaint.fromMap(e.data())).toList());
+
+  Future<List<Complaint>> getComplaints(String ownerId) async {
+    final complaints = await _firebaseFirestore
+        .collection('complaints')
+        .where('ownerId', isEqualTo: ownerId)
+        .get()
+        .then(
+          (value) =>
+              value.docs.map((e) => Complaint.fromMap(e.data())).toList(),
+        );
+    return complaints;
+  }
+
+  Future<void> updateComplaints_ID(Complaint complaint) async {
+    await _firebaseFirestore
+        .collection('complaints')
+        .doc(complaint.id)
+        .set(complaint.toMap());
+  }
+
+  Future<void> updateComplaints_reply(Complaint complaint) async {
+    await _firebaseFirestore
+        .collection('complaints')
+        .doc(complaint.id)
+        .update(complaint.toMap());
+  }
+
+  Future<void> deleteComplaints() async {
+    var collection = await _firebaseFirestore.collection('complaints');
+    var snapshots = await collection.get();
+    for (var doc in snapshots.docs) {
+      await doc.reference.delete();
+    }
+  }
+
+  Future<void> addCustody(Custody custody) async {
+    custody.id = await _firebaseFirestore
+        .collection('custodys')
+        .add(custody.toMap())
+        .then((value) => value.id);
+    await updateCustody_ID(custody);
+  }
+
+  Future<void> updateCustody_ID(Custody custody) async {
+    await _firebaseFirestore
+        .collection('custodys')
+        .doc(custody.id)
+        .set(custody.toMap());
+  }
+
+  Future<void> updateCustody_reply(Custody custody) async {
+    await _firebaseFirestore
+        .collection('custodys')
+        .doc(custody.id)
+        .update(custody.toMap());
+  }
+
+  Future<List<Custody>> get custody async =>
+      await _firebaseFirestore.collection('custodys').get().then(
+          (value) => value.docs.map((e) => Custody.fromMap(e.data())).toList());
+
+  Future<List<Custody>> get custodiesWithoutReply async =>
+      await _firebaseFirestore
+          .collection('custodys')
+          .where('reply', isNotEqualTo: true)
+          .get()
+          .then((value) =>
+              value.docs.map((e) => Custody.fromMap(e.data())).toList());
+
+  Future<List<Custody>> getCustody(String ownerId) async {
+    final custodys = await _firebaseFirestore
+        .collection('custodys')
+        .where('ownerId', isEqualTo: ownerId)
+        .get()
+        .then(
+          (value) => value.docs.map((e) => Custody.fromMap(e.data())).toList(),
+        );
+    return custodys;
+  }
+
+  Future<void> deleteCustody(Custody custody) async {
+    await _firebaseFirestore.collection('custodys').doc(custody.id).delete();
+  }
+
+  Future<void> addMeeting(Meeting meeting) async {
+    meeting.id = await _firebaseFirestore
+        .collection('meeting')
+        .add(meeting.toMap())
+        .then((value) => value.id);
+    await updateMeeting_ID(meeting);
+  }
+
+  Future<void> updateMeeting_ID(Meeting meeting) async {
+    await _firebaseFirestore
+        .collection('meeting')
+        .doc(meeting.id)
+        .set(meeting.toMap());
+  }
+
+  Future<List<Meeting>> get meeting async =>
+      await _firebaseFirestore.collection('meeting').get().then(
+          (value) => value.docs.map((e) => Meeting.fromMap(e.data())).toList());
+
+  Future<List<Meeting>> getMeeting(String id) async {
+    final meeting = await _firebaseFirestore
+        .collection('meeting')
+        .where('ownerId', isEqualTo: id)
+        .get()
+        .then(
+          (value) => value.docs.map((e) => Meeting.fromMap(e.data())).toList(),
+        );
+    return meeting;
+  }
+
+  Future<List<Meeting>> getMeetingID(String id) async {
+    final meeting = await _firebaseFirestore
+        .collection('meeting')
+        .where('ID', isEqualTo: id)
+        .get()
+        .then(
+          (value) => value.docs.map((e) => Meeting.fromMap(e.data())).toList(),
+        );
+    return meeting;
+  }
+
+  Future<Meeting> getMeeting_ID(String id) async {
+    return _firebaseFirestore
+        .collection('meeting')
+        .where('ID', isEqualTo: id)
+        .get()
+        .then((value) => Meeting.fromMap(value.docs.first.data()));
+  }
+
+  Future<void> addMeetingEmployee(MeetingEmployee meetingEmployee) async {
+    meetingEmployee.id = await _firebaseFirestore
+        .collection('meetingEmployee')
+        .add(meetingEmployee.toMap())
+        .then((value) => value.id);
+    await updateMeetingEmployee_ID(meetingEmployee);
+  }
+
+  Future<void> updateMeetingEmployee_ID(MeetingEmployee meetingEmployee) async {
+    await _firebaseFirestore
+        .collection('meetingEmployee')
+        .doc(meetingEmployee.id)
+        .set(meetingEmployee.toMap());
+  }
+
+  Future<void> deleteMeetingEmployee(MeetingEmployee meetingEmployee) async {
+    await _firebaseFirestore
+        .collection('meetingEmployee')
+        .doc(meetingEmployee.id)
+        .delete();
+  }
+
+  Future<void> updateMeetingEmployee_reply(
+      MeetingEmployee meetingEmployee) async {
+    await _firebaseFirestore
+        .collection('meetingEmployee')
+        .doc(meetingEmployee.id)
+        .update(meetingEmployee.toMap());
+  }
+
+  Future<bool> checkExisting(String ownerId, String meetId) async {
+    final result = await _firebaseFirestore
+        .collection('meetingEmployee')
+        .where("ownerId", isEqualTo: ownerId)
+        .where("meetID", isEqualTo: meetId)
+        .get();
+    return result.size != 0;
+  }
+
+  Future<List<MeetingEmployee>> getMeetingEmployee(String id) async {
+    final meetingEmployee = await _firebaseFirestore
+        .collection('meetingEmployee')
+        .where('meetID', isEqualTo: id)
+        .get()
+        .then(
+          (value) =>
+              value.docs.map((e) => MeetingEmployee.fromMap(e.data())).toList(),
+        );
+    return meetingEmployee;
+  }
+
+  Future<List<MeetingEmployee>> getMeetingAllEmployee(String ownerId) async {
+    final result = await _firebaseFirestore
+        .collection('meetingEmployee')
+        .where("ownerId", isEqualTo: ownerId)
+        .get()
+        .then((value) =>
+            value.docs.map((e) => MeetingEmployee.fromMap(e.data())).toList());
+    print(result.length);
+    return result;
   }
 }

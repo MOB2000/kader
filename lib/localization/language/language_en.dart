@@ -289,4 +289,145 @@ class LanguageEn extends Languages {
 
   @override
   String get vacationSaved => 'vacation taken';
+
+  /////
+  @override
+  String get addComplaintsTitle => 'Add Complaints';
+
+  @override
+  String get titleComplaints => 'title complaints';
+
+  @override
+  String get contentComplaints => 'content complaints';
+
+  @override
+  String get showName => 'show Name';
+
+  @override
+  String get addComplaints => 'Add Complaints';
+
+  @override
+  String get address => 'title';
+
+  @override
+  String get status => 'status';
+
+  @override
+  String get answered => 'answered';
+
+  @override
+  String get notReply => 'not reply';
+
+  @override
+  String get viewReply => 'view reply';
+
+  @override
+  String get sender => 'sender';
+
+  @override
+  String get reply => 'reply';
+
+  @override
+  String get userUnknown => 'user unknown';
+
+  @override
+  String get sendingDate => 'sending date';
+
+  @override
+  String get sendReply => 'send reply';
+
+  @override
+  String get message => 'Reply added successfully';
+
+  @override
+  String get ok => 'ok';
+
+  @override
+  String get complaintDetails => 'Complaint Details';
+
+  @override
+  String get custodyName => 'custody name';
+
+  @override
+  String get reason => 'reason';
+
+  @override
+  String get custodyRequest => 'custody request';
+
+  @override
+  String get receivedDate => 'received date';
+
+  @override
+  String get awaitingApproval => 'awaiting approval';
+
+  @override
+  String get employeeName => 'employee name';
+
+  @override
+  String get acceptance => 'acceptance';
+
+  @override
+  String get deleteCustody => 'delete';
+
+  @override
+  String get meetingDate => 'meeting date';
+
+  @override
+  String get hour => 'hour';
+
+  @override
+  String get meetingAddress => 'meeting address';
+
+  @override
+  String get place => 'place';
+
+  @override
+  String get pendingRequests => 'Pending Requests';
+
+  @override
+  String get presence => 'presence';
+
+  @override
+  String get apology => 'apology';
+
+  @override
+  String get addMeeting => 'add meeting';
+
+  @override
+  String get meetingMessage =>
+      'The meeting has been created. Please send an invitation to the staff';
+
+  @override
+  String get wrongMessage => 'Ensure that all data is entered';
+
+  @override
+  String get sendRequestsEmployees => 'Send requests to employees';
+
+  @override
+  String get inviteAll => 'invite all';
+
+  @override
+  String get selectAllEmployees => 'Select all employees in the department';
+
+  @override
+  String get inviteAllEmployees =>
+      'Are you sure to invite all department employees?';
+
+  @override
+  String get meetingDetails => 'meeting details';
+
+  @override
+  String get invitationAccepted => 'invitation accepted';
+
+  @override
+  String get invitationDeclined => 'invitation declined';
+
+  @override
+  String get notSeeInvitation => 'not see invitation';
+
+  @override
+  String get invitation => 'invitation';
+
+  @override
+  String get invited => 'invited';
 }

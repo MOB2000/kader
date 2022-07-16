@@ -19,7 +19,7 @@ class DepartmentsProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<String> getDepartment(CustomUser manager) {
+  Future<String> getDepartmentByManager(CustomUser manager) {
     return _firestore.getDepartmentId(manager);
   }
 
@@ -63,5 +63,13 @@ class DepartmentsProvider with ChangeNotifier {
   Future<List<CustomUser>> employeesWithoutDepartment(
       Department department) async {
     return _firestore.employeesWithoutDepartment(department);
+  }
+
+  Future<Department> getDepartment(String id) async {
+    return _firestore.getDepartment(id);
+  }
+
+  Future<Department> getDepartmentId(String ID) async {
+    return _firestore.getDepartmentID(ID);
   }
 }

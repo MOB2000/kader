@@ -13,6 +13,8 @@ abstract class Languages {
 
   String get home;
 
+  String get pendingRequests;
+
   String get login;
 
   String get register;
@@ -196,4 +198,94 @@ abstract class Languages {
   String get idNumberMustBeTen;
 
   String get alreadyHaveAccountLogin;
+
+  ///////
+
+  String get addComplaintsTitle;
+
+  String get titleComplaints;
+
+  String get contentComplaints;
+
+  String get showName;
+
+  String get addComplaints;
+
+  String get address;
+
+  String get status;
+
+  String get answered;
+
+  String get notReply;
+
+  String get viewReply;
+
+  String get sender;
+
+  String get reply;
+
+  String get userUnknown;
+
+  String get sendingDate;
+
+  String get sendReply;
+
+  String get message;
+
+  String get ok;
+
+  String get complaintDetails;
+
+  String get custodyName;
+
+  String get reason;
+
+  String get custodyRequest;
+
+  String get receivedDate;
+
+  String get awaitingApproval;
+
+  String get employeeName;
+
+  String get acceptance;
+
+  String get deleteCustody;
+
+  String get meetingDate;
+
+  String get hour;
+
+  String get meetingAddress;
+
+  String get place;
+
+  String get presence;
+
+  String get apology;
+
+  String get addMeeting;
+
+  String get meetingMessage;
+
+  String get sendRequestsEmployees;
+
+  String get inviteAll;
+
+  String get selectAllEmployees;
+
+  String get inviteAllEmployees;
+
+  String get meetingDetails;
+
+  String get invitationAccepted;
+
+  String get invitationDeclined;
+
+  String get notSeeInvitation;
+
+  String get invitation;
+
+  String get invited;
 }

@@ -289,4 +289,141 @@ class LanguageAr extends Languages {
 
   @override
   String get officialHoliday => 'إجازة رسمية';
+
+  /////
+  @override
+  String get addComplaintsTitle => 'إضافة شكوى جديدة';
+
+  @override
+  String get titleComplaints => 'عنوان الشكوى';
+
+  @override
+  String get contentComplaints => 'محتوى الشكوى';
+
+  @override
+  String get showName => 'عرض الاسم';
+
+  @override
+  String get addComplaints => 'إضافة الشكوى';
+
+  @override
+  String get address => 'العنوان';
+
+  @override
+  String get status => 'الحالة';
+
+  @override
+  String get answered => 'تم الرد';
+
+  @override
+  String get notReply => 'لم يتم الرد';
+
+  @override
+  String get viewReply => 'عرض الرد';
+
+  @override
+  String get sender => 'المرسل';
+
+  @override
+  String get reply => 'الرد';
+
+  @override
+  String get userUnknown => 'المستخدم مجهول';
+
+  @override
+  String get sendingDate => 'تاريخ الإرسال';
+
+  @override
+  String get sendReply => 'ارسال الرد';
+
+  @override
+  String get message => 'تم ارسال الرد بنجاح';
+
+  @override
+  String get ok => 'حسنا';
+
+  @override
+  String get complaintDetails => 'تفاصيل الشكوى';
+
+  @override
+  String get custodyName => 'اسم العهدة';
+
+  @override
+  String get reason => 'السبب';
+
+  @override
+  String get custodyRequest => 'طلب العهدة';
+
+  @override
+  String get pendingRequests => 'طلبات في الانتظار';
+
+  @override
+  String get receivedDate => 'تاريخ الإستلام';
+
+  @override
+  String get awaitingApproval => 'بانتظار الموافقة';
+
+  @override
+  String get employeeName => 'اسم الموظف';
+
+  @override
+  String get acceptance => 'قبول';
+
+  @override
+  String get deleteCustody => 'سحب';
+
+  @override
+  String get meetingDate => 'تاريخ الاجتماع';
+
+  @override
+  String get hour => 'الساعة';
+
+  @override
+  String get meetingAddress => 'عنوان الاجتماع';
+
+  @override
+  String get place => 'المكان';
+
+  @override
+  String get presence => 'حضور';
+
+  @override
+  String get apology => 'اعتذار';
+
+  @override
+  String get addMeeting => 'إضافة اجتماع';
+
+  @override
+  String get meetingMessage =>
+      'تم انشاء الاجتماع الرجاء ارسال دعوة الى الموظفين';
+
+  @override
+  String get sendRequestsEmployees => 'ارسال طلبات للموظفين';
+
+  @override
+  String get inviteAll => 'دعوة الكل';
+
+  @override
+  String get selectAllEmployees => ' تحديد كافة الموظفين في القسم';
+
+  @override
+  String get inviteAllEmployees => 'هل انت متاكد من دعوة جميع موظفي القسم ؟';
+
+  @override
+  String get meetingDetails => 'تفاصيل الاجتماع';
+
+  @override
+  String get invitationAccepted => 'تم قبول الدعوة';
+
+  @override
+  String get invitationDeclined => 'اعتذر عن الحضور';
+
+  @override
+  String get notSeeInvitation => 'لم يرا الدعوة';
+
+  @override
+  String get invitation => 'دعوة';
+
+  @override
+  String get invited => 'تمت الدعوة';
 }

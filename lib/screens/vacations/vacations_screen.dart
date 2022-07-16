@@ -20,8 +20,8 @@ class VacationsScreen extends StatelessWidget {
     final user = Provider.of<AuthProvider>(context).user;
 
     if (user.isManager) {
-      final departmentId =
-          await Provider.of<DepartmentsProvider>(context).getDepartment(user);
+      final departmentId = await Provider.of<DepartmentsProvider>(context)
+          .getDepartmentByManager(user);
 
       return vacationsProvider.getDepartmentVacations(departmentId);
     }

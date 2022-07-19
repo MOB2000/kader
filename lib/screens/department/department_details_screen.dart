@@ -8,7 +8,7 @@ import 'package:kader/widgets/select_manger_widget.dart';
 import 'package:provider/provider.dart';
 
 class DepartmentDetailsScreen extends StatefulWidget {
-  static const String routeName = 'DepartmentDetails';
+  static const String routeName = 'DepartmentDetailsScreen';
 
   final Department department;
   final CustomUser manager;
@@ -29,7 +29,8 @@ class _DepartmentDetailsScreenState extends State<DepartmentDetailsScreen> {
 
   bool firstTime = true;
 
-  getDepartmentEmployees(DepartmentsProvider departmentsProvider) async {
+  Future<void> getDepartmentEmployees(
+      DepartmentsProvider departmentsProvider) async {
     if (firstTime) {
       firstTime = false;
       departmentEmployees =
@@ -80,10 +81,6 @@ class _DepartmentDetailsScreenState extends State<DepartmentDetailsScreen> {
                           final employee = employees[index];
                           return ListTile(
                             title: Text(employee.name),
-                            trailing: TextButton(
-                              child: Text(languages.details),
-                              onPressed: () async {},
-                            ),
                           );
                         },
                       );

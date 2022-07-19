@@ -6,7 +6,6 @@ class CustomUser {
   String name;
   String email;
   String phoneNumber;
-  String idNumber;
   String photoUrl;
   UserType type;
 
@@ -21,7 +20,6 @@ class CustomUser {
     required this.name,
     required this.email,
     required this.phoneNumber,
-    required this.idNumber,
     required this.photoUrl,
     required this.type,
   });
@@ -31,7 +29,6 @@ class CustomUser {
         name = map[Keys.name],
         email = map[Keys.email],
         phoneNumber = map[Keys.phoneNumber],
-        idNumber = map[Keys.idNumber],
         photoUrl = map[Keys.photoUrl],
         type = UserType.fromString(map[Keys.type]);
 
@@ -41,7 +38,6 @@ class CustomUser {
       Keys.name: name,
       Keys.email: email,
       Keys.phoneNumber: phoneNumber,
-      Keys.idNumber: idNumber,
       Keys.photoUrl: photoUrl,
       Keys.type: type.toString(),
     };
@@ -52,7 +48,6 @@ class CustomUser {
           id: '',
           type: UserType.employee,
           phoneNumber: '',
-          idNumber: '',
           photoUrl: '',
           name: '',
           email: '',

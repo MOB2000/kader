@@ -2,7 +2,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:kader/constants/colors.dart';
 import 'package:kader/localization/app_localizations_delegate.dart';
 import 'package:kader/localization/language/languages.dart';
@@ -12,25 +11,25 @@ import 'package:kader/providers/auth_provider.dart';
 import 'package:kader/providers/complaints_provider.dart';
 import 'package:kader/providers/custody_provider.dart';
 import 'package:kader/providers/departments_provider.dart';
-import 'package:kader/providers/meeting_employee_provider.dart';
 import 'package:kader/providers/meeting_provider.dart';
 import 'package:kader/providers/vacations_provider.dart';
-import 'package:kader/screens/add_complaint_screen.dart';
-import 'package:kader/screens/add_custody_screen.dart';
 import 'package:kader/screens/attendance/attendance_history_screen.dart';
 import 'package:kader/screens/attendance/attendance_screen.dart';
 import 'package:kader/screens/attendance/employees_attendance_history_screen.dart';
 import 'package:kader/screens/auth/login_screen.dart';
 import 'package:kader/screens/auth/register_screen.dart';
-import 'package:kader/screens/complaints_screen.dart';
-import 'package:kader/screens/custody_screen.dart';
+import 'package:kader/screens/complaints/add_complaint_screen.dart';
+import 'package:kader/screens/complaints/complaints_screen.dart';
+import 'package:kader/screens/custody/custody_pending_requests_screen.dart';
+import 'package:kader/screens/custody/custody_screen.dart';
+import 'package:kader/screens/custody/custody_transfer_requests_screen.dart';
+import 'package:kader/screens/custody/request_custody_screen.dart';
 import 'package:kader/screens/department/create_department_screen.dart';
 import 'package:kader/screens/department/departments_screen.dart';
 import 'package:kader/screens/home_screen.dart';
-import 'package:kader/screens/meetings_screen.dart';
-import 'package:kader/screens/pending_requests_screen.dart';
+import 'package:kader/screens/meetings/meetings_screen.dart';
 import 'package:kader/screens/staff_management_screen.dart';
-import 'package:kader/screens/vacations/request_vacation_screen.dart';
+import 'package:kader/screens/vacations/vacation_request_screen.dart';
 import 'package:kader/screens/vacations/vacations_screen.dart';
 import 'package:kader/services/shared_preferences_helper.dart';
 import 'package:provider/provider.dart';
@@ -43,10 +42,10 @@ Future<void> main() async {
 
   await Firebase.initializeApp();
 
-  // TODO: check hard coded strings
-  // TODO: use empty text widget
-  // TODO: use keys
+  // TODO: use firebase security rules
   // TODO:
+  // TODO:
+
   runApp(const Kader());
 
   FlutterNativeSplash.remove();
@@ -92,13 +91,11 @@ class _KaderState extends State<Kader> {
         ChangeNotifierProvider(create: (context) => ComplaintsProvider()),
         ChangeNotifierProvider(create: (context) => CustodyProvider()),
         ChangeNotifierProvider(create: (context) => MeetingProvider()),
-        ChangeNotifierProvider(create: (context) => MeetingEmployeeProvider()),
       ],
       builder: (context, child) {
         return MaterialApp(
           theme: ThemeData(
-            fontFamily: GoogleFonts.tajawal().fontFamily,
-            scaffoldBackgroundColor: kScaffoldBackgroundColor,
+            scaffoldBackgroundColor: kSecondaryColor,
             inputDecorationTheme: const InputDecorationTheme(
               filled: true,
               focusedBorder: UnderlineInputBorder(
@@ -130,9 +127,9 @@ class _KaderState extends State<Kader> {
             StaffManagementScreen.routeName: (context) =>
                 const StaffManagementScreen(),
             VacationsScreen.routeName: (context) => const VacationsScreen(),
-            RequestVacationScreen.routeName: (context) =>
-                const RequestVacationScreen(),
-            AttendanceScreen.routeName: (context) => AttendanceScreen(),
+            VacationRequestScreen.routeName: (context) =>
+                const VacationRequestScreen(),
+            AttendanceScreen.routeName: (context) => const AttendanceScreen(),
             AttendanceHistoryScreen.routeName: (context) =>
                 const AttendanceHistoryScreen(),
             EmployeesAttendanceHistoryScreen.routeName: (context) =>
@@ -142,11 +139,15 @@ class _KaderState extends State<Kader> {
                 const CreateDepartmentScreen(),
             ComplaintsScreen.routeName: (context) => const ComplaintsScreen(),
             MeetingsScreen.routeName: (context) => const MeetingsScreen(),
-            PendingRequestsScreen.routeName: (context) =>
-                const PendingRequestsScreen(),
+            CustodyPendingRequestsScreen.routeName: (context) =>
+                const CustodyPendingRequestsScreen(),
             CustodyScreen.routeName: (context) => const CustodyScreen(),
-            AddComplaints.routeName: (context) => const AddComplaints(),
-            AddCustodyScreen.routeName: (context) => const AddCustodyScreen(),
+            CustodyTransferRequestsScreen.routeName: (context) =>
+                const CustodyTransferRequestsScreen(),
+            AddComplaintsScreen.routeName: (context) =>
+                const AddComplaintsScreen(),
+            RequestCustodyScreen.routeName: (context) =>
+                const RequestCustodyScreen(),
           },
           locale: _locale,
           supportedLocales: languageList.map((e) => e.toLocale),

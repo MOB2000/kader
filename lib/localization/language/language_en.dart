@@ -276,9 +276,6 @@ class LanguageEn extends Languages {
   String get rejected => 'rejected';
 
   @override
-  String get officialHoliday => 'official holiday';
-
-  @override
   String get admin => 'admin';
 
   @override
@@ -346,9 +343,6 @@ class LanguageEn extends Languages {
   String get complaintDetails => 'Complaint Details';
 
   @override
-  String get custodyName => 'custody name';
-
-  @override
   String get reason => 'reason';
 
   @override
@@ -398,9 +392,6 @@ class LanguageEn extends Languages {
       'The meeting has been created. Please send an invitation to the staff';
 
   @override
-  String get wrongMessage => 'Ensure that all data is entered';
-
-  @override
   String get sendRequestsEmployees => 'Send requests to employees';
 
   @override
@@ -430,4 +421,41 @@ class LanguageEn extends Languages {
 
   @override
   String get invited => 'invited';
+
+  @override
+  String get requestDate => 'request date';
+
+  @override
+  String get from => 'from';
+
+  @override
+  String get to => 'to';
+
+  @override
+  String get transferRequests => 'transfer requests';
+
+  @override
+  String get youDoNotHaveVacationsBalance => "you don't have vacations balance";
+
+  @override
+  String get didNotCheckAbsence => 'did not check absence';
+
+  @override
+  String get custodyRequestTransferHasSent =>
+      'custody request transfer has sent';
+
+  @override
+  String get hadApologize => 'had apologize';
+
+  @override
+  String get hadAttend => 'had attend';
+
+  @override
+  String get inviteEmployees => 'invite employees';
+
+  @override
+  String get transfer => 'transfer';
+
+  @override
+  String get transferToAnotherEmployee => 'transfer to another employee';
 }

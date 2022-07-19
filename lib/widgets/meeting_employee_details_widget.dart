@@ -35,20 +35,34 @@ class _MeetingEmployeeDetailsWidgetState
             style: const TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
           ),
           const Spacer(),
-          widget.meetingEmployee.reply != null?
-          widget.meetingEmployee.reply == true
-              ? Container(padding: const EdgeInsets.all(5),color: Colors.green, child:  Text(languages.invitationAccepted , style: const TextStyle(
-            fontSize: 18 ,
-            color: Colors.white
-          ),))
-              : Container(padding: const EdgeInsets.all(5),color: Colors.red, child:  Text(languages.invitationDeclined , style: const TextStyle(
-          fontSize: 18 ,
-          color: Colors.white
-          ),))
-              : Container(padding: const EdgeInsets.all(5),color: Colors.blue, child:  Text(languages.notSeeInvitation , style: const TextStyle(
-              fontSize: 18 ,
-              color: Colors.white
-          ),))
+          widget.meetingEmployee.reply != null
+              ? widget.meetingEmployee.reply == true
+                  ? Container(
+                      padding: const EdgeInsets.all(5),
+                      color: Colors.green,
+                      child: Text(
+                        languages.invitationAccepted,
+                        style:
+                            const TextStyle(fontSize: 18, color: Colors.white),
+                      ),
+                    )
+                  : Container(
+                      padding: const EdgeInsets.all(5),
+                      color: Colors.red,
+                      child: Text(
+                        languages.invitationDeclined,
+                        style:
+                            const TextStyle(fontSize: 18, color: Colors.white),
+                      ),
+                    )
+              : Container(
+                  padding: const EdgeInsets.all(5),
+                  color: Colors.blue,
+                  child: Text(
+                    languages.notSeeInvitation,
+                    style: const TextStyle(fontSize: 18, color: Colors.white),
+                  ),
+                ),
         ],
       ),
     );

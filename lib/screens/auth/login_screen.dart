@@ -20,7 +20,6 @@ class _LoginScreenState extends State<LoginScreen> {
   final _loginFormKey = GlobalKey<FormState>();
 
   String email = '';
-
   String password = '';
 
   final _passwordFocusNode = FocusNode();
@@ -69,18 +68,13 @@ class _LoginScreenState extends State<LoginScreen> {
             children: <Widget>[
               const Spacer(),
               TextFormField(
-                decoration: const InputDecoration(
-                  labelText: 'الايميل',
+                decoration: InputDecoration(
+                  labelText: languages.email,
                 ),
                 keyboardType: TextInputType.emailAddress,
                 validator: (value) => checkEmpty(value, languages.enterValue),
-                onSaved: (value) {
-                  value = value!.trim();
-                  email = value;
-                },
-                onFieldSubmitted: (value) {
-                  _passwordFocusNode.requestFocus();
-                },
+                onSaved: (value) => email = value!.trim(),
+                onFieldSubmitted: (value) => _passwordFocusNode.requestFocus(),
               ),
               const SizedBox(height: 18),
               TextFormField(
@@ -88,15 +82,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 decoration: InputDecoration(
                   labelText: languages.password,
                 ),
-                onFieldSubmitted: (value) async {
-                  await login();
-                },
+                onFieldSubmitted: (value) async => await login(),
                 obscureText: true,
                 validator: (value) => checkEmpty(value, languages.enterValue),
-                onSaved: (value) {
-                  value = value!.trim();
-                  password = value;
-                },
+                onSaved: (value) => password = value!.trim(),
               ),
               const Spacer(),
               TextButton(
@@ -106,10 +95,8 @@ class _LoginScreenState extends State<LoginScreen> {
               const Spacer(),
               TextButton(
                 child: Text(languages.register),
-                onPressed: () {
-                  Navigator.of(context)
-                      .pushReplacementNamed(RegisterScreen.routeName);
-                },
+                onPressed: () => Navigator.of(context)
+                    .pushReplacementNamed(RegisterScreen.routeName),
               ),
             ],
           ),

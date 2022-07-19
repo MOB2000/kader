@@ -1,12 +1,15 @@
+import 'package:kader/constants/keys.dart';
+
 class Custody {
   String? id;
-  final String ownerId;
   final String name;
+  String ownerId;
+  String ownerName;
   final String reason;
-  final String ownerName;
   DateTime? dateSendRequest;
-  bool reply;
   DateTime? dateRequestAccept;
+  bool hasReply;
+  bool hasRequestToTransfer;
 
   Custody({
     this.id,
@@ -16,31 +19,32 @@ class Custody {
     required this.ownerName,
     this.dateSendRequest,
     this.dateRequestAccept,
-    this.reply = false,
+    this.hasReply = false,
+    this.hasRequestToTransfer = false,
   });
 
-  bool get hasReply => reply != true;
-
   Custody.fromMap(Map<String, dynamic> map)
-      : ownerId = map['ownerId'],
-        name = map['name'],
-        ownerName = map['ownerName'],
-        reason = map['reason'],
-        reply = map['reply'] ?? false,
-        id = map['ID'],
-        dateSendRequest = DateTime.parse(map['dateSendRequest']),
-        dateRequestAccept = DateTime.parse(map['dateRequestAccept']);
+      : ownerId = map[Keys.ownerId],
+        name = map[Keys.name],
+        ownerName = map[Keys.ownerName],
+        reason = map[Keys.reason],
+        hasReply = map[Keys.reply] ?? false,
+        hasRequestToTransfer = map[Keys.hasRequestToTransfer] ?? false,
+        id = map[Keys.id],
+        dateSendRequest = DateTime.parse(map[Keys.dateSendRequest]),
+        dateRequestAccept = DateTime.parse(map[Keys.dateRequestAccept]);
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'ownerId': ownerId,
-      'name': name,
-      'reason': reason,
-      'ownerName': ownerName,
-      'reply': reply,
-      'ID': id,
-      'dateRequestAccept': dateRequestAccept?.toIso8601String(),
-      'dateSendRequest': dateSendRequest?.toIso8601String()
+      Keys.ownerId: ownerId,
+      Keys.name: name,
+      Keys.reason: reason,
+      Keys.ownerName: ownerName,
+      Keys.reply: hasReply,
+      Keys.hasRequestToTransfer: hasRequestToTransfer,
+      Keys.id: id,
+      Keys.dateRequestAccept: dateRequestAccept?.toIso8601String(),
+      Keys.dateSendRequest: dateSendRequest?.toIso8601String()
     };
   }
 }

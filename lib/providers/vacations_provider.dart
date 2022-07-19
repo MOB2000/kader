@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kader/models/department.dart';
 import 'package:kader/models/vacation_request.dart';
 import 'package:kader/services/firestore_helper.dart';
 
@@ -13,8 +14,9 @@ class VacationsProvider with ChangeNotifier {
   }
 
   Future<List<VacationRequest>> getDepartmentVacations(
-      String departmentId) async {
-    return await _firestoreHelper.getDepartmentVacations(departmentId);
+    Department department,
+  ) async {
+    return await _firestoreHelper.getDepartmentVacations(department);
   }
 
   Future<List<VacationRequest>> getEmployeeVacations(CustomUser user) async {

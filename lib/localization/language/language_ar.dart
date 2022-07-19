@@ -288,10 +288,6 @@ class LanguageAr extends Languages {
   String get vacationSaved => 'تم تسجيل إجازة';
 
   @override
-  String get officialHoliday => 'إجازة رسمية';
-
-  /////
-  @override
   String get addComplaintsTitle => 'إضافة شكوى جديدة';
 
   @override
@@ -344,9 +340,6 @@ class LanguageAr extends Languages {
 
   @override
   String get complaintDetails => 'تفاصيل الشكوى';
-
-  @override
-  String get custodyName => 'اسم العهدة';
 
   @override
   String get reason => 'السبب';
@@ -426,4 +419,41 @@ class LanguageAr extends Languages {
 
   @override
   String get invited => 'تمت الدعوة';
+
+  @override
+  String get requestDate => 'تاريخ الطلب';
+
+  @override
+  String get from => 'من';
+
+  @override
+  String get to => 'إلى';
+
+  @override
+  String get transferRequests => ' طلبات التحويل';
+
+  @override
+  String get youDoNotHaveVacationsBalance => 'لا يوجد لديك رصيد إجازات';
+
+  @override
+  String get didNotCheckAbsence => 'لم يتم تسجيل انصراف';
+
+  @override
+  String get custodyRequestTransferHasSent =>
+      'تم إرسال طلب تحويل العهدة إلى موظف آخر';
+
+  @override
+  String get hadApologize => 'اعتذرت عن الحضور';
+
+  @override
+  String get hadAttend => 'تم الحضور';
+
+  @override
+  String get inviteEmployees => 'تحويل';
+
+  @override
+  String get transfer => 'تحويل';
+
+  @override
+  String get transferToAnotherEmployee => 'تحويل إلى موظف آخر';
 }

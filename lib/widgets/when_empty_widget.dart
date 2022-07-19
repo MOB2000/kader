@@ -1,8 +1,8 @@
 import 'package:flutter/widgets.dart';
 import 'package:kader/localization/language/languages.dart';
 
-class TextEmptyWidget extends StatelessWidget {
-  const TextEmptyWidget({Key? key}) : super(key: key);
+class WhenEmptyWidget extends StatelessWidget {
+  const WhenEmptyWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

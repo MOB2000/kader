@@ -20,16 +20,16 @@ class AuthHelper with ChangeNotifier {
     return userCredential.user!.uid;
   }
 
-  Future<void> logout() async {
-    await _firebaseAuth.signOut();
-    await SharedPreferencesHelper.instance.setIsLogged(false);
-  }
-
   Future<String?> login(String email, String password) async {
     final userCredential = await _firebaseAuth.signInWithEmailAndPassword(
       email: email,
       password: password,
     );
     return userCredential.user?.uid;
+  }
+
+  Future<void> logout() async {
+    await _firebaseAuth.signOut();
+    await SharedPreferencesHelper.instance.setIsLogged(false);
   }
 }

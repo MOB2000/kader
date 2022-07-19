@@ -8,8 +8,6 @@ import 'package:kader/services/shared_preferences_helper.dart';
 class StringsHelper {
   StringsHelper._();
 
-  //_locale = Languages.of(context) .languageCode
-
   static String get _locale =>
       SharedPreferencesHelper.instance.language.languageCode;
 
@@ -72,9 +70,7 @@ class StringsHelper {
     if (attendanceStatus == AttendanceStatus.absence) {
       return languages.absence;
     }
-    if (attendanceStatus == AttendanceStatus.officialHoliday) {
-      return languages.officialHoliday;
-    }
+
     if (attendanceStatus == AttendanceStatus.vacation) {
       return languages.vacationSaved;
     }

@@ -27,8 +27,10 @@ class AttendanceHistoryWidget extends StatelessWidget {
           if (attendance.attendanceStatus == AttendanceStatus.attendance) ...[
             Text(
                 '${languages.attendance} ${StringsHelper.getHour(attendance.attendance!)}'),
-            Text(
-                '${languages.leaving} ${StringsHelper.getHour(attendance.leaving!)}'),
+            if (attendance.leaving != null)
+              Text(
+                  '${languages.leaving} ${StringsHelper.getHour(attendance.leaving!)}'),
+            if (attendance.leaving == null) Text(languages.didNotCheckAbsence),
           ],
           const Divider(thickness: 8),
         ],

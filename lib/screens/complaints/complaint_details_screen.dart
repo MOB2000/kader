@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:kader/localization/language/languages.dart';
 import 'package:kader/models/complaint.dart';
 import 'package:kader/providers/complaints_provider.dart';
 import 'package:kader/services/helpers.dart';
 import 'package:kader/services/shared_preferences_helper.dart';
+import 'package:kader/services/strings_helper.dart';
 import 'package:provider/provider.dart';
 
 class ComplaintDetailsScreen extends StatefulWidget {
@@ -22,18 +22,22 @@ class ComplaintDetailsScreen extends StatefulWidget {
 class _ComplaintDetailsScreenState extends State<ComplaintDetailsScreen> {
   final controller = TextEditingController();
 
-  Future openDialog(BuildContext context, Languages languages) async {
+  Future openDialog(
+    BuildContext context,
+    Languages languages,
+  ) async {
     await showDialog(
       context: context,
       builder: (context) => AlertDialog(
         title: Text(languages.message),
         actions: [
           TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-                Navigator.of(context).pop();
-              },
-              child: Text(languages.ok))
+            onPressed: () {
+              Navigator.of(context).pop();
+              Navigator.of(context).pop();
+            },
+            child: Text(languages.ok),
+          )
         ],
       ),
     );
@@ -89,7 +93,7 @@ class _ComplaintDetailsScreenState extends State<ComplaintDetailsScreen> {
                 width: double.infinity,
                 color: Colors.blueGrey,
                 child: Text(
-                  DateFormat('yyyy-MM-dd').format(widget.complaint.dateTime),
+                  StringsHelper.getDate(widget.complaint.dateTime),
                   style: const TextStyle(fontSize: 18, color: Colors.white),
                 ),
               ),
@@ -150,7 +154,7 @@ class _ComplaintDetailsScreenState extends State<ComplaintDetailsScreen> {
                     labelText: widget.complaint.reply,
                     alignLabelWithHint: true,
                   ),
-                  validator: (value) => checkEmpty(value, 'ادخل المحتوي'),
+                  validator: (value) => checkEmpty(value, languages.enterValue),
                   onSaved: (value) {
                     value = value!.trim();
                   },
@@ -205,7 +209,7 @@ class _ComplaintDetailsScreenState extends State<ComplaintDetailsScreen> {
                         await openDialog(context, languages);
                       },
                     ),
-                  )
+                  ),
             ],
           ),
         ),

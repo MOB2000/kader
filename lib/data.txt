@@ -2,6 +2,8 @@ all passwords are asdasd
 
 admin
 admin@asd.asd
+store
+stor@asd.asd
 
 departments
 mobile, web and marketing

@@ -28,9 +28,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final _emailFocusNode = FocusNode();
   final _passwordFocusNode = FocusNode();
   final _phoneNumberFocusNode = FocusNode();
-  final _idNumberFocusNode = FocusNode();
 
-  Future<void> submitForm(Languages languages) async {
+  Future<void> register(Languages languages) async {
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
 
     if (imageFile == null) {
@@ -133,15 +132,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     labelText: languages.password,
                   ),
                   obscureText: true,
-                  validator: (value) => checkEmpty(value, languages.enterValue),
                   focusNode: _passwordFocusNode,
-                  onSaved: (value) {
-                    value = value!.trim();
-                    password = value;
-                  },
-                  onFieldSubmitted: (value) {
-                    _phoneNumberFocusNode.requestFocus();
-                  },
+                  validator: (value) => checkEmpty(value, languages.enterValue),
+                  onSaved: (value) => password = value!.trim(),
+                  onFieldSubmitted: (value) =>
+                      _phoneNumberFocusNode.requestFocus(),
                 ),
                 const SizedBox(height: 8),
                 TextFormField(
@@ -162,53 +157,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                     return null;
                   },
-                  onSaved: (value) {
-                    value = value!.trim();
-                    authProvider.user.phoneNumber = value;
-                  },
-                  onFieldSubmitted: (value) {
-                    _idNumberFocusNode.requestFocus();
-                  },
+                  onSaved: (value) =>
+                      authProvider.user.phoneNumber = value!.trim(),
+                  onFieldSubmitted: (value) async => await register(languages),
                 ),
                 const SizedBox(height: 8),
-                TextFormField(
-                  decoration: InputDecoration(
-                    labelText: languages.idNumber,
-                  ),
-                  focusNode: _idNumberFocusNode,
-                  keyboardType: TextInputType.number,
-                  validator: (value) {
-                    value = value!.trim();
-                    if (value.isEmpty) {
-                      return languages.enterValue;
-                    }
-
-                    if (value.length != 10) {
-                      return languages.idNumberMustBeTen;
-                    }
-
-                    return null;
-                  },
-                  onSaved: (value) {
-                    value = value!.trim();
-                    authProvider.user.idNumber = value;
-                  },
-                  onFieldSubmitted: (value) async {
-                    await submitForm(languages);
-                  },
-                ),
-                const SizedBox(height: 12),
                 TextButton(
-                  onPressed: () => submitForm(languages),
+                  onPressed: () => register(languages),
                   child: Text(languages.register),
                 ),
                 const SizedBox(height: 48),
                 TextButton(
                   child: Text(languages.alreadyHaveAccountLogin),
-                  onPressed: () {
-                    Navigator.of(context)
-                        .pushReplacementNamed(LoginScreen.routeName);
-                  },
+                  onPressed: () => Navigator.of(context)
+                      .pushReplacementNamed(LoginScreen.routeName),
                 ),
               ],
             ),

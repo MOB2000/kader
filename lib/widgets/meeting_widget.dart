@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:kader/localization/language/languages.dart';
 import 'package:kader/models/meeting.dart';
 import 'package:kader/providers/departments_provider.dart';
-import 'package:kader/screens/meeting_employee_details_screen.dart';
-import 'package:kader/screens/send_request_meet_screen.dart';
+import 'package:kader/screens/meetings/meeting_employee_details_screen.dart';
+import 'package:kader/screens/meetings/send_request_meet_screen.dart';
+import 'package:kader/services/strings_helper.dart';
 import 'package:provider/provider.dart';
 
 class MeetingWidget extends StatefulWidget {
@@ -32,23 +33,19 @@ class _MeetingWidgetState extends State<MeetingWidget> {
         borderRadius: BorderRadius.circular(20),
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              Text(
-                "${languages.meetingDate}: ${widget.meeting.date}",
-                style:
-                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-              ),
-              const Spacer(),
-              Text(
-                "${languages.hour}: ${widget.meeting.hour}",
-                style:
-                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-              ),
-            ],
+          Text(
+            "${languages.meetingDate}: ${StringsHelper.getDayDate(widget.meeting.date)}",
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
           ),
-          const SizedBox(height: 15),
+          const SizedBox(height: 12),
+          // TODO: use StringsHelper
+          Text(
+            "${languages.hour}: ${widget.meeting.time}",
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          ),
+          const SizedBox(height: 12),
           Row(
             children: [
               Text(
@@ -67,10 +64,10 @@ class _MeetingWidgetState extends State<MeetingWidget> {
                   Icons.add,
                   size: 20,
                 ),
-                label: const Text("دعوة موظفين"),
+                label: Text(languages.inviteEmployees),
                 onPressed: () async {
                   var department = await departmentsProvider
-                      .getDepartmentId(widget.meeting.departmentId);
+                      .getDepartmentById(widget.meeting.departmentId);
                   if (!mounted) return;
                   Navigator.push(
                       context,
@@ -89,7 +86,7 @@ class _MeetingWidgetState extends State<MeetingWidget> {
                     Icons.details,
                     size: 20,
                   ),
-                  label: const Text("تفاصيل"),
+                  label: Text(languages.details),
                   onPressed: () {
                     Navigator.push(
                         context,

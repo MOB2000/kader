@@ -10,17 +10,22 @@ class DepartmentsProvider with ChangeNotifier {
 
   Future<List<CustomUser>> get employees async => _firestore.employees;
 
+  Future<Department> getDepartmentByManager(CustomUser manager) {
+    return _firestore.getDepartmentByManager(manager);
+  }
+
+  Future<Department> getDepartmentByEmployee(CustomUser employee) {
+    return _firestore.getDepartmentByEmployee(employee);
+  }
+
   Future<void> createDepartment(String name, String managerId) async {
-    final department = Department(
-      name: name,
-      managerId: managerId,
-    );
+    final department = Department(name: name, managerId: managerId);
     await _firestore.createDepartment(department);
     notifyListeners();
   }
 
-  Future<String> getDepartmentByManager(CustomUser manager) {
-    return _firestore.getDepartmentId(manager);
+  Future<void> updateDepartment(Department department) async {
+    await _firestore.updateDepartment(department);
   }
 
   Future<void> deleteDepartment(Department department) async {
@@ -36,19 +41,15 @@ class DepartmentsProvider with ChangeNotifier {
     return _firestore.getDepartmentManager(department);
   }
 
-  Future<void> updateDepartment(Department department) async {
-    await _firestore.updateDepartment(department);
-  }
-
   Future<List<CustomUser>> getDepartmentEmployees(Department department) async {
     return await _firestore.getDepartmentEmployees(department);
   }
 
-  Future<void> addEmployeesToDepartments(
+  Future<void> addEmployeesToDepartment(
     List<CustomUser> employees,
     Department department,
   ) async {
-    await _firestore.addEmployeesToDepartments(employees, department);
+    await _firestore.addEmployeesToDepartment(employees, department);
     notifyListeners();
   }
 
@@ -60,16 +61,17 @@ class DepartmentsProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<List<CustomUser>> employeesWithoutDepartment(
-      Department department) async {
+  Future<List<CustomUser>> getEmployeesWithoutDepartment(
+    Department department,
+  ) async {
     return _firestore.employeesWithoutDepartment(department);
   }
 
-  Future<Department> getDepartment(String id) async {
-    return _firestore.getDepartment(id);
+  Future<Department> getDepartmentByManagerId(String managerId) async {
+    return _firestore.getDepartmentByManagerId(managerId);
   }
 
-  Future<Department> getDepartmentId(String ID) async {
-    return _firestore.getDepartmentID(ID);
+  Future<Department> getDepartmentById(String id) async {
+    return _firestore.getDepartmentById(id);
   }
 }

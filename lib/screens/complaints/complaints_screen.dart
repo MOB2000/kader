@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kader/localization/language/languages.dart';
 import 'package:kader/models/complaint.dart';
 import 'package:kader/providers/complaints_provider.dart';
-import 'package:kader/screens/add_complaint_screen.dart';
+import 'package:kader/screens/complaints/add_complaint_screen.dart';
 import 'package:kader/services/shared_preferences_helper.dart';
 import 'package:kader/widgets/complaint_widget.dart';
 import 'package:kader/widgets/loading_widget.dart';
@@ -46,7 +46,7 @@ class ComplaintsScreen extends StatelessWidget {
           : FloatingActionButton(
               child: const Icon(Icons.add),
               onPressed: () {
-                Navigator.of(context).pushNamed(AddComplaints.routeName);
+                Navigator.of(context).pushNamed(AddComplaintsScreen.routeName);
               },
             ),
     );

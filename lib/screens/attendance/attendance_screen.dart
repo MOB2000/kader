@@ -10,11 +10,16 @@ import 'package:kader/services/strings_helper.dart';
 import 'package:kader/widgets/loading_widget.dart';
 import 'package:provider/provider.dart';
 
-class AttendanceScreen extends StatelessWidget {
+class AttendanceScreen extends StatefulWidget {
   static const String routeName = 'AttendanceScreen';
 
-  AttendanceScreen({Key? key}) : super(key: key);
+  const AttendanceScreen({Key? key}) : super(key: key);
 
+  @override
+  State<AttendanceScreen> createState() => _AttendanceScreenState();
+}
+
+class _AttendanceScreenState extends State<AttendanceScreen> {
   Attendance attendance = Attendance(
     id: DateTime.now().toIso8601String(),
     employeeId: '',
@@ -38,100 +43,97 @@ class AttendanceScreen extends StatelessWidget {
         title: Text(languages.attendance),
       ),
       body: FutureBuilder<Attendance?>(
-          future: attendanceProvider.checkSavedAttendance(user),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.done) {
-              attendance = snapshot.data ?? attendance;
+        future: attendanceProvider.checkSavedAttendance(user),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            attendance = snapshot.data ?? attendance;
 
-              return Column(
-                children: <Widget>[
-                  const SizedBox(height: 12),
-                  Text(StringsHelper.getDay(attendance.date)),
-                  Text(StringsHelper.getDate(attendance.date)),
-                  const SizedBox(height: 12),
-                  if (attendance.attendanceStatus == AttendanceStatus.absence)
-                    Center(child: Text(languages.absenceSaved)),
-                  if (attendance.attendanceStatus == AttendanceStatus.vacation)
-                    Center(child: Text(languages.vacationSaved)),
-                  if (attendance.attendanceStatus != AttendanceStatus.absence &&
-                      attendance.attendanceStatus !=
-                          AttendanceStatus.vacation) ...[
+            return Column(
+              children: <Widget>[
+                const SizedBox(height: 12),
+                Text(StringsHelper.getDay(attendance.date)),
+                Text(StringsHelper.getDate(attendance.date)),
+                const SizedBox(height: 12),
+                if (attendance.attendanceStatus == AttendanceStatus.absence)
+                  Center(child: Text(languages.absenceSaved)),
+                if (attendance.attendanceStatus == AttendanceStatus.vacation)
+                  Center(child: Text(languages.vacationSaved)),
+                if (attendance.attendanceStatus != AttendanceStatus.absence &&
+                    attendance.attendanceStatus !=
+                        AttendanceStatus.vacation) ...[
+                  Row(
+                    children: <Widget>[
+                      Text(languages.attendance),
+                      if (attendance.attendance != null)
+                        Text(StringsHelper.getHour(attendance.attendance!)),
+                      if (attendance.attendance == null)
+                        TextButton(
+                          child: Text(languages.checkAttendance),
+                          onPressed: () async {
+                            attendance.attendanceStatus =
+                                AttendanceStatus.attendance;
+                            attendance.attendance = DateTime.now();
+                            await attendanceProvider
+                                .updateAttendance(attendance);
+                          },
+                        ),
+                    ],
+                  ),
+                  if (attendance.attendance != null)
                     Row(
                       children: <Widget>[
-                        Text(languages.attendance),
-                        if (attendance.attendance != null)
-                          Text(StringsHelper.getHour(attendance.attendance!)),
-                        if (attendance.attendance == null)
+                        Text(languages.leaving),
+                        if (attendance.leaving != null)
+                          Text(StringsHelper.getHour(attendance.leaving!)),
+                        if (attendance.leaving == null)
                           TextButton(
-                            child: Text(languages.checkAttendance),
+                            child: Text(languages.checkLeaving),
                             onPressed: () async {
                               attendance.attendanceStatus =
                                   AttendanceStatus.attendance;
-                              attendance.attendance = DateTime.now();
+                              attendance.leaving = DateTime.now();
+
                               await attendanceProvider
                                   .updateAttendance(attendance);
                             },
                           ),
                       ],
                     ),
-                    if (attendance.attendance != null)
-                      Row(
-                        children: <Widget>[
-                          Text(languages.leaving),
-                          if (attendance.leaving != null)
-                            Text(StringsHelper.getHour(attendance.leaving!)),
-                          if (attendance.leaving == null)
-                            TextButton(
-                              child: Text(languages.checkLeaving),
-                              onPressed: () async {
-                                attendance.attendanceStatus =
-                                    AttendanceStatus.attendance;
-                                attendance.leaving = DateTime.now();
-
-                                await attendanceProvider
-                                    .updateAttendance(attendance);
-                              },
-                            ),
-                        ],
-                      ),
-                  ],
-                  if (attendance.attendance == null &&
-                      attendance.leaving == null)
-                    if (attendance.attendanceStatus !=
-                            AttendanceStatus.absence &&
-                        attendance.attendanceStatus !=
-                            AttendanceStatus.vacation)
-                      TextButton(
-                        child: Text(languages.checkAbsence),
-                        onPressed: () async {
-                          attendance.attendance = null;
-                          attendance.leaving = null;
-                          attendance.attendanceStatus =
-                              AttendanceStatus.absence;
-                          await attendanceProvider.updateAttendance(attendance);
-                        },
-                      ),
-                  TextButton(
-                    child: Text(languages.showHistory),
-                    onPressed: () {
-                      Navigator.of(context)
-                          .pushNamed(AttendanceHistoryScreen.routeName);
-                    },
-                  ),
-                  if (user.isManager)
+                ],
+                if (attendance.attendance == null && attendance.leaving == null)
+                  if (attendance.attendanceStatus != AttendanceStatus.absence &&
+                      attendance.attendanceStatus != AttendanceStatus.vacation)
                     TextButton(
-                      child: Text(languages.showEmployeesHistory),
-                      onPressed: () {
-                        Navigator.of(context).pushNamed(
-                            EmployeesAttendanceHistoryScreen.routeName);
+                      child: Text(languages.checkAbsence),
+                      onPressed: () async {
+                        attendance.attendance = null;
+                        attendance.leaving = null;
+                        attendance.attendanceStatus = AttendanceStatus.absence;
+                        await attendanceProvider.updateAttendance(attendance);
                       },
                     ),
-                ],
-              );
-            }
+                TextButton(
+                  child: Text(languages.showHistory),
+                  onPressed: () {
+                    Navigator.of(context)
+                        .pushNamed(AttendanceHistoryScreen.routeName);
+                  },
+                ),
+                if (user.isManager)
+                  TextButton(
+                    child: Text(languages.showEmployeesHistory),
+                    onPressed: () {
+                      Navigator.of(context).pushNamed(
+                          EmployeesAttendanceHistoryScreen.routeName);
+                    },
+                  ),
+              ],
+            );
+          }
 
-            return const LoadingWidget();
-          }),
+          return const LoadingWidget();
+        },
+      ),
     );
   }
 }

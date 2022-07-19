@@ -17,13 +17,8 @@ class ComplaintsProvider with ChangeNotifier {
     return await _firestoreHelper.getComplaints(ownerId);
   }
 
-  updateComplaints(Complaint complaint) async {
-    await _firestoreHelper.updateComplaints_reply(complaint);
-    notifyListeners();
-  }
-
-  deleteComplaints() async {
-    await _firestoreHelper.deleteComplaints();
+  Future<void> updateComplaints(Complaint complaint) async {
+    await _firestoreHelper.updateComplaint(complaint);
     notifyListeners();
   }
 }

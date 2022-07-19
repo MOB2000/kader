@@ -3,10 +3,12 @@ import 'package:kader/localization/language/languages.dart';
 import 'package:kader/models/custody.dart';
 import 'package:kader/providers/auth_provider.dart';
 import 'package:kader/providers/custody_provider.dart';
-import 'package:kader/screens/add_custody_screen.dart';
-import 'package:kader/screens/pending_requests_screen.dart';
+import 'package:kader/screens/custody/custody_pending_requests_screen.dart';
+import 'package:kader/screens/custody/custody_transfer_requests_screen.dart';
+import 'package:kader/screens/custody/request_custody_screen.dart';
 import 'package:kader/widgets/custody_widget.dart';
 import 'package:kader/widgets/loading_widget.dart';
+import 'package:kader/widgets/when_empty_widget.dart';
 import 'package:provider/provider.dart';
 
 class CustodyScreen extends StatelessWidget {
@@ -26,18 +28,24 @@ class CustodyScreen extends StatelessWidget {
       ),
       body: Column(
         children: <Widget>[
-          if (user.isAdmin)
+          if (user.isAdmin) ...[
             TextButton(
               child: Text(languages.pendingRequests),
               onPressed: () async {
                 Navigator.of(context)
-                    .pushNamed(PendingRequestsScreen.routeName);
+                    .pushNamed(CustodyPendingRequestsScreen.routeName);
               },
             ),
-          if (user.isAdmin)
+            TextButton(
+              child: Text(languages.transferRequests),
+              onPressed: () async {
+                Navigator.of(context)
+                    .pushNamed(CustodyTransferRequestsScreen.routeName);
+              },
+            ),
             Expanded(
               child: FutureBuilder<List<Custody>>(
-                future: custodyProvider.custodies,
+                future: custodyProvider.custodiesWithReply,
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.done) {
                     final custodies = snapshot.data!;
@@ -45,11 +53,6 @@ class CustodyScreen extends StatelessWidget {
                       itemCount: custodies.length,
                       itemBuilder: (context, index) {
                         return CustodyWidget(custody: custodies[index]);
-                        if (custodies[index].reply) {
-                          return CustodyWidget(custody: custodies[index]);
-                        } else {
-                          return Container();
-                        }
                       },
                     );
                   }
@@ -57,27 +60,23 @@ class CustodyScreen extends StatelessWidget {
                 },
               ),
             ),
+          ],
           if (!user.isAdmin)
             Expanded(
               child: FutureBuilder<List<Custody>>(
-                future: custodyProvider.custodies,
+                future: custodyProvider.getUserCustodies(user),
                 builder: (context, snapshot) {
-                  final custody = snapshot.data;
-                  if (custody != null) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    final custody = snapshot.data!;
+                    if (custody.isEmpty) {
+                      return const WhenEmptyWidget();
+                    }
                     return ListView.builder(
                         itemCount: custody.length,
-                        itemBuilder: (context, index) {
-                          if (custody[index].ownerId == user.id) {
-                            return CustodyWidget(custody: custody[index]);
-                          } else {
-                            return Container();
-                          }
-                        });
-                  } else {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
+                        itemBuilder: (context, index) =>
+                            CustodyWidget(custody: custody[index]));
                   }
+                  return const LoadingWidget();
                 },
               ),
             )
@@ -88,7 +87,7 @@ class CustodyScreen extends StatelessWidget {
           : FloatingActionButton(
               child: const Icon(Icons.add),
               onPressed: () {
-                Navigator.of(context).pushNamed(AddCustodyScreen.routeName);
+                Navigator.of(context).pushNamed(RequestCustodyScreen.routeName);
               },
             ),
     );

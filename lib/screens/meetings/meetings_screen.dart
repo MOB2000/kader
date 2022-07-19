@@ -3,9 +3,8 @@ import 'package:kader/localization/language/languages.dart';
 import 'package:kader/models/meeting.dart';
 import 'package:kader/models/meeting_employee.dart';
 import 'package:kader/providers/departments_provider.dart';
-import 'package:kader/providers/meeting_employee_provider.dart';
 import 'package:kader/providers/meeting_provider.dart';
-import 'package:kader/screens/add_meeting_screen.dart';
+import 'package:kader/screens/meetings/add_meeting_screen.dart';
 import 'package:kader/services/shared_preferences_helper.dart';
 import 'package:kader/widgets/loading_widget.dart';
 import 'package:kader/widgets/meeting_all_employee_widget.dart';
@@ -27,8 +26,7 @@ class _MeetingsScreenState extends State<MeetingsScreen> {
     final user = SharedPreferencesHelper.instance.account;
     final departmentsProvider = Provider.of<DepartmentsProvider>(context);
     final meetingProvider = Provider.of<MeetingProvider>(context);
-    final meetingEmployeeProvider =
-        Provider.of<MeetingEmployeeProvider>(context);
+    final provider = Provider.of<MeetingProvider>(context);
 
     final languages = Languages.of(context);
     return Scaffold(
@@ -54,7 +52,7 @@ class _MeetingsScreenState extends State<MeetingsScreen> {
               },
             )
           : FutureBuilder<List<MeetingEmployee>>(
-              future: meetingEmployeeProvider.getEmployeeMeetings(user.id),
+              future: provider.getEmployeeMeetings(user.id),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.done) {
                   final meetings = snapshot.data!;
@@ -62,12 +60,13 @@ class _MeetingsScreenState extends State<MeetingsScreen> {
                     return Center(child: Text(languages.noData));
                   }
                   return ListView.builder(
-                      itemCount: meetings.length,
-                      itemBuilder: (context, index) {
-                        return meetingAllEmployeeWidget(
-                          meetingEmployee: meetings[index],
-                        );
-                      });
+                    itemCount: meetings.length,
+                    itemBuilder: (context, index) {
+                      return MeetingAllEmployeeWidget(
+                        meetingEmployee: meetings[index],
+                      );
+                    },
+                  );
                 }
                 return const LoadingWidget();
               },
@@ -78,7 +77,7 @@ class _MeetingsScreenState extends State<MeetingsScreen> {
               child: const Icon(Icons.add),
               onPressed: () async {
                 final department =
-                    await departmentsProvider.getDepartment(user.id);
+                    await departmentsProvider.getDepartmentByManagerId(user.id);
                 if (!mounted) return;
                 Navigator.push(
                     context,

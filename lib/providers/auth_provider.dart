@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:kader/models/custom_user.dart';
+import 'package:kader/models/user_type.dart';
 import 'package:kader/services/auth_helper.dart';
 import 'package:kader/services/firebase_storage_helper.dart';
 import 'package:kader/services/firestore_helper.dart';
@@ -41,6 +42,7 @@ class AuthProvider with ChangeNotifier {
       return;
     }
     user.id = uid;
+    user.type = UserType.employee;
     await _firestoreHelper.addUser(user);
     await saveUserLocal();
   }

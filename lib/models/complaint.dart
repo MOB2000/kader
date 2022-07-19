@@ -1,3 +1,5 @@
+import 'package:kader/constants/keys.dart';
+
 class Complaint {
   String? id;
   final String ownerId;
@@ -22,25 +24,25 @@ class Complaint {
   bool get hasReply => reply != null;
 
   Complaint.fromMap(Map<String, dynamic> map)
-      : ownerId = map['ownerId'],
-        ownerName = map['ownerName'],
-        title = map['title'],
-        body = map['body'],
-        reply = map['reply'],
-        showOwner = map['showOwner'],
-        id = map['ID'],
-        dateTime = DateTime.parse(map['dateTime']);
+      : ownerId = map[Keys.ownerId],
+        ownerName = map[Keys.ownerName],
+        title = map[Keys.title],
+        body = map[Keys.body],
+        reply = map[Keys.reply],
+        showOwner = map[Keys.showOwner],
+        id = map[Keys.id],
+        dateTime = DateTime.parse(map[Keys.date]);
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'ownerId': ownerId,
-      'ownerName': ownerName,
-      'title': title,
-      'body': body,
-      'showOwner': showOwner,
-      'reply': reply,
-      'ID': id,
-      'dateTime': dateTime.toIso8601String(),
+      Keys.ownerId: ownerId,
+      Keys.ownerName: ownerName,
+      Keys.title: title,
+      Keys.body: body,
+      Keys.showOwner: showOwner,
+      Keys.reply: reply,
+      Keys.id: id,
+      Keys.date: dateTime.toIso8601String(),
     };
   }
 }

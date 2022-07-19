@@ -5,7 +5,7 @@ import 'package:kader/models/department.dart';
 import 'package:kader/models/meeting.dart';
 import 'package:kader/models/meeting_employee.dart';
 import 'package:kader/providers/departments_provider.dart';
-import 'package:kader/providers/meeting_employee_provider.dart';
+import 'package:kader/providers/meeting_provider.dart';
 import 'package:kader/widgets/employee_meeting_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -22,13 +22,54 @@ class SendRequestMeetScreen extends StatefulWidget {
 }
 
 class _SendRequestMeetScreenState extends State<SendRequestMeetScreen> {
-  bool value = true;
+  bool sendToAllEmployees = true;
+
+  Future openDialog(
+    BuildContext context,
+    Languages languages,
+    Department department,
+    String meetingId,
+    MeetingProvider provider,
+    DepartmentsProvider departmentsProvider,
+  ) =>
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text(languages.inviteAllEmployees),
+          actions: [
+            TextButton(
+              onPressed: () async {
+                var list = await departmentsProvider
+                    .getDepartmentEmployees(department);
+                list.forEach((element) async {
+                  var result =
+                      await provider.checkExisting(element.id, meetingId);
+                  if (result == false) {
+                    provider.addMeetingEmployee(MeetingEmployee(
+                        meetId: meetingId,
+                        ownerName: element.name,
+                        ownerId: element.id));
+                  }
+                });
+
+                Navigator.of(context).pop();
+              },
+              child: Text(languages.ok),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text(languages.no),
+            )
+          ],
+        ),
+      );
 
   @override
   Widget build(BuildContext context) {
     final servicesProvider = Provider.of<DepartmentsProvider>(context);
-    final meetingEmployeeProvider =
-        Provider.of<MeetingEmployeeProvider>(context);
+    final provider = Provider.of<MeetingProvider>(context);
 
     final languages = Languages.of(context);
 
@@ -49,24 +90,19 @@ class _SendRequestMeetScreenState extends State<SendRequestMeetScreen> {
                 ),
                 const Spacer(),
                 Checkbox(
-                    value: value,
+                    value: sendToAllEmployees,
                     onChanged: (v) {
                       setState(() {
-                        value = v!;
+                        sendToAllEmployees = v!;
                       });
                     }),
               ],
             ),
-            value
+            sendToAllEmployees
                 ? ElevatedButton(
                     onPressed: () async {
-                      openDialog(
-                          context,
-                          languages,
-                          widget.department,
-                          widget.meeting.id!,
-                          meetingEmployeeProvider,
-                          servicesProvider);
+                      openDialog(context, languages, widget.department,
+                          widget.meeting.id!, provider, servicesProvider);
                     },
                     child: Text(languages.inviteAll))
                 : Container(),
@@ -74,7 +110,7 @@ class _SendRequestMeetScreenState extends State<SendRequestMeetScreen> {
             Container(
                 margin: const EdgeInsets.only(top: 10),
                 alignment: Alignment.centerRight,
-                child: !value
+                child: !sendToAllEmployees
                     ? SingleChildScrollView(
                         child: Column(
                           children: [
@@ -113,40 +149,3 @@ class _SendRequestMeetScreenState extends State<SendRequestMeetScreen> {
     );
   }
 }
-
-Future openDialog(
-        BuildContext context,
-        Languages languages,
-        Department department,
-        String meetingId,
-        MeetingEmployeeProvider provider,
-        DepartmentsProvider departmentsProvider) =>
-    showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-              title: Text(languages.inviteAllEmployees),
-              actions: [
-                TextButton(
-                    onPressed: () async {
-                      var list = await departmentsProvider
-                          .getDepartmentEmployees(department);
-                      list.forEach((element) async {
-                        var result =
-                            await provider.checkExisting(element.id, meetingId);
-                        if (result == false) {
-                          provider.addMeetingEmployee(MeetingEmployee(
-                              meetID: meetingId,
-                              ownerName: element.name,
-                              ownerId: element.id));
-                        }
-                      });
-                      Navigator.of(context).pop();
-                    },
-                    child: Text(languages.ok)),
-                TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: Text(languages.no))
-              ],
-            ));

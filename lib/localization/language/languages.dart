@@ -117,8 +117,6 @@ abstract class Languages {
 
   String get vacationSaved;
 
-  String get officialHoliday;
-
   String get manageDepartment;
 
   String get manageDepartments;
@@ -237,13 +235,13 @@ abstract class Languages {
 
   String get complaintDetails;
 
-  String get custodyName;
-
   String get reason;
 
   String get custodyRequest;
 
   String get receivedDate;
+
+  String get requestDate;
 
   String get awaitingApproval;
 
@@ -277,6 +275,8 @@ abstract class Languages {
 
   String get inviteAllEmployees;
 
+  String get inviteEmployees; //دعوة موظفين
+
   String get meetingDetails;
 
   String get invitationAccepted;
@@ -287,5 +287,25 @@ abstract class Languages {
 
   String get invitation;
 
+  String get didNotCheckAbsence;
+
   String get invited;
+
+  String get from;
+
+  String get to;
+
+  String get hadAttend;
+
+  String get hadApologize;
+
+  String get transfer;
+
+  String get transferRequests;
+
+  String get youDoNotHaveVacationsBalance;
+
+  String get transferToAnotherEmployee;
+
+  String get custodyRequestTransferHasSent;
 }

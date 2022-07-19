@@ -4,13 +4,13 @@ import 'package:kader/models/vacation_request.dart';
 import 'package:kader/providers/auth_provider.dart';
 import 'package:kader/providers/departments_provider.dart';
 import 'package:kader/providers/vacations_provider.dart';
-import 'package:kader/screens/vacations/request_vacation_screen.dart';
+import 'package:kader/screens/vacations/vacation_request_screen.dart';
 import 'package:kader/widgets/loading_widget.dart';
 import 'package:kader/widgets/vacation_request_widget.dart';
 import 'package:provider/provider.dart';
 
 class VacationsScreen extends StatelessWidget {
-  static const String routeName = 'EVacationScreen';
+  static const String routeName = 'VacationsScreen';
 
   const VacationsScreen({Key? key}) : super(key: key);
 
@@ -20,10 +20,10 @@ class VacationsScreen extends StatelessWidget {
     final user = Provider.of<AuthProvider>(context).user;
 
     if (user.isManager) {
-      final departmentId = await Provider.of<DepartmentsProvider>(context)
+      final department = await Provider.of<DepartmentsProvider>(context)
           .getDepartmentByManager(user);
 
-      return vacationsProvider.getDepartmentVacations(departmentId);
+      return vacationsProvider.getDepartmentVacations(department);
     }
 
     return vacationsProvider.getEmployeeVacations(user);
@@ -71,7 +71,7 @@ class VacationsScreen extends StatelessWidget {
               ),
               onPressed: () {
                 Navigator.of(context)
-                    .pushNamed(RequestVacationScreen.routeName);
+                    .pushNamed(VacationRequestScreen.routeName);
               },
             ),
     );

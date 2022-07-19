@@ -95,7 +95,7 @@ class _DepartmentDetailsScreenState extends State<DepartmentDetailsScreen> {
               child: Text(languages.addRemoveEmployees),
               onPressed: () async {
                 final employeesWithoutDepartment = await departmentsProvider
-                    .employeesWithoutDepartment(widget.department);
+                    .getEmployeesWithoutDepartment(widget.department);
 
                 final employeesToAdd = await departmentsProvider
                     .getDepartmentEmployees(widget.department);
@@ -151,7 +151,7 @@ class _DepartmentDetailsScreenState extends State<DepartmentDetailsScreen> {
                   },
                 );
                 if (add) {
-                  await departmentsProvider.addEmployeesToDepartments(
+                  await departmentsProvider.addEmployeesToDepartment(
                       employeesToAdd, widget.department);
                 }
               },

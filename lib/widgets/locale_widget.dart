@@ -3,7 +3,6 @@ import 'package:kader/localization/language/languages.dart';
 import 'package:kader/localization/language_data.dart';
 import 'package:kader/localization/locale_constant.dart';
 
-//ignore: must_be_immutable
 class LocaleWidget extends StatefulWidget {
   const LocaleWidget({Key? key}) : super(key: key);
 

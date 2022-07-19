@@ -6,17 +6,17 @@ import 'package:kader/services/helpers.dart';
 import 'package:kader/services/shared_preferences_helper.dart';
 import 'package:provider/provider.dart';
 
-class AddComplaints extends StatefulWidget {
-  static const String routeName = 'AddComplaints';
+class AddComplaintsScreen extends StatefulWidget {
+  static const String routeName = 'AddComplaintsScreen';
 
-  const AddComplaints({Key? key}) : super(key: key);
+  const AddComplaintsScreen({Key? key}) : super(key: key);
 
   @override
-  State<AddComplaints> createState() => _AddComplaintsState();
+  State<AddComplaintsScreen> createState() => _AddComplaintsScreenState();
 }
 
-class _AddComplaintsState extends State<AddComplaints> {
-  bool value = true;
+class _AddComplaintsScreenState extends State<AddComplaintsScreen> {
+  bool showOwner = true;
   final addComplaintFormKey = GlobalKey<FormState>();
   final titleController = TextEditingController();
   final bodyController = TextEditingController();
@@ -25,7 +25,7 @@ class _AddComplaintsState extends State<AddComplaints> {
   Widget build(BuildContext context) {
     final user = SharedPreferencesHelper.instance.account;
     final languages = Languages.of(context);
-    final servicesProvider = Provider.of<ComplaintsProvider>(context);
+    final provider = Provider.of<ComplaintsProvider>(context);
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -60,10 +60,10 @@ class _AddComplaintsState extends State<AddComplaints> {
               const SizedBox(height: 12),
               CheckboxListTile(
                 title: Text(languages.showName),
-                value: value,
+                value: showOwner,
                 onChanged: (v) {
                   setState(() {
-                    value = v!;
+                    showOwner = v!;
                   });
                 },
               ),
@@ -83,12 +83,12 @@ class _AddComplaintsState extends State<AddComplaints> {
                       ownerName: user.name,
                       title: titleController.text,
                       body: bodyController.text,
-                      showOwner: value,
+                      showOwner: showOwner,
                       reply: null,
                       dateTime: DateTime.now(),
                     );
 
-                    servicesProvider.addComplaint(complaint);
+                    provider.addComplaint(complaint);
                     Navigator.of(context).pop();
                   }
                 },

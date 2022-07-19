@@ -23,7 +23,9 @@ class VacationRequestWidget extends StatelessWidget {
     final user = Provider.of<AuthProvider>(context).user;
 
     final range =
-        '${StringsHelper.getDate(vacationRequest.dateTimeRange.start)} ${StringsHelper.getDate(vacationRequest.dateTimeRange.end)}';
+        '${StringsHelper.getDate(vacationRequest.dateTimeRange.start)} '
+        '${StringsHelper.getDate(vacationRequest.dateTimeRange.end)}';
+
     return ListTile(
       title: Text(
         user.isEmployee ? vacationRequest.cause : vacationRequest.employeeName,
@@ -52,8 +54,12 @@ class VacationRequestWidget extends StatelessWidget {
                     ),
                   ],
                 )
-              : Text(StringsHelper.translateRequestStatus(
-                  vacationRequest.status, languages)),
+              : Text(
+                  StringsHelper.translateRequestStatus(
+                    vacationRequest.status,
+                    languages,
+                  ),
+                ),
     );
   }
 }

@@ -2,12 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:kader/localization/language/languages.dart';
 import 'package:kader/models/complaint.dart';
-import 'package:kader/screens/complaint_details_screen.dart';
+import 'package:kader/screens/complaints/complaint_details_screen.dart';
 import 'package:kader/services/shared_preferences_helper.dart';
 
 class ComplaintWidget extends StatefulWidget {
-  static const String routeName = 'AddComplaints';
-
   final Complaint complaint;
 
   const ComplaintWidget({

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:kader/constants/keys.dart';
 import 'package:kader/localization/language/languages.dart';
 import 'package:kader/models/vacation_request.dart';
@@ -9,29 +10,28 @@ import 'package:kader/services/helpers.dart';
 import 'package:kader/services/strings_helper.dart';
 import 'package:provider/provider.dart';
 
-class RequestVacationScreen extends StatefulWidget {
-  static const String routeName = 'RequestVacationScreen';
+class VacationRequestScreen extends StatefulWidget {
+  static const String routeName = 'VacationRequestScreen';
 
-  const RequestVacationScreen({Key? key}) : super(key: key);
+  const VacationRequestScreen({Key? key}) : super(key: key);
 
   @override
-  State<RequestVacationScreen> createState() => _RequestVacationScreenState();
+  State<VacationRequestScreen> createState() => _VacationRequestScreenState();
 }
 
-class _RequestVacationScreenState extends State<RequestVacationScreen> {
+class _VacationRequestScreenState extends State<VacationRequestScreen> {
   final _vacationRequestFormKey = GlobalKey<FormState>();
 
   String cause = '';
+
+  DateTimeRange dateTimeFullRange = DateTimeRange(
+    start: DateTime.now(),
+    end: DateTime.now().add(const Duration(days: 40)),
+  );
   DateTimeRange dateTimeRange = DateTimeRange(
     start: DateTime.now(),
     end: DateTime.now().add(
-      const Duration(days: 100),
-    ),
-  );
-  final initialDateTimeRange = DateTimeRange(
-    start: DateTime.now(),
-    end: DateTime.now().add(
-      const Duration(days: 1),
+      const Duration(days: 2),
     ),
   );
 
@@ -66,9 +66,9 @@ class _RequestVacationScreenState extends State<RequestVacationScreen> {
                     onPressed: () async {
                       final pickedDate = await showDateRangePicker(
                         context: context,
-                        initialDateRange: initialDateTimeRange,
-                        firstDate: dateTimeRange.start,
-                        lastDate: dateTimeRange.end,
+                        initialDateRange: dateTimeRange,
+                        firstDate: dateTimeFullRange.start,
+                        lastDate: dateTimeFullRange.end,
                       );
 
                       if (pickedDate != null) {
@@ -82,15 +82,12 @@ class _RequestVacationScreenState extends State<RequestVacationScreen> {
               ),
               TextFormField(
                 validator: (value) => checkEmpty(value, languages.enterValue),
-                onSaved: (value) {
-                  value = value!.trim();
-                  cause = value;
-                },
+                onSaved: (value) => cause = value!.trim(),
                 decoration: InputDecoration(
                   labelText: languages.cause,
                 ),
               ),
-              const Spacer(),
+              const SizedBox(height: 24),
               Center(
                 child: TextButton(
                   child: Text(languages.sendRequest),
@@ -100,11 +97,25 @@ class _RequestVacationScreenState extends State<RequestVacationScreen> {
 
                       final departmentId = await FirebaseFirestore.instance
                           .collection(Keys.employeesDepartments)
-                          .where(Keys.empId, isEqualTo: user.id)
+                          .where(Keys.employeeId, isEqualTo: user.id)
                           .get()
                           .then((value) =>
-                              value.docs.first.data()[Keys.department_id]);
+                              value.docs.first.data()[Keys.departmentId]);
 
+                      final vacationsBalance = await FirebaseFirestore.instance
+                          .collection(Keys.vacationsBalance)
+                          .where(Keys.userId, isEqualTo: user.id)
+                          .get()
+                          .then((value) async {
+                        return value.docs.first.data()[Keys.balance];
+                      });
+
+                      if (dateTimeRange.duration.inDays > vacationsBalance) {
+                        Fluttertoast.showToast(
+                          msg: languages.youDoNotHaveVacationsBalance,
+                        );
+                        return;
+                      }
                       final vacationRequest = VacationRequest(
                         departmentId: departmentId,
                         employeeId: user.id,
@@ -122,7 +133,6 @@ class _RequestVacationScreenState extends State<RequestVacationScreen> {
                   },
                 ),
               ),
-              const Spacer(),
             ],
           ),
         ),

@@ -5,7 +5,9 @@ import 'package:kader/models/meeting.dart';
 import 'package:kader/providers/meeting_provider.dart';
 import 'package:kader/services/helpers.dart';
 import 'package:kader/services/shared_preferences_helper.dart';
+import 'package:kader/services/strings_helper.dart';
 import 'package:provider/provider.dart';
+import 'package:time_range_picker/time_range_picker.dart';
 
 class AddMeetingScreen extends StatefulWidget {
   static const String routeName = 'AddMeetingScreen';
@@ -21,11 +23,8 @@ class AddMeetingScreen extends StatefulWidget {
 }
 
 class _AddMeetingScreenState extends State<AddMeetingScreen> {
-  bool value = true;
+  // TODO: remove controllers and use addMeetingFormKey
   final addMeetingFormKey = GlobalKey<FormState>();
-  final dateController = TextEditingController();
-  final hoursController = TextEditingController();
-  final durationController = TextEditingController();
   final placeController = TextEditingController();
   final subjectController = TextEditingController();
 
@@ -45,6 +44,13 @@ class _AddMeetingScreenState extends State<AddMeetingScreen> {
             ));
   }
 
+  DateTime date = DateTime.now().add(const Duration(days: 1));
+
+  TimeRange time = TimeRange(
+      startTime: TimeOfDay.now(),
+      endTime:
+          TimeOfDay.fromDateTime(DateTime.now().add(const Duration(hours: 1))));
+
   @override
   Widget build(BuildContext context) {
     final meetingProvider = Provider.of<MeetingProvider>(context);
@@ -62,31 +68,47 @@ class _AddMeetingScreenState extends State<AddMeetingScreen> {
             padding: const EdgeInsets.all(12),
             child: Column(
               children: <Widget>[
-                // TODO: use date picker
-                TextFormField(
-                  controller: dateController,
-                  decoration: InputDecoration(
-                    labelText: languages.meetingDate,
-                  ),
-                  validator: (value) => checkEmpty(value, languages.enterValue),
+                Row(
+                  children: <Widget>[
+                    const Text('التاريخ'),
+                    Text(StringsHelper.getDayDate(date)),
+                    TextButton(
+                      onPressed: () async {
+                        final selectedDate = await showDatePicker(
+                          context: context,
+                          initialDate: date,
+                          firstDate: DateTime.now(),
+                          lastDate:
+                              DateTime.now().add(const Duration(days: 10)),
+                        );
+                        if (selectedDate != null) {
+                          setState(() {
+                            date = selectedDate;
+                          });
+                        }
+                      },
+                      child: const Text('تغيير'),
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 12),
-                TextFormField(
-                  controller: hoursController,
-                  decoration: InputDecoration(
-                    labelText: languages.hour,
-                    alignLabelWithHint: true,
-                  ),
-                  validator: (value) => checkEmpty(value, languages.enterValue),
-                ),
-                const SizedBox(height: 12),
-                TextFormField(
-                  controller: durationController,
-                  decoration: InputDecoration(
-                    labelText: languages.duration,
-                    alignLabelWithHint: true,
-                  ),
-                  validator: (value) => checkEmpty(value, languages.enterValue),
+                Row(
+                  children: <Widget>[
+                    const Text('الوقت'),
+                    //TODO: clean up ui using StringsHelper
+                    Text('${time.startTime} ${time.endTime}'),
+                    TextButton(
+                      child: const Text('تغيير'),
+                      onPressed: () async {
+                        time = await showTimeRangePicker(
+                          context: context,
+                          start: time.startTime,
+                          end: time.endTime,
+                        );
+
+                        setState(() {});
+                      },
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 12),
                 TextFormField(
@@ -122,9 +144,8 @@ class _AddMeetingScreenState extends State<AddMeetingScreen> {
                         Meeting(
                           departmentId: widget.department.id!,
                           ownerId: user.id,
-                          date: dateController.text,
-                          hour: hoursController.text,
-                          duration: durationController.text,
+                          date: date,
+                          time: time,
                           place: placeController.text,
                           subject: subjectController.text,
                         ),

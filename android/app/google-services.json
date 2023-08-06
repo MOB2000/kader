@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "219660533919",
+    "project_id": "kader756",
+    "storage_bucket": "kader756.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:219660533919:android:8d7bf50243f7e79b3662aa",
+        "android_client_info": {
+          "package_name": "com.example.kader"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "219660533919-dql7dls2bvmcon7ibioslcnugg9ui16c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCO4sE9EDLbIYnvRYmpjeG_gOMlJRtuuw4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "219660533919-dql7dls2bvmcon7ibioslcnugg9ui16c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

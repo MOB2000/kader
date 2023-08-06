@@ -1,0 +1,41 @@
+name: kader
+description: A new Flutter project.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.5 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.2
+  flutter_localizations:
+    sdk: flutter
+  provider: ^6.0.2
+  firebase_core:
+  firebase_auth:
+  cloud_firestore:
+  firebase_storage:
+  shared_preferences:
+  intl:
+  image_picker:
+  fluttertoast:
+  time_range_picker:
+  flutter_native_splash:
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+  flutter_launcher_icons: "^0.13.1"
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/logo.png"
